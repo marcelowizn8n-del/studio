@@ -9,6 +9,13 @@ from app.schemas.project_briefing import ProjectBriefingCreate, ProjectBriefingO
 from app.schemas.project_story import ProjectStoryGenerateRequest, ProjectStoryOut
 from app.schemas.project_image_prompt import ProjectImagePromptGenerateRequest, ProjectImagePromptOut
 from app.schemas.project_video_prompt import ProjectVideoPromptGenerateRequest, ProjectVideoPromptOut
+from app.schemas.scene import (
+    ProjectSceneCreate,
+    ProjectSceneGenerateRequest,
+    ProjectSceneOut,
+    ProjectScenePromptGenerateRequest,
+    ProjectSceneUpdate,
+)
 from app.services.project_service import (
     list_projects,
     get_project_by_id,
@@ -31,6 +38,16 @@ from app.services.project_image_prompt_service import (
 from app.services.project_video_prompt_service import (
     get_video_prompts_by_project_id,
     generate_or_update_video_prompts,
+)
+from app.services.scene_service import (
+    create_project_scene,
+    delete_project_scene,
+    generate_image_prompts_for_scenes,
+    generate_project_scenes,
+    generate_video_prompts_for_scenes,
+    get_project_scene,
+    list_project_scenes,
+    update_project_scene,
 )
 
 router = APIRouter(prefix="/api/v1/projects", tags=["projects"])
@@ -234,3 +251,130 @@ def api_generate_project_video_prompts(
         )
     except ValueError as exc:
         raise HTTPException(status_code=400, detail=str(exc))
+
+
+@router.get("/{project_id}/scenes", response_model=list[ProjectSceneOut])
+def api_list_project_scenes(
+    project_id: int,
+    db: Session = Depends(get_db),
+    current_user: User = Depends(get_current_user),
+) -> list[ProjectSceneOut]:
+    project = get_project_by_id(db, project_id, current_user.id)
+    if not project:
+        raise HTTPException(status_code=404, detail="Projeto não encontrado")
+    return list_project_scenes(db, project_id)
+
+
+@router.post("/{project_id}/scenes", response_model=ProjectSceneOut, status_code=status.HTTP_201_CREATED)
+def api_create_project_scene(
+    project_id: int,
+    payload: ProjectSceneCreate,
+    db: Session = Depends(get_db),
+    current_user: User = Depends(get_current_user),
+) -> ProjectSceneOut:
+    project = get_project_by_id(db, project_id, current_user.id)
+    if not project:
+        raise HTTPException(status_code=404, detail="Projeto não encontrado")
+    return create_project_scene(db, project_id, payload)
+
+
+@router.post("/{project_id}/scenes/generate", response_model=list[ProjectSceneOut])
+def api_generate_project_scenes(
+    project_id: int,
+    payload: ProjectSceneGenerateRequest,
+    db: Session = Depends(get_db),
+    current_user: User = Depends(get_current_user),
+) -> list[ProjectSceneOut]:
+    project = get_project_by_id(db, project_id, current_user.id)
+    if not project:
+        raise HTTPException(status_code=404, detail="Projeto não encontrado")
+
+    try:
+        return generate_project_scenes(
+            db,
+            project_id=project_id,
+            scene_count=payload.scene_count,
+            force_regenerate=payload.force_regenerate,
+        )
+    except ValueError as exc:
+        raise HTTPException(status_code=400, detail=str(exc))
+
+
+@router.post("/{project_id}/scenes/generate-image-prompts", response_model=list[ProjectSceneOut])
+def api_generate_project_scene_image_prompts(
+    project_id: int,
+    payload: ProjectScenePromptGenerateRequest,
+    db: Session = Depends(get_db),
+    current_user: User = Depends(get_current_user),
+) -> list[ProjectSceneOut]:
+    project = get_project_by_id(db, project_id, current_user.id)
+    if not project:
+        raise HTTPException(status_code=404, detail="Projeto não encontrado")
+
+    try:
+        return generate_image_prompts_for_scenes(
+            db,
+            project_id=project_id,
+            force_regenerate=payload.force_regenerate,
+        )
+    except ValueError as exc:
+        raise HTTPException(status_code=400, detail=str(exc))
+
+
+@router.post("/{project_id}/scenes/generate-video-prompts", response_model=list[ProjectSceneOut])
+def api_generate_project_scene_video_prompts(
+    project_id: int,
+    payload: ProjectScenePromptGenerateRequest,
+    db: Session = Depends(get_db),
+    current_user: User = Depends(get_current_user),
+) -> list[ProjectSceneOut]:
+    project = get_project_by_id(db, project_id, current_user.id)
+    if not project:
+        raise HTTPException(status_code=404, detail="Projeto não encontrado")
+
+    try:
+        return generate_video_prompts_for_scenes(
+            db,
+            project_id=project_id,
+            force_regenerate=payload.force_regenerate,
+        )
+    except ValueError as exc:
+        raise HTTPException(status_code=400, detail=str(exc))
+
+
+@router.patch("/{project_id}/scenes/{scene_id}", response_model=ProjectSceneOut)
+def api_update_project_scene(
+    project_id: int,
+    scene_id: int,
+    payload: ProjectSceneUpdate,
+    db: Session = Depends(get_db),
+    current_user: User = Depends(get_current_user),
+) -> ProjectSceneOut:
+    project = get_project_by_id(db, project_id, current_user.id)
+    if not project:
+        raise HTTPException(status_code=404, detail="Projeto não encontrado")
+
+    scene = get_project_scene(db, project_id, scene_id)
+    if not scene:
+        raise HTTPException(status_code=404, detail="Cena não encontrada")
+
+    return update_project_scene(db, scene, payload)
+
+
+@router.delete("/{project_id}/scenes/{scene_id}", response_model=MessageResponse)
+def api_delete_project_scene(
+    project_id: int,
+    scene_id: int,
+    db: Session = Depends(get_db),
+    current_user: User = Depends(get_current_user),
+) -> MessageResponse:
+    project = get_project_by_id(db, project_id, current_user.id)
+    if not project:
+        raise HTTPException(status_code=404, detail="Projeto não encontrado")
+
+    scene = get_project_scene(db, project_id, scene_id)
+    if not scene:
+        raise HTTPException(status_code=404, detail="Cena não encontrada")
+
+    delete_project_scene(db, scene)
+    return MessageResponse(message="Cena excluída com sucesso")

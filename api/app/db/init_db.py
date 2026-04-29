@@ -8,6 +8,7 @@ from app.models.project_briefing import ProjectBriefing  # noqa: F401
 from app.models.project_story import ProjectStory  # noqa: F401
 from app.models.project_image_prompt import ProjectImagePrompt  # noqa: F401
 from app.models.project_video_prompt import ProjectVideoPrompt  # noqa: F401
+from app.models.scene import ProjectScene  # noqa: F401
 
 
 def init() -> None:

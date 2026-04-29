@@ -547,6 +547,24 @@ export default function ProjectsPage() {
                       Prompts de vídeo
                     </Link>
 
+                    <Link
+                      href={`/projects/${project.id}/scenes`}
+                      style={{
+                        textDecoration: "none",
+                        height: "40px",
+                        borderRadius: "10px",
+                        border: "1px solid rgba(200,168,255,0.28)",
+                        background: "rgba(200,168,255,0.14)",
+                        color: "#c8a8ff",
+                        padding: "0 14px",
+                        display: "inline-flex",
+                        alignItems: "center",
+                        fontWeight: 700,
+                      }}
+                    >
+                      Cenas
+                    </Link>
+
                     <button
                       onClick={() => handleEdit(project)}
                       style={{
