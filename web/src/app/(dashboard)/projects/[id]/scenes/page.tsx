@@ -26,6 +26,12 @@ type Scene = {
   duration_seconds: number;
   image_prompt: string | null;
   video_prompt: string | null;
+  generated_image_base64: string | null;
+  generated_image_mime_type: string | null;
+  image_generation_model: string | null;
+  image_generation_size: string | null;
+  image_generation_quality: string | null;
+  image_generation_status: string | null;
   status: string;
   created_at: string;
   updated_at: string;
@@ -400,6 +406,26 @@ export default function ProjectScenesPage() {
               >
                 Gerar prompts de vídeo
               </button>
+              <button
+                onClick={() =>
+                  runSceneAction("gpt-images", "Imagens geradas com GPT Image 2", () =>
+                    fetch(`/api/projects/${projectId}/scenes/generate-images`, {
+                      method: "POST",
+                      headers: { "Content-Type": "application/json" },
+                      body: JSON.stringify({ force_regenerate: true }),
+                    })
+                  )
+                }
+                disabled={!scenes.length || busyAction === "gpt-images"}
+                style={{
+                  ...buttonStyle,
+                  border: "1px solid rgba(143,255,194,0.22)",
+                  background: "rgba(56,217,169,0.12)",
+                  color: "#7ff0c4",
+                }}
+              >
+                {busyAction === "gpt-images" ? "Gerando imagens..." : "Gerar imagens GPT Image 2"}
+              </button>
             </div>
 
             <form onSubmit={handleCreateScene} style={{ display: "grid", gap: "12px" }}>
@@ -551,6 +577,7 @@ export default function ProjectScenesPage() {
                     </div>
 
                     <PromptBlock title="Prompt de imagem" value={scene.image_prompt} />
+                    <GeneratedImage scene={scene} />
                     <PromptBlock title="Prompt de vídeo" value={scene.video_prompt} />
                   </div>
                 </article>
@@ -560,6 +587,55 @@ export default function ProjectScenesPage() {
         </section>
       </div>
     </main>
+  );
+}
+
+function GeneratedImage({ scene }: { scene: Scene }) {
+  if (!scene.generated_image_base64) {
+    return (
+      <div
+        style={{
+          background: "#0d1430",
+          border: "1px solid rgba(255,255,255,0.08)",
+          borderRadius: "16px",
+          padding: "16px",
+          color: "#b6bfd6",
+        }}
+      >
+        Imagem ainda não gerada para esta cena.
+      </div>
+    );
+  }
+
+  const mimeType = scene.generated_image_mime_type || "image/png";
+
+  return (
+    <div
+      style={{
+        background: "#0d1430",
+        border: "1px solid rgba(255,255,255,0.08)",
+        borderRadius: "16px",
+        padding: "16px",
+        display: "grid",
+        gap: "10px",
+      }}
+    >
+      <h3 style={{ margin: 0, color: "#7ff0c4" }}>Imagem gerada</h3>
+      <img
+        src={`data:${mimeType};base64,${scene.generated_image_base64}`}
+        alt={`Imagem gerada para ${scene.title}`}
+        style={{
+          width: "100%",
+          borderRadius: "12px",
+          border: "1px solid rgba(255,255,255,0.08)",
+          display: "block",
+        }}
+      />
+      <div style={{ color: "#93a0c7", fontSize: "14px" }}>
+        Modelo: {scene.image_generation_model || "n/d"} · Qualidade:{" "}
+        {scene.image_generation_quality || "n/d"} · Tamanho: {scene.image_generation_size || "n/d"}
+      </div>
+    </div>
   );
 }
 

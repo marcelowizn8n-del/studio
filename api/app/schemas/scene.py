@@ -29,6 +29,10 @@ class ProjectScenePromptGenerateRequest(BaseModel):
     force_regenerate: bool = True
 
 
+class ProjectSceneImageGenerateRequest(BaseModel):
+    force_regenerate: bool = True
+
+
 class ProjectSceneOut(BaseModel):
     id: int
     project_id: int
@@ -38,6 +42,12 @@ class ProjectSceneOut(BaseModel):
     duration_seconds: int
     image_prompt: str | None = None
     video_prompt: str | None = None
+    generated_image_base64: str | None = None
+    generated_image_mime_type: str | None = None
+    image_generation_model: str | None = None
+    image_generation_size: str | None = None
+    image_generation_quality: str | None = None
+    image_generation_status: str | None = None
     status: str
     created_at: datetime
     updated_at: datetime

@@ -1,6 +1,7 @@
 from sqlalchemy import delete, select
 from sqlalchemy.orm import Session
 
+from app.core.config import get_settings
 from app.models.project import Project
 from app.models.project_briefing import ProjectBriefing
 from app.models.project_story import ProjectStory
@@ -157,6 +158,63 @@ def generate_video_prompts_for_scenes(
     return list_project_scenes(db, project_id)
 
 
+def generate_images_for_scenes(
+    db: Session,
+    project_id: int,
+    force_regenerate: bool = True,
+) -> list[ProjectScene]:
+    settings = get_settings()
+    if not settings.OPENAI_API_KEY:
+        raise ValueError("OPENAI_API_KEY não configurada")
+
+    scenes = list_project_scenes(db, project_id)
+    if not scenes:
+        raise ValueError("Crie ou gere cenas antes de gerar imagens")
+
+    try:
+        from openai import OpenAI
+    except ImportError as exc:
+        raise ValueError("Dependência openai não instalada no backend") from exc
+
+    client = OpenAI(api_key=settings.OPENAI_API_KEY)
+    mime_type = _mime_type_for_format(settings.OPENAI_IMAGE_FORMAT)
+
+    for scene in scenes:
+        if scene.generated_image_base64 and not force_regenerate:
+            continue
+
+        prompt = scene.image_prompt or (
+            f"{scene.title}: {scene.description}. Frame cinematográfico 16:9, "
+            "luz expressiva, composição clara, atmosfera memorável, sem texto, sem logos."
+        )
+
+        response = client.images.generate(
+            model=settings.OPENAI_IMAGE_MODEL,
+            prompt=prompt,
+            size=settings.OPENAI_IMAGE_SIZE,
+            quality=settings.OPENAI_IMAGE_QUALITY,
+            output_format=settings.OPENAI_IMAGE_FORMAT,
+            n=1,
+        )
+
+        image = response.data[0] if response.data else None
+        image_base64 = getattr(image, "b64_json", None) if image else None
+        if not image_base64:
+            raise ValueError(f"OpenAI não retornou imagem para {scene.title}")
+
+        scene.generated_image_base64 = image_base64
+        scene.generated_image_mime_type = mime_type
+        scene.image_generation_model = settings.OPENAI_IMAGE_MODEL
+        scene.image_generation_size = settings.OPENAI_IMAGE_SIZE
+        scene.image_generation_quality = settings.OPENAI_IMAGE_QUALITY
+        scene.image_generation_status = "generated"
+        scene.status = "image_generated"
+        db.add(scene)
+
+    db.commit()
+    return list_project_scenes(db, project_id)
+
+
 def normalize_scene_positions(db: Session, project_id: int) -> None:
     scenes = list_project_scenes(db, project_id)
     for index, scene in enumerate(scenes, start=1):
@@ -182,3 +240,11 @@ def _story_to_scene_chunks(story_text: str, scene_count: int) -> list[str]:
         chunks[current] = f"{chunks[current]} {paragraph}".strip()
 
     return [chunk[:900].rstrip() for chunk in chunks if chunk.strip()]
+
+
+def _mime_type_for_format(output_format: str) -> str:
+    if output_format == "jpeg":
+        return "image/jpeg"
+    if output_format == "webp":
+        return "image/webp"
+    return "image/png"

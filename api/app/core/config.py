@@ -23,6 +23,11 @@ class Settings(BaseSettings):
     SECRET_KEY: str = "change_me"
     ACCESS_TOKEN_EXPIRE_MINUTES: int = 15
     REFRESH_TOKEN_EXPIRE_DAYS: int = 30
+    OPENAI_API_KEY: str | None = None
+    OPENAI_IMAGE_MODEL: str = "gpt-image-2"
+    OPENAI_IMAGE_SIZE: str = "1536x1024"
+    OPENAI_IMAGE_QUALITY: str = "medium"
+    OPENAI_IMAGE_FORMAT: str = "png"
 
     @property
     def database_url(self) -> str:
