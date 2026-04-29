@@ -1,10 +1,16 @@
 :root {
-  --bg: #0b1020;
-  --panel: #121933;
-  --muted: #93a0c3;
-  --text: #f5f7ff;
-  --accent: #7c9cff;
-  --border: rgba(255, 255, 255, 0.08);
+  --bg: #f4f7fb;
+  --panel: #ffffff;
+  --panel-soft: #f8fbff;
+  --muted: #5f6f89;
+  --text: #172033;
+  --accent: #2563eb;
+  --coral: #ef6a4f;
+  --teal: #0f9f8f;
+  --lilac: #7c3aed;
+  --border: rgba(42, 55, 82, 0.12);
+  --shadow: 0 18px 45px rgba(36, 48, 75, 0.12);
+  --font-body: "Avenir Next", "Segoe UI", "Helvetica Neue", sans-serif;
 }
 
 * {
@@ -14,9 +20,12 @@
 html, body {
   margin: 0;
   padding: 0;
-  background: linear-gradient(180deg, #0b1020 0%, #131a33 100%);
+  background:
+    radial-gradient(circle at 14% 8%, rgba(15, 159, 143, 0.13), transparent 28%),
+    radial-gradient(circle at 86% 0%, rgba(239, 106, 79, 0.14), transparent 30%),
+    linear-gradient(180deg, #f4f7fb 0%, #edf4fb 100%);
   color: var(--text);
-  font-family: Arial, Helvetica, sans-serif;
+  font-family: var(--font-body);
 }
 
 a {
@@ -35,11 +44,11 @@ body {
 }
 
 .hero {
-  background: rgba(255, 255, 255, 0.04);
+  background: rgba(255, 255, 255, 0.88);
   border: 1px solid var(--border);
-  border-radius: 20px;
+  border-radius: 18px;
   padding: 28px;
-  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.24);
+  box-shadow: var(--shadow);
 }
 
 .badge {
@@ -47,8 +56,8 @@ body {
   padding: 6px 10px;
   border-radius: 999px;
   font-size: 12px;
-  background: rgba(124, 156, 255, 0.16);
-  color: #dbe4ff;
+  background: rgba(15, 159, 143, 0.12);
+  color: #0b766b;
   margin-bottom: 12px;
 }
 
@@ -62,8 +71,9 @@ body {
 .card {
   background: var(--panel);
   border: 1px solid var(--border);
-  border-radius: 16px;
+  border-radius: 14px;
   padding: 18px;
+  box-shadow: 0 10px 30px rgba(36, 48, 75, 0.08);
 }
 
 .muted {
@@ -74,8 +84,12 @@ body {
   margin-top: 12px;
   padding: 14px;
   border-radius: 12px;
-  background: rgba(0, 0, 0, 0.25);
+  background: #f8fbff;
   border: 1px solid var(--border);
   font-family: monospace;
   overflow-x: auto;
+}
+
+::selection {
+  background: rgba(239, 106, 79, 0.22);
 }

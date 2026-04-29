@@ -44,17 +44,17 @@ const emptyScene = {
 };
 
 const panelStyle = {
-  background: "#121933",
-  border: "1px solid rgba(255,255,255,0.08)",
+  background: "#ffffff",
+  border: "1px solid rgba(42,55,82,0.12)",
   borderRadius: "20px",
   padding: "24px",
 } as const;
 
 const fieldStyle = {
   borderRadius: "12px",
-  border: "1px solid rgba(255,255,255,0.12)",
-  background: "#0d1430",
-  color: "#ffffff",
+  border: "1px solid rgba(42,55,82,0.16)",
+  background: "#f8fbff",
+  color: "#172033",
   padding: "14px",
   outline: "none",
 } as const;
@@ -62,9 +62,9 @@ const fieldStyle = {
 const buttonStyle = {
   minHeight: "44px",
   borderRadius: "12px",
-  border: "1px solid rgba(255,255,255,0.12)",
-  background: "#18213f",
-  color: "#ffffff",
+  border: "1px solid rgba(42,55,82,0.16)",
+  background: "#ffffff",
+  color: "#172033",
   cursor: "pointer",
   fontWeight: 700,
   padding: "0 18px",
@@ -259,9 +259,9 @@ export default function ProjectScenesPage() {
           minHeight: "100vh",
           display: "grid",
           placeItems: "center",
-          background: "#0b1020",
-          color: "#ffffff",
-          fontFamily: "Arial, sans-serif",
+          background: "#f4f7fb",
+          color: "#172033",
+          fontFamily: "var(--font-body)",
         }}
       >
         <div>Carregando cenas...</div>
@@ -273,10 +273,10 @@ export default function ProjectScenesPage() {
     <main
       style={{
         minHeight: "100vh",
-        background: "#0b1020",
-        color: "#ffffff",
+        background: "#f4f7fb",
+        color: "#172033",
         padding: "32px",
-        fontFamily: "Arial, sans-serif",
+        fontFamily: "var(--font-body)",
       }}
     >
       <div style={{ maxWidth: "1180px", margin: "0 auto", display: "grid", gap: "24px" }}>
@@ -297,15 +297,15 @@ export default function ProjectScenesPage() {
                 fontWeight: 700,
                 letterSpacing: "0.08em",
                 textTransform: "uppercase",
-                color: "#c8a8ff",
+                color: "#7c3aed",
                 marginBottom: "10px",
               }}
             >
-              Studio ThinkingTools • Sprint 7
+              Studio ThinkingTools
             </div>
 
             <h1 style={{ margin: 0, fontSize: "34px" }}>Editor de cenas</h1>
-            <p style={{ marginTop: "10px", color: "#b6bfd6", maxWidth: "760px" }}>
+            <p style={{ marginTop: "10px", color: "#5f6f89", maxWidth: "760px" }}>
               Quebre a história em cenas individuais e gere prompts específicos de imagem e vídeo.
             </p>
           </div>
@@ -331,13 +331,13 @@ export default function ProjectScenesPage() {
 
         <section style={{ ...panelStyle, display: "grid", gap: "10px" }}>
           <h2 style={{ marginTop: 0, marginBottom: 0 }}>{project?.title}</h2>
-          <div style={{ color: "#dbe4ff" }}>
+          <div style={{ color: "#334155" }}>
             <strong>Status:</strong> {project?.status}
           </div>
-          <div style={{ color: "#dbe4ff" }}>
+          <div style={{ color: "#334155" }}>
             <strong>Usuário:</strong> {user?.full_name} ({user?.email})
           </div>
-          <div style={{ color: "#b6bfd6" }}>
+          <div style={{ color: "#5f6f89" }}>
             {project?.description || "Sem descrição do projeto"}
           </div>
         </section>
@@ -346,7 +346,7 @@ export default function ProjectScenesPage() {
           <aside style={{ ...panelStyle, display: "grid", gap: "18px" }}>
             <div style={{ display: "grid", gap: "12px" }}>
               <h2 style={{ margin: 0 }}>Gerar timeline</h2>
-              <label style={{ display: "grid", gap: "8px", color: "#dbe4ff" }}>
+              <label style={{ display: "grid", gap: "8px", color: "#334155" }}>
                 Quantidade de cenas
                 <input
                   type="number"
@@ -371,7 +371,8 @@ export default function ProjectScenesPage() {
                 style={{
                   ...buttonStyle,
                   border: "none",
-                  background: busyAction === "generate-scenes" ? "#4f5b7a" : "#8b5cf6",
+                  background: busyAction === "generate-scenes" ? "#94a3b8" : "#7c3aed",
+                  color: "#ffffff",
                 }}
               >
                 {busyAction === "generate-scenes" ? "Gerando..." : "Gerar cenas da história"}
@@ -421,7 +422,7 @@ export default function ProjectScenesPage() {
                   ...buttonStyle,
                   border: "1px solid rgba(143,255,194,0.22)",
                   background: "rgba(56,217,169,0.12)",
-                  color: "#7ff0c4",
+                  color: "#047857",
                 }}
               >
                 {busyAction === "gpt-images" ? "Gerando imagens..." : "Gerar imagens GPT Image 2"}
@@ -465,7 +466,8 @@ export default function ProjectScenesPage() {
                 style={{
                   ...buttonStyle,
                   border: "none",
-                  background: saving ? "#4f5b7a" : "#4f7cff",
+                  background: saving ? "#94a3b8" : "#2563eb",
+                  color: "#ffffff",
                 }}
               >
                 {saving ? "Criando..." : "Adicionar cena"}
@@ -492,7 +494,7 @@ export default function ProjectScenesPage() {
               <div
                 style={{
                   background: "rgba(56, 217, 169, 0.12)",
-                  color: "#7ff0c4",
+                  color: "#047857",
                   border: "1px solid rgba(56, 217, 169, 0.24)",
                   padding: "12px 14px",
                   borderRadius: "12px",
@@ -503,7 +505,7 @@ export default function ProjectScenesPage() {
             ) : null}
 
             {scenes.length === 0 ? (
-              <div style={{ ...panelStyle, color: "#b6bfd6" }}>
+              <div style={{ ...panelStyle, color: "#5f6f89" }}>
                 Nenhuma cena criada ainda. Gere cenas a partir da história ou adicione manualmente.
               </div>
             ) : (
@@ -525,7 +527,7 @@ export default function ProjectScenesPage() {
                       height: "48px",
                       borderRadius: "16px",
                       background: "rgba(200,168,255,0.14)",
-                      color: "#c8a8ff",
+                      color: "#7c3aed",
                       fontWeight: 800,
                       fontSize: "20px",
                     }}
@@ -555,7 +557,7 @@ export default function ProjectScenesPage() {
                     />
 
                     <div style={{ display: "flex", gap: "12px", flexWrap: "wrap", alignItems: "center" }}>
-                      <label style={{ display: "flex", gap: "8px", alignItems: "center", color: "#b6bfd6" }}>
+                      <label style={{ display: "flex", gap: "8px", alignItems: "center", color: "#5f6f89" }}>
                         Duração
                         <input
                           type="number"
@@ -573,7 +575,7 @@ export default function ProjectScenesPage() {
                       <button onClick={() => handleDeleteScene(scene)} style={buttonStyle}>
                         Excluir cena
                       </button>
-                      <span style={{ color: "#93a0c7", fontSize: "14px" }}>status: {scene.status}</span>
+                      <span style={{ color: "#7a879c", fontSize: "14px" }}>status: {scene.status}</span>
                     </div>
 
                     <PromptBlock title="Prompt de imagem" value={scene.image_prompt} />
@@ -595,11 +597,11 @@ function GeneratedImage({ scene }: { scene: Scene }) {
     return (
       <div
         style={{
-          background: "#0d1430",
-          border: "1px solid rgba(255,255,255,0.08)",
+          background: "#f8fbff",
+          border: "1px solid rgba(42,55,82,0.12)",
           borderRadius: "16px",
           padding: "16px",
-          color: "#b6bfd6",
+          color: "#5f6f89",
         }}
       >
         Imagem ainda não gerada para esta cena.
@@ -612,26 +614,26 @@ function GeneratedImage({ scene }: { scene: Scene }) {
   return (
     <div
       style={{
-        background: "#0d1430",
-        border: "1px solid rgba(255,255,255,0.08)",
+        background: "#f8fbff",
+        border: "1px solid rgba(42,55,82,0.12)",
         borderRadius: "16px",
         padding: "16px",
         display: "grid",
         gap: "10px",
       }}
     >
-      <h3 style={{ margin: 0, color: "#7ff0c4" }}>Imagem gerada</h3>
+      <h3 style={{ margin: 0, color: "#047857" }}>Imagem gerada</h3>
       <img
         src={`data:${mimeType};base64,${scene.generated_image_base64}`}
         alt={`Imagem gerada para ${scene.title}`}
         style={{
           width: "100%",
           borderRadius: "12px",
-          border: "1px solid rgba(255,255,255,0.08)",
+          border: "1px solid rgba(42,55,82,0.12)",
           display: "block",
         }}
       />
-      <div style={{ color: "#93a0c7", fontSize: "14px" }}>
+      <div style={{ color: "#7a879c", fontSize: "14px" }}>
         Modelo: {scene.image_generation_model || "n/d"} · Qualidade:{" "}
         {scene.image_generation_quality || "n/d"} · Tamanho: {scene.image_generation_size || "n/d"}
       </div>
@@ -643,14 +645,14 @@ function PromptBlock({ title, value }: { title: string; value: string | null }) 
   return (
     <div
       style={{
-        background: "#0d1430",
-        border: "1px solid rgba(255,255,255,0.08)",
+        background: "#f8fbff",
+        border: "1px solid rgba(42,55,82,0.12)",
         borderRadius: "16px",
         padding: "16px",
       }}
     >
-      <h3 style={{ marginTop: 0, color: "#c8a8ff" }}>{title}</h3>
-      <p style={{ margin: 0, color: "#dbe4ff", lineHeight: 1.6 }}>
+      <h3 style={{ marginTop: 0, color: "#7c3aed" }}>{title}</h3>
+      <p style={{ margin: 0, color: "#334155", lineHeight: 1.6 }}>
         {value || "Ainda não gerado para esta cena."}
       </p>
     </div>

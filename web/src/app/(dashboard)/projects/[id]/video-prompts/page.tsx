@@ -125,9 +125,9 @@ export default function VideoPromptsPage() {
           minHeight: "100vh",
           display: "grid",
           placeItems: "center",
-          background: "#0b1020",
-          color: "#ffffff",
-          fontFamily: "Arial, sans-serif",
+          background: "#f4f7fb",
+          color: "#172033",
+          fontFamily: "var(--font-body)",
         }}
       >
         <div>Carregando prompts de vídeo...</div>
@@ -139,10 +139,10 @@ export default function VideoPromptsPage() {
     <main
       style={{
         minHeight: "100vh",
-        background: "#0b1020",
-        color: "#ffffff",
+        background: "#f4f7fb",
+        color: "#172033",
         padding: "32px",
-        fontFamily: "Arial, sans-serif",
+        fontFamily: "var(--font-body)",
       }}
     >
       <div
@@ -170,17 +170,17 @@ export default function VideoPromptsPage() {
                 fontWeight: 700,
                 letterSpacing: "0.08em",
                 textTransform: "uppercase",
-                color: "#c8a8ff",
+                color: "#7c3aed",
                 marginBottom: "10px",
               }}
             >
-              Studio ThinkingTools · Sprint 7
+              Studio ThinkingTools
             </div>
 
             <h1 style={{ margin: 0, fontSize: "32px" }}>Prompts de Vídeo</h1>
 
             {project ? (
-              <p style={{ marginTop: "10px", color: "#b6bfd6" }}>
+              <p style={{ marginTop: "10px", color: "#5f6f89" }}>
                 Projeto: <strong>{project.title}</strong> (status: {project.status})
               </p>
             ) : null}
@@ -191,9 +191,9 @@ export default function VideoPromptsPage() {
               href="/projects"
               style={{
                 textDecoration: "none",
-                color: "#ffffff",
-                background: "#18213f",
-                border: "1px solid rgba(255,255,255,0.12)",
+                color: "#172033",
+                background: "#ffffff",
+                border: "1px solid rgba(42,55,82,0.16)",
                 borderRadius: "12px",
                 padding: "12px 18px",
                 fontWeight: 700,
@@ -206,7 +206,7 @@ export default function VideoPromptsPage() {
               href={`/projects/${projectId}/story`}
               style={{
                 textDecoration: "none",
-                color: "#7ff0c4",
+                color: "#047857",
                 background: "rgba(56,217,169,0.12)",
                 border: "1px solid rgba(143,255,194,0.22)",
                 borderRadius: "12px",
@@ -221,7 +221,7 @@ export default function VideoPromptsPage() {
               href={`/projects/${projectId}/image-prompts`}
               style={{
                 textDecoration: "none",
-                color: "#ffe39a",
+                color: "#9a6b00",
                 background: "rgba(255,210,90,0.12)",
                 border: "1px solid rgba(255,210,90,0.25)",
                 borderRadius: "12px",
@@ -238,9 +238,9 @@ export default function VideoPromptsPage() {
                 height: "44px",
                 padding: "0 18px",
                 borderRadius: "12px",
-                border: "1px solid rgba(255,255,255,0.12)",
-                background: "#18213f",
-                color: "#ffffff",
+                border: "1px solid rgba(42,55,82,0.16)",
+                background: "#ffffff",
+                color: "#172033",
                 cursor: "pointer",
                 fontWeight: 700,
               }}
@@ -252,15 +252,15 @@ export default function VideoPromptsPage() {
 
         <section
           style={{
-            background: "#121933",
-            border: "1px solid rgba(255,255,255,0.08)",
+            background: "#ffffff",
+            border: "1px solid rgba(42,55,82,0.12)",
             borderRadius: "20px",
             padding: "24px",
             display: "grid",
             gap: "16px",
           }}
         >
-          <div style={{ color: "#b6bfd6" }}>
+          <div style={{ color: "#5f6f89" }}>
             Usuário autenticado: <strong>{user?.full_name}</strong> ({user?.email})
           </div>
 
@@ -287,7 +287,7 @@ export default function VideoPromptsPage() {
                 height: "50px",
                 borderRadius: "12px",
                 border: "none",
-                background: generating ? "#4f5b7a" : "#a172ff",
+                background: generating ? "#94a3b8" : "#a172ff",
                 color: "#ffffff",
                 fontWeight: 700,
                 cursor: generating ? "not-allowed" : "pointer",
@@ -318,11 +318,11 @@ export default function VideoPromptsPage() {
 
             <div
               style={{
-                background: "#121933",
-                border: "1px solid rgba(255,255,255,0.08)",
+                background: "#ffffff",
+                border: "1px solid rgba(42,55,82,0.12)",
                 borderRadius: "16px",
                 padding: "16px",
-                color: "#93a0c7",
+                color: "#7a879c",
                 fontSize: "14px",
               }}
             >
@@ -332,11 +332,11 @@ export default function VideoPromptsPage() {
         ) : (
           <section
             style={{
-              background: "#121933",
-              border: "1px solid rgba(255,255,255,0.08)",
+              background: "#ffffff",
+              border: "1px solid rgba(42,55,82,0.12)",
               borderRadius: "20px",
               padding: "24px",
-              color: "#b6bfd6",
+              color: "#5f6f89",
             }}
           >
             Nenhum prompt de vídeo gerado ainda. Clique em "Gerar prompts de vídeo".
@@ -352,20 +352,20 @@ function Block({ title, content }: { title: string; content: string | null | und
   return (
     <article
       style={{
-        background: "#121933",
-        border: "1px solid rgba(255,255,255,0.08)",
+        background: "#ffffff",
+        border: "1px solid rgba(42,55,82,0.12)",
         borderRadius: "18px",
         padding: "20px",
         display: "grid",
         gap: "10px",
       }}
     >
-      <h2 style={{ margin: 0, fontSize: "18px", color: "#c8a8ff" }}>{title}</h2>
+      <h2 style={{ margin: 0, fontSize: "18px", color: "#7c3aed" }}>{title}</h2>
       <pre
         style={{
           margin: 0,
           whiteSpace: "pre-wrap",
-          color: "#dbe4ff",
+          color: "#334155",
           fontFamily: "inherit",
           fontSize: "15px",
           lineHeight: 1.6,

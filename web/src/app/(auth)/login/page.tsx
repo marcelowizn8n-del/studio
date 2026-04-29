@@ -53,8 +53,8 @@ export default function LoginPage() {
         minHeight: "100vh",
         display: "grid",
         placeItems: "center",
-        background: "#0b1020",
-        color: "#ffffff",
+        background: "#f4f7fb",
+        color: "#172033",
         padding: "24px",
       }}
     >
@@ -62,8 +62,8 @@ export default function LoginPage() {
         style={{
           width: "100%",
           maxWidth: "460px",
-          background: "#121933",
-          border: "1px solid rgba(255,255,255,0.08)",
+          background: "#ffffff",
+          border: "1px solid rgba(42,55,82,0.12)",
           borderRadius: "20px",
           padding: "32px",
           boxShadow: "0 20px 60px rgba(0,0,0,0.35)",
@@ -77,7 +77,7 @@ export default function LoginPage() {
               fontWeight: 700,
               letterSpacing: "0.08em",
               textTransform: "uppercase",
-              color: "#8ab4ff",
+              color: "#2f6fdd",
               marginBottom: "12px",
             }}
           >
@@ -86,7 +86,7 @@ export default function LoginPage() {
           <h1 style={{ fontSize: "32px", margin: 0, marginBottom: "8px" }}>
             Entrar
           </h1>
-          <p style={{ margin: 0, color: "#b6bfd6", lineHeight: 1.5 }}>
+          <p style={{ margin: 0, color: "#5f6f89", lineHeight: 1.5 }}>
             Faça login para acessar o painel do seu agente de histórias,
             imagens e vídeos.
           </p>
@@ -103,9 +103,9 @@ export default function LoginPage() {
               style={{
                 height: "48px",
                 borderRadius: "12px",
-                border: "1px solid rgba(255,255,255,0.12)",
-                background: "#0d1430",
-                color: "#ffffff",
+                border: "1px solid rgba(42,55,82,0.16)",
+                background: "#f8fbff",
+                color: "#172033",
                 padding: "0 14px",
                 outline: "none",
               }}
@@ -122,9 +122,9 @@ export default function LoginPage() {
               style={{
                 height: "48px",
                 borderRadius: "12px",
-                border: "1px solid rgba(255,255,255,0.12)",
-                background: "#0d1430",
-                color: "#ffffff",
+                border: "1px solid rgba(42,55,82,0.16)",
+                background: "#f8fbff",
+                color: "#172033",
                 padding: "0 14px",
                 outline: "none",
               }}
@@ -153,7 +153,7 @@ export default function LoginPage() {
               height: "50px",
               borderRadius: "12px",
               border: "none",
-              background: loading ? "#4f5b7a" : "#4f7cff",
+              background: loading ? "#94a3b8" : "#2563eb",
               color: "#ffffff",
               fontWeight: 700,
               cursor: loading ? "not-allowed" : "pointer",

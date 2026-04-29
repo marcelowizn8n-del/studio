@@ -147,9 +147,9 @@ export default function ProjectImagePromptsPage() {
           minHeight: "100vh",
           display: "grid",
           placeItems: "center",
-          background: "#0b1020",
-          color: "#ffffff",
-          fontFamily: "Arial, sans-serif",
+          background: "#f4f7fb",
+          color: "#172033",
+          fontFamily: "var(--font-body)",
         }}
       >
         <div>Carregando prompts de imagem...</div>
@@ -161,10 +161,10 @@ export default function ProjectImagePromptsPage() {
     <main
       style={{
         minHeight: "100vh",
-        background: "#0b1020",
-        color: "#ffffff",
+        background: "#f4f7fb",
+        color: "#172033",
         padding: "32px",
-        fontFamily: "Arial, sans-serif",
+        fontFamily: "var(--font-body)",
       }}
     >
       <div
@@ -192,7 +192,7 @@ export default function ProjectImagePromptsPage() {
                 fontWeight: 700,
                 letterSpacing: "0.08em",
                 textTransform: "uppercase",
-                color: "#8ab4ff",
+                color: "#2f6fdd",
                 marginBottom: "10px",
               }}
             >
@@ -201,7 +201,7 @@ export default function ProjectImagePromptsPage() {
 
             <h1 style={{ margin: 0, fontSize: "34px" }}>Prompts de imagem</h1>
 
-            <p style={{ marginTop: "10px", color: "#b6bfd6", maxWidth: "760px" }}>
+            <p style={{ marginTop: "10px", color: "#5f6f89", maxWidth: "760px" }}>
               Gere prompts visuais a partir do briefing e da história já criados no projeto.
             </p>
           </div>
@@ -211,9 +211,9 @@ export default function ProjectImagePromptsPage() {
               href={`/projects/${projectId}/story`}
               style={{
                 textDecoration: "none",
-                color: "#ffffff",
-                background: "#18213f",
-                border: "1px solid rgba(255,255,255,0.12)",
+                color: "#172033",
+                background: "#ffffff",
+                border: "1px solid rgba(42,55,82,0.16)",
                 borderRadius: "12px",
                 padding: "12px 18px",
                 fontWeight: 700,
@@ -228,9 +228,9 @@ export default function ProjectImagePromptsPage() {
                 height: "44px",
                 padding: "0 18px",
                 borderRadius: "12px",
-                border: "1px solid rgba(255,255,255,0.12)",
-                background: "#18213f",
-                color: "#ffffff",
+                border: "1px solid rgba(42,55,82,0.16)",
+                background: "#ffffff",
+                color: "#172033",
                 cursor: "pointer",
                 fontWeight: 700,
               }}
@@ -242,8 +242,8 @@ export default function ProjectImagePromptsPage() {
 
         <section
           style={{
-            background: "#121933",
-            border: "1px solid rgba(255,255,255,0.08)",
+            background: "#ffffff",
+            border: "1px solid rgba(42,55,82,0.12)",
             borderRadius: "20px",
             padding: "24px",
             display: "grid",
@@ -251,21 +251,21 @@ export default function ProjectImagePromptsPage() {
           }}
         >
           <h2 style={{ marginTop: 0, marginBottom: 0 }}>{project?.title}</h2>
-          <div style={{ color: "#dbe4ff" }}>
+          <div style={{ color: "#334155" }}>
             <strong>Status:</strong> {project?.status}
           </div>
-          <div style={{ color: "#dbe4ff" }}>
+          <div style={{ color: "#334155" }}>
             <strong>Usuário:</strong> {user?.full_name} ({user?.email})
           </div>
-          <div style={{ color: "#b6bfd6" }}>
+          <div style={{ color: "#5f6f89" }}>
             {project?.description || "Sem descrição do projeto"}
           </div>
         </section>
 
         <section
           style={{
-            background: "#121933",
-            border: "1px solid rgba(255,255,255,0.08)",
+            background: "#ffffff",
+            border: "1px solid rgba(42,55,82,0.12)",
             borderRadius: "20px",
             padding: "24px",
             display: "grid",
@@ -282,7 +282,7 @@ export default function ProjectImagePromptsPage() {
                 height: "46px",
                 borderRadius: "12px",
                 border: "none",
-                background: generating ? "#4f5b7a" : "#4f7cff",
+                background: generating ? "#94a3b8" : "#2563eb",
                 color: "#ffffff",
                 fontWeight: 700,
                 cursor: generating ? "not-allowed" : "pointer",
@@ -312,7 +312,7 @@ export default function ProjectImagePromptsPage() {
             <div
               style={{
                 background: "rgba(56, 217, 169, 0.12)",
-                color: "#7ff0c4",
+                color: "#047857",
                 border: "1px solid rgba(56, 217, 169, 0.24)",
                 padding: "12px 14px",
                 borderRadius: "12px",
@@ -326,11 +326,11 @@ export default function ProjectImagePromptsPage() {
           {!imagePrompts?.title ? (
             <div
               style={{
-                background: "#0d1430",
-                border: "1px solid rgba(255,255,255,0.08)",
+                background: "#f8fbff",
+                border: "1px solid rgba(42,55,82,0.12)",
                 borderRadius: "16px",
                 padding: "20px",
-                color: "#b6bfd6",
+                color: "#5f6f89",
               }}
             >
               Ainda não existem prompts de imagem gerados para este projeto.
@@ -339,14 +339,14 @@ export default function ProjectImagePromptsPage() {
             <div style={{ display: "grid", gap: "16px" }}>
               <div
                 style={{
-                  background: "#0d1430",
-                  border: "1px solid rgba(255,255,255,0.08)",
+                  background: "#f8fbff",
+                  border: "1px solid rgba(42,55,82,0.12)",
                   borderRadius: "16px",
                   padding: "20px",
                 }}
               >
                 <h3 style={{ marginTop: 0 }}>{imagePrompts.title}</h3>
-                <div style={{ color: "#93a0c7", fontSize: "14px" }}>
+                <div style={{ color: "#7a879c", fontSize: "14px" }}>
                   modo: {imagePrompts.generation_mode || "n/d"} • status: {imagePrompts.status || "n/d"}
                 </div>
               </div>
@@ -371,8 +371,8 @@ function Card({ title, text }: { title: string; text: string | null }) {
   return (
     <div
       style={{
-        background: "#0d1430",
-        border: "1px solid rgba(255,255,255,0.08)",
+        background: "#f8fbff",
+        border: "1px solid rgba(42,55,82,0.12)",
         borderRadius: "16px",
         padding: "20px",
       }}
@@ -384,7 +384,7 @@ function Card({ title, text }: { title: string; text: string | null }) {
           fontFamily: "inherit",
           margin: 0,
           lineHeight: 1.7,
-          color: "#dbe4ff",
+          color: "#334155",
         }}
       >
         {text || "Sem conteúdo"}
