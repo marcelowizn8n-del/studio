@@ -43,6 +43,18 @@ const emptyScene = {
   duration_seconds: 8,
 };
 
+const imageModelOptions = [
+  { value: "gpt-image-2", label: "GPT Image 2", description: "Melhor qualidade, requer acesso liberado na organização" },
+  { value: "gpt-image-1.5", label: "GPT Image 1.5", description: "Alta qualidade da família GPT Image" },
+  { value: "gpt-image-1", label: "GPT Image 1", description: "Modelo GPT Image anterior e mais disponível" },
+  { value: "gpt-image-1-mini", label: "GPT Image 1 Mini", description: "Opção mais leve para testes" },
+  { value: "dall-e-3", label: "DALL-E 3", description: "Fallback estável para geração por prompt" },
+];
+
+const imageSizeOptions = ["1024x1024", "1536x1024", "1024x1536"];
+const gptImageQualityOptions = ["low", "medium", "high"];
+const dallEQualityOptions = ["standard", "hd"];
+
 const panelStyle = {
   background: "#ffffff",
   border: "1px solid rgba(42,55,82,0.12)",
@@ -80,6 +92,9 @@ export default function ProjectScenesPage() {
   const [scenes, setScenes] = useState<Scene[]>([]);
   const [form, setForm] = useState(emptyScene);
   const [sceneCount, setSceneCount] = useState(6);
+  const [imageModel, setImageModel] = useState("gpt-image-2");
+  const [imageSize, setImageSize] = useState("1536x1024");
+  const [imageQuality, setImageQuality] = useState("medium");
 
   const [loading, setLoading] = useState(true);
   const [saving, setSaving] = useState(false);
@@ -129,6 +144,15 @@ export default function ProjectScenesPage() {
       loadData();
     }
   }, [projectId]);
+
+  useEffect(() => {
+    if (imageModel === "dall-e-3" && !dallEQualityOptions.includes(imageQuality)) {
+      setImageQuality("standard");
+    }
+    if (imageModel !== "dall-e-3" && !gptImageQualityOptions.includes(imageQuality)) {
+      setImageQuality("medium");
+    }
+  }, [imageModel, imageQuality]);
 
   async function runSceneAction(
     actionName: string,
@@ -409,11 +433,16 @@ export default function ProjectScenesPage() {
               </button>
               <button
                 onClick={() =>
-                  runSceneAction("gpt-images", "Imagens geradas com GPT Image 2", () =>
+                  runSceneAction("gpt-images", "Imagens geradas", () =>
                     fetch(`/api/projects/${projectId}/scenes/generate-images`, {
                       method: "POST",
                       headers: { "Content-Type": "application/json" },
-                      body: JSON.stringify({ force_regenerate: true }),
+                      body: JSON.stringify({
+                        force_regenerate: true,
+                        model: imageModel,
+                        size: imageSize,
+                        quality: imageQuality,
+                      }),
                     })
                   )
                 }
@@ -425,8 +454,64 @@ export default function ProjectScenesPage() {
                   color: "#047857",
                 }}
               >
-                {busyAction === "gpt-images" ? "Gerando imagens..." : "Gerar imagens GPT Image 2"}
+                {busyAction === "gpt-images" ? "Gerando imagens..." : "Gerar imagens"}
               </button>
+            </div>
+
+            <div
+              style={{
+                display: "grid",
+                gap: "12px",
+                borderTop: "1px solid rgba(42,55,82,0.12)",
+                paddingTop: "18px",
+              }}
+            >
+              <h2 style={{ margin: 0 }}>Modelo de imagem</h2>
+              <label style={{ display: "grid", gap: "8px", color: "#334155" }}>
+                Modelo
+                <select
+                  value={imageModel}
+                  onChange={(event) => setImageModel(event.target.value)}
+                  style={{ ...fieldStyle, height: "48px" }}
+                >
+                  {imageModelOptions.map((option) => (
+                    <option key={option.value} value={option.value}>
+                      {option.label}
+                    </option>
+                  ))}
+                </select>
+              </label>
+              <div style={{ color: "#5f6f89", fontSize: "14px", lineHeight: 1.5 }}>
+                {imageModelOptions.find((option) => option.value === imageModel)?.description}
+              </div>
+              <label style={{ display: "grid", gap: "8px", color: "#334155" }}>
+                Tamanho
+                <select
+                  value={imageSize}
+                  onChange={(event) => setImageSize(event.target.value)}
+                  style={{ ...fieldStyle, height: "48px" }}
+                >
+                  {imageSizeOptions.map((option) => (
+                    <option key={option} value={option}>
+                      {option}
+                    </option>
+                  ))}
+                </select>
+              </label>
+              <label style={{ display: "grid", gap: "8px", color: "#334155" }}>
+                Qualidade
+                <select
+                  value={imageQuality}
+                  onChange={(event) => setImageQuality(event.target.value)}
+                  style={{ ...fieldStyle, height: "48px" }}
+                >
+                  {(imageModel === "dall-e-3" ? dallEQualityOptions : gptImageQualityOptions).map((option) => (
+                    <option key={option} value={option}>
+                      {option}
+                    </option>
+                  ))}
+                </select>
+              </label>
             </div>
 
             <form onSubmit={handleCreateScene} style={{ display: "grid", gap: "12px" }}>

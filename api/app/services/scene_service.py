@@ -8,6 +8,16 @@ from app.models.project_story import ProjectStory
 from app.models.scene import ProjectScene
 from app.schemas.scene import ProjectSceneCreate, ProjectSceneUpdate
 
+SUPPORTED_IMAGE_MODELS = {
+    "gpt-image-2",
+    "gpt-image-1.5",
+    "gpt-image-1",
+    "gpt-image-1-mini",
+    "dall-e-3",
+}
+GPT_IMAGE_QUALITIES = {"low", "medium", "high"}
+DALL_E_3_QUALITIES = {"standard", "hd"}
+
 
 def list_project_scenes(db: Session, project_id: int) -> list[ProjectScene]:
     stmt = (
@@ -162,10 +172,19 @@ def generate_images_for_scenes(
     db: Session,
     project_id: int,
     force_regenerate: bool = True,
+    model: str | None = None,
+    size: str | None = None,
+    quality: str | None = None,
 ) -> list[ProjectScene]:
     settings = get_settings()
     if not settings.OPENAI_API_KEY:
         raise ValueError("OPENAI_API_KEY não configurada")
+
+    image_model = model or settings.OPENAI_IMAGE_MODEL
+    image_size = size or settings.OPENAI_IMAGE_SIZE
+    image_quality = _normalize_image_quality(image_model, quality or settings.OPENAI_IMAGE_QUALITY)
+    if image_model not in SUPPORTED_IMAGE_MODELS:
+        raise ValueError(f"Modelo de imagem não suportado: {image_model}")
 
     scenes = list_project_scenes(db, project_id)
     if not scenes:
@@ -189,19 +208,18 @@ def generate_images_for_scenes(
         )
 
         try:
-            response = client.images.generate(
-                model=settings.OPENAI_IMAGE_MODEL,
+            response = client.images.generate(**_build_image_generation_params(
+                model=image_model,
                 prompt=prompt,
-                size=settings.OPENAI_IMAGE_SIZE,
-                quality=settings.OPENAI_IMAGE_QUALITY,
+                size=image_size,
+                quality=image_quality,
                 output_format=settings.OPENAI_IMAGE_FORMAT,
-                n=1,
-            )
+            ))
         except OpenAIError as exc:
             message = str(exc)
-            if "must be verified" in message and settings.OPENAI_IMAGE_MODEL == "gpt-image-2":
+            if "must be verified" in message and image_model.startswith("gpt-image"):
                 raise ValueError(
-                    "Sua organização OpenAI precisa ser verificada para usar o modelo gpt-image-2. "
+                    f"Sua organização OpenAI precisa ser verificada para usar o modelo {image_model}. "
                     "Verifique a organização nas configurações da OpenAI e tente novamente após a liberação."
                 ) from exc
             raise ValueError(f"Erro da OpenAI ao gerar imagem: {message}") from exc
@@ -213,9 +231,9 @@ def generate_images_for_scenes(
 
         scene.generated_image_base64 = image_base64
         scene.generated_image_mime_type = mime_type
-        scene.image_generation_model = settings.OPENAI_IMAGE_MODEL
-        scene.image_generation_size = settings.OPENAI_IMAGE_SIZE
-        scene.image_generation_quality = settings.OPENAI_IMAGE_QUALITY
+        scene.image_generation_model = image_model
+        scene.image_generation_size = image_size
+        scene.image_generation_quality = image_quality
         scene.image_generation_status = "generated"
         scene.status = "image_generated"
         db.add(scene)
@@ -257,3 +275,42 @@ def _mime_type_for_format(output_format: str) -> str:
     if output_format == "webp":
         return "image/webp"
     return "image/png"
+
+
+def _normalize_image_quality(model: str, quality: str) -> str:
+    normalized = quality.lower().strip()
+    if model == "dall-e-3":
+        if normalized in DALL_E_3_QUALITIES:
+            return normalized
+        if normalized == "high":
+            return "hd"
+        return "standard"
+
+    if normalized in GPT_IMAGE_QUALITIES:
+        return normalized
+    if normalized == "standard":
+        return "medium"
+    if normalized == "hd":
+        return "high"
+    return "medium"
+
+
+def _build_image_generation_params(
+    model: str,
+    prompt: str,
+    size: str,
+    quality: str,
+    output_format: str,
+) -> dict:
+    params = {
+        "model": model,
+        "prompt": prompt,
+        "size": size,
+        "quality": quality,
+        "n": 1,
+    }
+    if model == "dall-e-3":
+        params["response_format"] = "b64_json"
+    else:
+        params["output_format"] = output_format
+    return params

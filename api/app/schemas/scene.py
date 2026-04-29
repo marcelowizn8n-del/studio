@@ -31,6 +31,9 @@ class ProjectScenePromptGenerateRequest(BaseModel):
 
 class ProjectSceneImageGenerateRequest(BaseModel):
     force_regenerate: bool = True
+    model: str | None = Field(default=None, max_length=80)
+    size: str | None = Field(default=None, max_length=40)
+    quality: str | None = Field(default=None, max_length=40)
 
 
 class ProjectSceneOut(BaseModel):

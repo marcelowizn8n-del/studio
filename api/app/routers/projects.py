@@ -360,6 +360,9 @@ def api_generate_project_scene_images(
             db,
             project_id=project_id,
             force_regenerate=payload.force_regenerate,
+            model=payload.model,
+            size=payload.size,
+            quality=payload.quality,
         )
     except ValueError as exc:
         raise HTTPException(status_code=400, detail=str(exc))
