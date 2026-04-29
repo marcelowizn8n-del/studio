@@ -4,6 +4,7 @@ const API_URL =
   process.env.INTERNAL_API_URL ||
   process.env.NEXT_PUBLIC_API_URL ||
   "http://api:8000";
+const USE_SECURE_COOKIES = process.env.NODE_ENV === "production";
 
 type RefreshResult = {
   access_token: string;
@@ -121,7 +122,7 @@ export function applyAuthCookies(
       name: "tt_access",
       value: accessToken,
       httpOnly: true,
-      secure: true,
+      secure: USE_SECURE_COOKIES,
       sameSite: "lax",
       path: "/",
       maxAge: 60 * 15,
@@ -133,7 +134,7 @@ export function applyAuthCookies(
       name: "tt_refresh",
       value: refreshToken,
       httpOnly: true,
-      secure: true,
+      secure: USE_SECURE_COOKIES,
       sameSite: "lax",
       path: "/",
       maxAge: 60 * 60 * 24 * 30,
@@ -146,7 +147,7 @@ export function clearAuthCookies(response: NextResponse) {
     name: "tt_access",
     value: "",
     httpOnly: true,
-    secure: true,
+    secure: USE_SECURE_COOKIES,
     sameSite: "lax",
     path: "/",
     maxAge: 0,
@@ -156,7 +157,7 @@ export function clearAuthCookies(response: NextResponse) {
     name: "tt_refresh",
     value: "",
     httpOnly: true,
-    secure: true,
+    secure: USE_SECURE_COOKIES,
     sameSite: "lax",
     path: "/",
     maxAge: 0,

@@ -4,6 +4,7 @@ const API_URL =
   process.env.INTERNAL_API_URL ||
   process.env.NEXT_PUBLIC_API_URL ||
   "http://api:8000";
+const USE_SECURE_COOKIES = process.env.NODE_ENV === "production";
 
 async function fetchCurrentUser(accessToken: string) {
   return fetch(`${API_URL}/api/v1/auth/me`, {
@@ -66,7 +67,7 @@ export async function GET(request: NextRequest) {
         name: "tt_access",
         value: "",
         httpOnly: true,
-        secure: true,
+        secure: USE_SECURE_COOKIES,
         sameSite: "lax",
         path: "/",
         maxAge: 0,
@@ -76,7 +77,7 @@ export async function GET(request: NextRequest) {
         name: "tt_refresh",
         value: "",
         httpOnly: true,
-        secure: true,
+        secure: USE_SECURE_COOKIES,
         sameSite: "lax",
         path: "/",
         maxAge: 0,
@@ -100,7 +101,7 @@ export async function GET(request: NextRequest) {
       name: "tt_access",
       value: refreshData.access_token,
       httpOnly: true,
-      secure: true,
+      secure: USE_SECURE_COOKIES,
       sameSite: "lax",
       path: "/",
       maxAge: 60 * 15,
@@ -110,7 +111,7 @@ export async function GET(request: NextRequest) {
       name: "tt_refresh",
       value: refreshData.refresh_token,
       httpOnly: true,
-      secure: true,
+      secure: USE_SECURE_COOKIES,
       sameSite: "lax",
       path: "/",
       maxAge: 60 * 60 * 24 * 30,

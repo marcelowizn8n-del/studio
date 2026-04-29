@@ -1,5 +1,7 @@
 import { NextResponse } from "next/server";
 
+const USE_SECURE_COOKIES = process.env.NODE_ENV === "production";
+
 export async function POST() {
   const response = NextResponse.json(
     { ok: true, message: "Logout realizado com sucesso" },
@@ -10,7 +12,7 @@ export async function POST() {
     name: "tt_access",
     value: "",
     httpOnly: true,
-    secure: true,
+    secure: USE_SECURE_COOKIES,
     sameSite: "lax",
     path: "/",
     maxAge: 0,
@@ -20,7 +22,7 @@ export async function POST() {
     name: "tt_refresh",
     value: "",
     httpOnly: true,
-    secure: true,
+    secure: USE_SECURE_COOKIES,
     sameSite: "lax",
     path: "/",
     maxAge: 0,

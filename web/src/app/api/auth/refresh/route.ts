@@ -4,6 +4,7 @@ const API_URL =
   process.env.INTERNAL_API_URL ||
   process.env.NEXT_PUBLIC_API_URL ||
   "http://api:8000";
+const USE_SECURE_COOKIES = process.env.NODE_ENV === "production";
 
 export async function POST(request: NextRequest) {
   try {
@@ -45,7 +46,7 @@ export async function POST(request: NextRequest) {
       name: "tt_access",
       value: data.access_token,
       httpOnly: true,
-      secure: true,
+      secure: USE_SECURE_COOKIES,
       sameSite: "lax",
       path: "/",
       maxAge: 60 * 15,
@@ -55,7 +56,7 @@ export async function POST(request: NextRequest) {
       name: "tt_refresh",
       value: data.refresh_token,
       httpOnly: true,
-      secure: true,
+      secure: USE_SECURE_COOKIES,
       sameSite: "lax",
       path: "/",
       maxAge: 60 * 60 * 24 * 30,

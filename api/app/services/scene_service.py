@@ -172,7 +172,7 @@ def generate_images_for_scenes(
         raise ValueError("Crie ou gere cenas antes de gerar imagens")
 
     try:
-        from openai import OpenAI
+        from openai import OpenAI, OpenAIError
     except ImportError as exc:
         raise ValueError("Dependência openai não instalada no backend") from exc
 
@@ -188,14 +188,23 @@ def generate_images_for_scenes(
             "luz expressiva, composição clara, atmosfera memorável, sem texto, sem logos."
         )
 
-        response = client.images.generate(
-            model=settings.OPENAI_IMAGE_MODEL,
-            prompt=prompt,
-            size=settings.OPENAI_IMAGE_SIZE,
-            quality=settings.OPENAI_IMAGE_QUALITY,
-            output_format=settings.OPENAI_IMAGE_FORMAT,
-            n=1,
-        )
+        try:
+            response = client.images.generate(
+                model=settings.OPENAI_IMAGE_MODEL,
+                prompt=prompt,
+                size=settings.OPENAI_IMAGE_SIZE,
+                quality=settings.OPENAI_IMAGE_QUALITY,
+                output_format=settings.OPENAI_IMAGE_FORMAT,
+                n=1,
+            )
+        except OpenAIError as exc:
+            message = str(exc)
+            if "must be verified" in message and settings.OPENAI_IMAGE_MODEL == "gpt-image-2":
+                raise ValueError(
+                    "Sua organização OpenAI precisa ser verificada para usar o modelo gpt-image-2. "
+                    "Verifique a organização nas configurações da OpenAI e tente novamente após a liberação."
+                ) from exc
+            raise ValueError(f"Erro da OpenAI ao gerar imagem: {message}") from exc
 
         image = response.data[0] if response.data else None
         image_base64 = getattr(image, "b64_json", None) if image else None
