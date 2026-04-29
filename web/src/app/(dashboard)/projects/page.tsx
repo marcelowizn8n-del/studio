@@ -174,8 +174,8 @@ export default function ProjectsPage() {
           minHeight: "100vh",
           display: "grid",
           placeItems: "center",
-          background: "#f4f7fb",
-          color: "#172033",
+          background: "#0b1326",
+          color: "#dae2fd",
           fontFamily: "var(--font-body)",
         }}
       >
@@ -188,8 +188,8 @@ export default function ProjectsPage() {
     <main
       style={{
         minHeight: "100vh",
-        background: "#f4f7fb",
-        color: "#172033",
+        background: "#0b1326",
+        color: "#dae2fd",
         padding: "32px",
         fontFamily: "var(--font-body)",
       }}
@@ -219,7 +219,7 @@ export default function ProjectsPage() {
                 fontWeight: 700,
                 letterSpacing: "0.08em",
                 textTransform: "uppercase",
-                color: "#2f6fdd",
+                color: "#c0c1ff",
                 marginBottom: "10px",
               }}
             >
@@ -228,7 +228,7 @@ export default function ProjectsPage() {
 
             <h1 style={{ margin: 0, fontSize: "34px" }}>Projetos</h1>
 
-            <p style={{ marginTop: "10px", color: "#5f6f89", maxWidth: "760px" }}>
+            <p style={{ marginTop: "10px", color: "#c7c4d7", maxWidth: "760px" }}>
               Cada projeto pode receber briefing, história, prompts de imagem e prompts de vídeo.
             </p>
           </div>
@@ -238,10 +238,10 @@ export default function ProjectsPage() {
               href="/"
               style={{
                 textDecoration: "none",
-                color: "#172033",
-                background: "#ffffff",
-                border: "1px solid rgba(42,55,82,0.16)",
-                borderRadius: "12px",
+                color: "#dae2fd",
+                background: "rgba(255,255,255,0.055)",
+                border: "1px solid rgba(255,255,255,0.16)",
+                borderRadius: "16px",
                 padding: "12px 18px",
                 fontWeight: 700,
               }}
@@ -254,10 +254,10 @@ export default function ProjectsPage() {
               style={{
                 height: "44px",
                 padding: "0 18px",
-                borderRadius: "12px",
-                border: "1px solid rgba(42,55,82,0.16)",
-                background: "#ffffff",
-                color: "#172033",
+                borderRadius: "16px",
+                border: "1px solid rgba(255,255,255,0.16)",
+                background: "rgba(255,255,255,0.055)",
+                color: "#dae2fd",
                 cursor: "pointer",
                 fontWeight: 700,
               }}
@@ -269,9 +269,9 @@ export default function ProjectsPage() {
 
         <section
           style={{
-            background: "#ffffff",
-            border: "1px solid rgba(42,55,82,0.12)",
-            borderRadius: "20px",
+            background: "rgba(255,255,255,0.055)",
+            border: "1px solid rgba(255,255,255,0.12)",
+            borderRadius: "24px",
             padding: "24px",
           }}
         >
@@ -279,7 +279,7 @@ export default function ProjectsPage() {
             {editingId ? "Editar projeto" : "Novo projeto"}
           </h2>
 
-          <div style={{ marginBottom: "18px", color: "#5f6f89" }}>
+          <div style={{ marginBottom: "18px", color: "#c7c4d7" }}>
             Usuário autenticado: <strong>{user?.full_name}</strong> ({user?.email})
           </div>
 
@@ -295,10 +295,10 @@ export default function ProjectsPage() {
                 required
                 style={{
                   height: "48px",
-                  borderRadius: "12px",
-                  border: "1px solid rgba(42,55,82,0.16)",
-                  background: "#f8fbff",
-                  color: "#172033",
+                  borderRadius: "16px",
+                  border: "1px solid rgba(255,255,255,0.16)",
+                  background: "rgba(6,14,32,0.58)",
+                  color: "#dae2fd",
                   padding: "0 14px",
                   outline: "none",
                 }}
@@ -317,10 +317,10 @@ export default function ProjectsPage() {
                 }
                 rows={5}
                 style={{
-                  borderRadius: "12px",
-                  border: "1px solid rgba(42,55,82,0.16)",
-                  background: "#f8fbff",
-                  color: "#172033",
+                  borderRadius: "16px",
+                  border: "1px solid rgba(255,255,255,0.16)",
+                  background: "rgba(6,14,32,0.58)",
+                  color: "#dae2fd",
                   padding: "14px",
                   outline: "none",
                   resize: "vertical",
@@ -340,10 +340,10 @@ export default function ProjectsPage() {
                 }
                 style={{
                   height: "48px",
-                  borderRadius: "12px",
-                  border: "1px solid rgba(42,55,82,0.16)",
-                  background: "#f8fbff",
-                  color: "#172033",
+                  borderRadius: "16px",
+                  border: "1px solid rgba(255,255,255,0.16)",
+                  background: "rgba(6,14,32,0.58)",
+                  color: "#dae2fd",
                   padding: "0 14px",
                   outline: "none",
                 }}
@@ -358,10 +358,10 @@ export default function ProjectsPage() {
               <div
                 style={{
                   background: "rgba(255, 84, 89, 0.12)",
-                  color: "#ff8f93",
+                  color: "#ffb4ab",
                   border: "1px solid rgba(255, 84, 89, 0.24)",
                   padding: "12px 14px",
-                  borderRadius: "12px",
+                  borderRadius: "16px",
                   fontSize: "14px",
                 }}
               >
@@ -373,10 +373,10 @@ export default function ProjectsPage() {
               <div
                 style={{
                   background: "rgba(56, 217, 169, 0.12)",
-                  color: "#047857",
+                  color: "#7ff0c4",
                   border: "1px solid rgba(56, 217, 169, 0.24)",
                   padding: "12px 14px",
-                  borderRadius: "12px",
+                  borderRadius: "16px",
                   fontSize: "14px",
                 }}
               >
@@ -390,9 +390,9 @@ export default function ProjectsPage() {
                 disabled={saving}
                 style={{
                   height: "50px",
-                  borderRadius: "12px",
+                  borderRadius: "16px",
                   border: "none",
-                  background: saving ? "#94a3b8" : "#2563eb",
+                  background: saving ? "#908fa0" : "#8083ff",
                   color: "#ffffff",
                   fontWeight: 700,
                   cursor: saving ? "not-allowed" : "pointer",
@@ -414,10 +414,10 @@ export default function ProjectsPage() {
                   onClick={handleCancelEdit}
                   style={{
                     height: "50px",
-                    borderRadius: "12px",
-                    border: "1px solid rgba(42,55,82,0.16)",
-                    background: "#ffffff",
-                    color: "#172033",
+                    borderRadius: "16px",
+                    border: "1px solid rgba(255,255,255,0.16)",
+                    background: "rgba(255,255,255,0.055)",
+                    color: "#dae2fd",
                     fontWeight: 700,
                     cursor: "pointer",
                     padding: "0 18px",
@@ -436,11 +436,11 @@ export default function ProjectsPage() {
           {projects.length === 0 ? (
             <div
               style={{
-                background: "#ffffff",
-                border: "1px solid rgba(42,55,82,0.12)",
+                background: "rgba(255,255,255,0.055)",
+                border: "1px solid rgba(255,255,255,0.12)",
                 borderRadius: "18px",
                 padding: "20px",
-                color: "#5f6f89",
+                color: "#c7c4d7",
               }}
             >
               Nenhum projeto encontrado. Crie o primeiro projeto acima.
@@ -450,8 +450,8 @@ export default function ProjectsPage() {
               <article
                 key={project.id}
                 style={{
-                  background: "#ffffff",
-                  border: "1px solid rgba(42,55,82,0.12)",
+                  background: "rgba(255,255,255,0.055)",
+                  border: "1px solid rgba(255,255,255,0.12)",
                   borderRadius: "18px",
                   padding: "20px",
                   display: "grid",
@@ -469,7 +469,7 @@ export default function ProjectsPage() {
                 >
                   <div>
                     <h3 style={{ margin: 0 }}>{project.title}</h3>
-                    <div style={{ color: "#2f6fdd", marginTop: "6px" }}>
+                    <div style={{ color: "#c0c1ff", marginTop: "6px" }}>
                       status: {project.status}
                     </div>
                   </div>
@@ -501,7 +501,7 @@ export default function ProjectsPage() {
                         borderRadius: "10px",
                         border: "1px solid rgba(143,255,194,0.22)",
                         background: "rgba(56,217,169,0.12)",
-                        color: "#047857",
+                        color: "#7ff0c4",
                         padding: "0 14px",
                         display: "inline-flex",
                         alignItems: "center",
@@ -555,7 +555,7 @@ export default function ProjectsPage() {
                         borderRadius: "10px",
                         border: "1px solid rgba(200,168,255,0.28)",
                         background: "rgba(200,168,255,0.14)",
-                        color: "#7c3aed",
+                        color: "#c0c1ff",
                         padding: "0 14px",
                         display: "inline-flex",
                         alignItems: "center",
@@ -570,9 +570,9 @@ export default function ProjectsPage() {
                       style={{
                         height: "40px",
                         borderRadius: "10px",
-                        border: "1px solid rgba(42,55,82,0.16)",
-                        background: "#ffffff",
-                        color: "#172033",
+                        border: "1px solid rgba(255,255,255,0.16)",
+                        background: "rgba(255,255,255,0.055)",
+                        color: "#dae2fd",
                         cursor: "pointer",
                         padding: "0 14px",
                         fontWeight: 700,
@@ -599,11 +599,11 @@ export default function ProjectsPage() {
                   </div>
                 </div>
 
-                <p style={{ margin: 0, color: "#334155", lineHeight: 1.6 }}>
+                <p style={{ margin: 0, color: "#dae2fd", lineHeight: 1.6 }}>
                   {project.description || "Sem descrição"}
                 </p>
 
-                <div style={{ color: "#7a879c", fontSize: "14px" }}>
+                <div style={{ color: "#908fa0", fontSize: "14px" }}>
                   Criado em: {project.created_at}
                 </div>
               </article>

@@ -145,8 +145,8 @@ export default function ProjectStoryPage() {
           minHeight: "100vh",
           display: "grid",
           placeItems: "center",
-          background: "#f4f7fb",
-          color: "#172033",
+          background: "#0b1326",
+          color: "#dae2fd",
           fontFamily: "var(--font-body)",
         }}
       >
@@ -159,8 +159,8 @@ export default function ProjectStoryPage() {
     <main
       style={{
         minHeight: "100vh",
-        background: "#f4f7fb",
-        color: "#172033",
+        background: "#0b1326",
+        color: "#dae2fd",
         padding: "32px",
         fontFamily: "var(--font-body)",
       }}
@@ -190,7 +190,7 @@ export default function ProjectStoryPage() {
                 fontWeight: 700,
                 letterSpacing: "0.08em",
                 textTransform: "uppercase",
-                color: "#2f6fdd",
+                color: "#c0c1ff",
                 marginBottom: "10px",
               }}
             >
@@ -199,7 +199,7 @@ export default function ProjectStoryPage() {
 
             <h1 style={{ margin: 0, fontSize: "34px" }}>História do projeto</h1>
 
-            <p style={{ marginTop: "10px", color: "#5f6f89", maxWidth: "760px" }}>
+            <p style={{ marginTop: "10px", color: "#c7c4d7", maxWidth: "760px" }}>
               Gere uma história base a partir do briefing já salvo no projeto.
             </p>
           </div>
@@ -209,10 +209,10 @@ export default function ProjectStoryPage() {
               href={`/projects/${projectId}/briefing`}
               style={{
                 textDecoration: "none",
-                color: "#172033",
-                background: "#ffffff",
-                border: "1px solid rgba(42,55,82,0.16)",
-                borderRadius: "12px",
+                color: "#dae2fd",
+                background: "rgba(255,255,255,0.055)",
+                border: "1px solid rgba(255,255,255,0.16)",
+                borderRadius: "16px",
                 padding: "12px 18px",
                 fontWeight: 700,
               }}
@@ -225,10 +225,10 @@ export default function ProjectStoryPage() {
               style={{
                 height: "44px",
                 padding: "0 18px",
-                borderRadius: "12px",
-                border: "1px solid rgba(42,55,82,0.16)",
-                background: "#ffffff",
-                color: "#172033",
+                borderRadius: "16px",
+                border: "1px solid rgba(255,255,255,0.16)",
+                background: "rgba(255,255,255,0.055)",
+                color: "#dae2fd",
                 cursor: "pointer",
                 fontWeight: 700,
               }}
@@ -240,31 +240,31 @@ export default function ProjectStoryPage() {
 
         <section
           style={{
-            background: "#ffffff",
-            border: "1px solid rgba(42,55,82,0.12)",
-            borderRadius: "20px",
+            background: "rgba(255,255,255,0.055)",
+            border: "1px solid rgba(255,255,255,0.12)",
+            borderRadius: "24px",
             padding: "24px",
             display: "grid",
             gap: "10px",
           }}
         >
           <h2 style={{ marginTop: 0, marginBottom: 0 }}>{project?.title}</h2>
-          <div style={{ color: "#334155" }}>
+          <div style={{ color: "#dae2fd" }}>
             <strong>Status:</strong> {project?.status}
           </div>
-          <div style={{ color: "#334155" }}>
+          <div style={{ color: "#dae2fd" }}>
             <strong>Usuário:</strong> {user?.full_name} ({user?.email})
           </div>
-          <div style={{ color: "#5f6f89" }}>
+          <div style={{ color: "#c7c4d7" }}>
             {project?.description || "Sem descrição do projeto"}
           </div>
         </section>
 
         <section
           style={{
-            background: "#ffffff",
-            border: "1px solid rgba(42,55,82,0.12)",
-            borderRadius: "20px",
+            background: "rgba(255,255,255,0.055)",
+            border: "1px solid rgba(255,255,255,0.12)",
+            borderRadius: "24px",
             padding: "24px",
             display: "grid",
             gap: "16px",
@@ -278,9 +278,9 @@ export default function ProjectStoryPage() {
               disabled={generating}
               style={{
                 height: "46px",
-                borderRadius: "12px",
+                borderRadius: "16px",
                 border: "none",
-                background: generating ? "#94a3b8" : "#2563eb",
+                background: generating ? "#908fa0" : "#8083ff",
                 color: "#ffffff",
                 fontWeight: 700,
                 cursor: generating ? "not-allowed" : "pointer",
@@ -295,10 +295,10 @@ export default function ProjectStoryPage() {
             <div
               style={{
                 background: "rgba(255, 84, 89, 0.12)",
-                color: "#ff8f93",
+                color: "#ffb4ab",
                 border: "1px solid rgba(255, 84, 89, 0.24)",
                 padding: "12px 14px",
-                borderRadius: "12px",
+                borderRadius: "16px",
                 fontSize: "14px",
               }}
             >
@@ -310,10 +310,10 @@ export default function ProjectStoryPage() {
             <div
               style={{
                 background: "rgba(56, 217, 169, 0.12)",
-                color: "#047857",
+                color: "#7ff0c4",
                 border: "1px solid rgba(56, 217, 169, 0.24)",
                 padding: "12px 14px",
-                borderRadius: "12px",
+                borderRadius: "16px",
                 fontSize: "14px",
               }}
             >
@@ -324,11 +324,11 @@ export default function ProjectStoryPage() {
           {!story?.title ? (
             <div
               style={{
-                background: "#f8fbff",
-                border: "1px solid rgba(42,55,82,0.12)",
+                background: "rgba(6,14,32,0.58)",
+                border: "1px solid rgba(255,255,255,0.12)",
                 borderRadius: "16px",
                 padding: "20px",
-                color: "#5f6f89",
+                color: "#c7c4d7",
               }}
             >
               Ainda não existe história gerada para este projeto.
@@ -337,22 +337,22 @@ export default function ProjectStoryPage() {
             <div style={{ display: "grid", gap: "16px" }}>
               <div
                 style={{
-                  background: "#f8fbff",
-                  border: "1px solid rgba(42,55,82,0.12)",
+                  background: "rgba(6,14,32,0.58)",
+                  border: "1px solid rgba(255,255,255,0.12)",
                   borderRadius: "16px",
                   padding: "20px",
                 }}
               >
                 <h3 style={{ marginTop: 0 }}>{story.title}</h3>
-                <div style={{ color: "#7a879c", fontSize: "14px" }}>
+                <div style={{ color: "#908fa0", fontSize: "14px" }}>
                   modo: {story.generation_mode || "n/d"} • status: {story.status || "n/d"}
                 </div>
               </div>
 
               <div
                 style={{
-                  background: "#f8fbff",
-                  border: "1px solid rgba(42,55,82,0.12)",
+                  background: "rgba(6,14,32,0.58)",
+                  border: "1px solid rgba(255,255,255,0.12)",
                   borderRadius: "16px",
                   padding: "20px",
                 }}
@@ -363,8 +363,8 @@ export default function ProjectStoryPage() {
 
               <div
                 style={{
-                  background: "#f8fbff",
-                  border: "1px solid rgba(42,55,82,0.12)",
+                  background: "rgba(6,14,32,0.58)",
+                  border: "1px solid rgba(255,255,255,0.12)",
                   borderRadius: "16px",
                   padding: "20px",
                 }}
@@ -375,8 +375,8 @@ export default function ProjectStoryPage() {
 
               <div
                 style={{
-                  background: "#f8fbff",
-                  border: "1px solid rgba(42,55,82,0.12)",
+                  background: "rgba(6,14,32,0.58)",
+                  border: "1px solid rgba(255,255,255,0.12)",
                   borderRadius: "16px",
                   padding: "20px",
                 }}
@@ -387,8 +387,8 @@ export default function ProjectStoryPage() {
 
               <div
                 style={{
-                  background: "#f8fbff",
-                  border: "1px solid rgba(42,55,82,0.12)",
+                  background: "rgba(6,14,32,0.58)",
+                  border: "1px solid rgba(255,255,255,0.12)",
                   borderRadius: "16px",
                   padding: "20px",
                 }}
@@ -399,8 +399,8 @@ export default function ProjectStoryPage() {
 
               <div
                 style={{
-                  background: "#f8fbff",
-                  border: "1px solid rgba(42,55,82,0.12)",
+                  background: "rgba(6,14,32,0.58)",
+                  border: "1px solid rgba(255,255,255,0.12)",
                   borderRadius: "16px",
                   padding: "20px",
                 }}
@@ -411,8 +411,8 @@ export default function ProjectStoryPage() {
 
               <div
                 style={{
-                  background: "#f8fbff",
-                  border: "1px solid rgba(42,55,82,0.12)",
+                  background: "rgba(6,14,32,0.58)",
+                  border: "1px solid rgba(255,255,255,0.12)",
                   borderRadius: "16px",
                   padding: "20px",
                 }}
@@ -424,7 +424,7 @@ export default function ProjectStoryPage() {
                     fontFamily: "inherit",
                     margin: 0,
                     lineHeight: 1.7,
-                    color: "#334155",
+                    color: "#dae2fd",
                   }}
                 >
                   {story.full_story_text || "Sem texto completo"}

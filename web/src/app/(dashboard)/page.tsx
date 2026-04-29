@@ -75,8 +75,8 @@ export default function DashboardPage() {
     <main
       style={{
         minHeight: "100vh",
-        background: "#f4f7fb",
-        color: "#172033",
+        background: "#0b1326",
+        color: "#dae2fd",
         padding: "32px",
         fontFamily: "var(--font-body)",
       }}
@@ -106,7 +106,7 @@ export default function DashboardPage() {
                 fontWeight: 700,
                 letterSpacing: "0.08em",
                 textTransform: "uppercase",
-                color: "#2f6fdd",
+                color: "#c0c1ff",
                 marginBottom: "10px",
               }}
             >
@@ -115,7 +115,7 @@ export default function DashboardPage() {
             <h1 style={{ margin: 0, fontSize: "34px" }}>
               Área autenticada funcionando
             </h1>
-            <p style={{ marginTop: "10px", color: "#5f6f89", maxWidth: "760px" }}>
+            <p style={{ marginTop: "10px", color: "#c7c4d7", maxWidth: "760px" }}>
               Seu frontend Next.js agora usa login real, cookies HttpOnly e
               validação de sessão via FastAPI.
             </p>
@@ -126,10 +126,10 @@ export default function DashboardPage() {
             style={{
               height: "44px",
               padding: "0 18px",
-              borderRadius: "12px",
-              border: "1px solid rgba(42,55,82,0.16)",
-              background: "#ffffff",
-              color: "#172033",
+              borderRadius: "16px",
+              border: "1px solid rgba(255,255,255,0.16)",
+              background: "rgba(255,255,255,0.055)",
+              color: "#dae2fd",
               cursor: "pointer",
               fontWeight: 700,
             }}
@@ -140,14 +140,14 @@ export default function DashboardPage() {
 
         <section
           style={{
-            background: "#ffffff",
-            border: "1px solid rgba(42,55,82,0.12)",
-            borderRadius: "20px",
+            background: "rgba(255,255,255,0.055)",
+            border: "1px solid rgba(255,255,255,0.12)",
+            borderRadius: "24px",
             padding: "24px",
           }}
         >
           <h2 style={{ marginTop: 0 }}>Sessão atual</h2>
-          <div style={{ display: "grid", gap: "10px", color: "#334155" }}>
+          <div style={{ display: "grid", gap: "10px", color: "#dae2fd" }}>
             <div><strong>ID:</strong> {user?.id}</div>
             <div><strong>Nome:</strong> {user?.full_name}</div>
             <div><strong>E-mail:</strong> {user?.email}</div>
@@ -167,16 +167,16 @@ export default function DashboardPage() {
             href="/projects"
             style={{
               textDecoration: "none",
-              color: "#172033",
-              background: "#ffffff",
-              border: "1px solid rgba(42,55,82,0.12)",
+              color: "#dae2fd",
+              background: "rgba(255,255,255,0.055)",
+              border: "1px solid rgba(255,255,255,0.12)",
               borderRadius: "18px",
               padding: "20px",
               display: "block",
             }}
           >
             <strong>Projetos</strong>
-            <div style={{ marginTop: "8px", color: "#5f6f89" }}>
+            <div style={{ marginTop: "8px", color: "#c7c4d7" }}>
               Próximo passo: CRUD de projetos.
             </div>
           </Link>
@@ -185,16 +185,16 @@ export default function DashboardPage() {
             href="/settings"
             style={{
               textDecoration: "none",
-              color: "#172033",
-              background: "#ffffff",
-              border: "1px solid rgba(42,55,82,0.12)",
+              color: "#dae2fd",
+              background: "rgba(255,255,255,0.055)",
+              border: "1px solid rgba(255,255,255,0.12)",
               borderRadius: "18px",
               padding: "20px",
               display: "block",
             }}
           >
             <strong>Configurações</strong>
-            <div style={{ marginTop: "8px", color: "#5f6f89" }}>
+            <div style={{ marginTop: "8px", color: "#c7c4d7" }}>
               Próximo passo: gestão de conta e preferências.
             </div>
           </Link>

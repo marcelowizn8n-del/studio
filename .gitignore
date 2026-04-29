@@ -23,5 +23,6 @@ __pycache__/
 *.sql
 *.bak
 backups/
+new/
 
 story-agent-v1-base.zip

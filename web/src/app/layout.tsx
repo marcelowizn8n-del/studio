@@ -2,8 +2,8 @@ import './globals.css';
 import type { Metadata } from 'next';
 
 export const metadata: Metadata = {
-  title: 'Story Agent V1',
-  description: 'Base V1 com Next.js + FastAPI + PostgreSQL + Redis'
+  title: 'Studio ThinkingTools',
+  description: 'Studio criativo para histórias, cenas, prompts, imagens e vídeos'
 };
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {

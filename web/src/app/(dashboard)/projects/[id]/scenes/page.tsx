@@ -56,27 +56,27 @@ const gptImageQualityOptions = ["low", "medium", "high"];
 const dallEQualityOptions = ["standard", "hd"];
 
 const panelStyle = {
-  background: "#ffffff",
-  border: "1px solid rgba(42,55,82,0.12)",
-  borderRadius: "20px",
+  background: "rgba(255,255,255,0.055)",
+  border: "1px solid rgba(255,255,255,0.12)",
+  borderRadius: "24px",
   padding: "24px",
 } as const;
 
 const fieldStyle = {
-  borderRadius: "12px",
-  border: "1px solid rgba(42,55,82,0.16)",
-  background: "#f8fbff",
-  color: "#172033",
+  borderRadius: "16px",
+  border: "1px solid rgba(255,255,255,0.16)",
+  background: "rgba(6,14,32,0.58)",
+  color: "#dae2fd",
   padding: "14px",
   outline: "none",
 } as const;
 
 const buttonStyle = {
   minHeight: "44px",
-  borderRadius: "12px",
-  border: "1px solid rgba(42,55,82,0.16)",
-  background: "#ffffff",
-  color: "#172033",
+  borderRadius: "16px",
+  border: "1px solid rgba(255,255,255,0.16)",
+  background: "rgba(255,255,255,0.055)",
+  color: "#dae2fd",
   cursor: "pointer",
   fontWeight: 700,
   padding: "0 18px",
@@ -283,8 +283,8 @@ export default function ProjectScenesPage() {
           minHeight: "100vh",
           display: "grid",
           placeItems: "center",
-          background: "#f4f7fb",
-          color: "#172033",
+          background: "#0b1326",
+          color: "#dae2fd",
           fontFamily: "var(--font-body)",
         }}
       >
@@ -297,8 +297,8 @@ export default function ProjectScenesPage() {
     <main
       style={{
         minHeight: "100vh",
-        background: "#f4f7fb",
-        color: "#172033",
+        background: "#0b1326",
+        color: "#dae2fd",
         padding: "32px",
         fontFamily: "var(--font-body)",
       }}
@@ -321,7 +321,7 @@ export default function ProjectScenesPage() {
                 fontWeight: 700,
                 letterSpacing: "0.08em",
                 textTransform: "uppercase",
-                color: "#7c3aed",
+                color: "#c0c1ff",
                 marginBottom: "10px",
               }}
             >
@@ -329,7 +329,7 @@ export default function ProjectScenesPage() {
             </div>
 
             <h1 style={{ margin: 0, fontSize: "34px" }}>Editor de cenas</h1>
-            <p style={{ marginTop: "10px", color: "#5f6f89", maxWidth: "760px" }}>
+            <p style={{ marginTop: "10px", color: "#c7c4d7", maxWidth: "760px" }}>
               Quebre a história em cenas individuais e gere prompts específicos de imagem e vídeo.
             </p>
           </div>
@@ -355,13 +355,13 @@ export default function ProjectScenesPage() {
 
         <section style={{ ...panelStyle, display: "grid", gap: "10px" }}>
           <h2 style={{ marginTop: 0, marginBottom: 0 }}>{project?.title}</h2>
-          <div style={{ color: "#334155" }}>
+          <div style={{ color: "#dae2fd" }}>
             <strong>Status:</strong> {project?.status}
           </div>
-          <div style={{ color: "#334155" }}>
+          <div style={{ color: "#dae2fd" }}>
             <strong>Usuário:</strong> {user?.full_name} ({user?.email})
           </div>
-          <div style={{ color: "#5f6f89" }}>
+          <div style={{ color: "#c7c4d7" }}>
             {project?.description || "Sem descrição do projeto"}
           </div>
         </section>
@@ -370,7 +370,7 @@ export default function ProjectScenesPage() {
           <aside style={{ ...panelStyle, display: "grid", gap: "18px" }}>
             <div style={{ display: "grid", gap: "12px" }}>
               <h2 style={{ margin: 0 }}>Gerar timeline</h2>
-              <label style={{ display: "grid", gap: "8px", color: "#334155" }}>
+              <label style={{ display: "grid", gap: "8px", color: "#dae2fd" }}>
                 Quantidade de cenas
                 <input
                   type="number"
@@ -395,7 +395,7 @@ export default function ProjectScenesPage() {
                 style={{
                   ...buttonStyle,
                   border: "none",
-                  background: busyAction === "generate-scenes" ? "#94a3b8" : "#7c3aed",
+                  background: busyAction === "generate-scenes" ? "#908fa0" : "#c0c1ff",
                   color: "#ffffff",
                 }}
               >
@@ -451,7 +451,7 @@ export default function ProjectScenesPage() {
                   ...buttonStyle,
                   border: "1px solid rgba(143,255,194,0.22)",
                   background: "rgba(56,217,169,0.12)",
-                  color: "#047857",
+                  color: "#7ff0c4",
                 }}
               >
                 {busyAction === "gpt-images" ? "Gerando imagens..." : "Gerar imagens"}
@@ -462,12 +462,12 @@ export default function ProjectScenesPage() {
               style={{
                 display: "grid",
                 gap: "12px",
-                borderTop: "1px solid rgba(42,55,82,0.12)",
+                borderTop: "1px solid rgba(255,255,255,0.12)",
                 paddingTop: "18px",
               }}
             >
               <h2 style={{ margin: 0 }}>Modelo de imagem</h2>
-              <label style={{ display: "grid", gap: "8px", color: "#334155" }}>
+              <label style={{ display: "grid", gap: "8px", color: "#dae2fd" }}>
                 Modelo
                 <select
                   value={imageModel}
@@ -481,10 +481,10 @@ export default function ProjectScenesPage() {
                   ))}
                 </select>
               </label>
-              <div style={{ color: "#5f6f89", fontSize: "14px", lineHeight: 1.5 }}>
+              <div style={{ color: "#c7c4d7", fontSize: "14px", lineHeight: 1.5 }}>
                 {imageModelOptions.find((option) => option.value === imageModel)?.description}
               </div>
-              <label style={{ display: "grid", gap: "8px", color: "#334155" }}>
+              <label style={{ display: "grid", gap: "8px", color: "#dae2fd" }}>
                 Tamanho
                 <select
                   value={imageSize}
@@ -498,7 +498,7 @@ export default function ProjectScenesPage() {
                   ))}
                 </select>
               </label>
-              <label style={{ display: "grid", gap: "8px", color: "#334155" }}>
+              <label style={{ display: "grid", gap: "8px", color: "#dae2fd" }}>
                 Qualidade
                 <select
                   value={imageQuality}
@@ -551,7 +551,7 @@ export default function ProjectScenesPage() {
                 style={{
                   ...buttonStyle,
                   border: "none",
-                  background: saving ? "#94a3b8" : "#2563eb",
+                  background: saving ? "#908fa0" : "#8083ff",
                   color: "#ffffff",
                 }}
               >
@@ -565,10 +565,10 @@ export default function ProjectScenesPage() {
               <div
                 style={{
                   background: "rgba(255, 84, 89, 0.12)",
-                  color: "#ff8f93",
+                  color: "#ffb4ab",
                   border: "1px solid rgba(255, 84, 89, 0.24)",
                   padding: "12px 14px",
-                  borderRadius: "12px",
+                  borderRadius: "16px",
                 }}
               >
                 {error}
@@ -579,10 +579,10 @@ export default function ProjectScenesPage() {
               <div
                 style={{
                   background: "rgba(56, 217, 169, 0.12)",
-                  color: "#047857",
+                  color: "#7ff0c4",
                   border: "1px solid rgba(56, 217, 169, 0.24)",
                   padding: "12px 14px",
-                  borderRadius: "12px",
+                  borderRadius: "16px",
                 }}
               >
                 {success}
@@ -590,7 +590,7 @@ export default function ProjectScenesPage() {
             ) : null}
 
             {scenes.length === 0 ? (
-              <div style={{ ...panelStyle, color: "#5f6f89" }}>
+              <div style={{ ...panelStyle, color: "#c7c4d7" }}>
                 Nenhuma cena criada ainda. Gere cenas a partir da história ou adicione manualmente.
               </div>
             ) : (
@@ -612,7 +612,7 @@ export default function ProjectScenesPage() {
                       height: "48px",
                       borderRadius: "16px",
                       background: "rgba(200,168,255,0.14)",
-                      color: "#7c3aed",
+                      color: "#c0c1ff",
                       fontWeight: 800,
                       fontSize: "20px",
                     }}
@@ -642,7 +642,7 @@ export default function ProjectScenesPage() {
                     />
 
                     <div style={{ display: "flex", gap: "12px", flexWrap: "wrap", alignItems: "center" }}>
-                      <label style={{ display: "flex", gap: "8px", alignItems: "center", color: "#5f6f89" }}>
+                      <label style={{ display: "flex", gap: "8px", alignItems: "center", color: "#c7c4d7" }}>
                         Duração
                         <input
                           type="number"
@@ -660,7 +660,7 @@ export default function ProjectScenesPage() {
                       <button onClick={() => handleDeleteScene(scene)} style={buttonStyle}>
                         Excluir cena
                       </button>
-                      <span style={{ color: "#7a879c", fontSize: "14px" }}>status: {scene.status}</span>
+                      <span style={{ color: "#908fa0", fontSize: "14px" }}>status: {scene.status}</span>
                     </div>
 
                     <PromptBlock title="Prompt de imagem" value={scene.image_prompt} />
@@ -682,11 +682,11 @@ function GeneratedImage({ scene }: { scene: Scene }) {
     return (
       <div
         style={{
-          background: "#f8fbff",
-          border: "1px solid rgba(42,55,82,0.12)",
+          background: "rgba(6,14,32,0.58)",
+          border: "1px solid rgba(255,255,255,0.12)",
           borderRadius: "16px",
           padding: "16px",
-          color: "#5f6f89",
+          color: "#c7c4d7",
         }}
       >
         Imagem ainda não gerada para esta cena.
@@ -699,26 +699,26 @@ function GeneratedImage({ scene }: { scene: Scene }) {
   return (
     <div
       style={{
-        background: "#f8fbff",
-        border: "1px solid rgba(42,55,82,0.12)",
+        background: "rgba(6,14,32,0.58)",
+        border: "1px solid rgba(255,255,255,0.12)",
         borderRadius: "16px",
         padding: "16px",
         display: "grid",
         gap: "10px",
       }}
     >
-      <h3 style={{ margin: 0, color: "#047857" }}>Imagem gerada</h3>
+      <h3 style={{ margin: 0, color: "#7ff0c4" }}>Imagem gerada</h3>
       <img
         src={`data:${mimeType};base64,${scene.generated_image_base64}`}
         alt={`Imagem gerada para ${scene.title}`}
         style={{
           width: "100%",
-          borderRadius: "12px",
-          border: "1px solid rgba(42,55,82,0.12)",
+          borderRadius: "16px",
+          border: "1px solid rgba(255,255,255,0.12)",
           display: "block",
         }}
       />
-      <div style={{ color: "#7a879c", fontSize: "14px" }}>
+      <div style={{ color: "#908fa0", fontSize: "14px" }}>
         Modelo: {scene.image_generation_model || "n/d"} · Qualidade:{" "}
         {scene.image_generation_quality || "n/d"} · Tamanho: {scene.image_generation_size || "n/d"}
       </div>
@@ -730,14 +730,14 @@ function PromptBlock({ title, value }: { title: string; value: string | null }) 
   return (
     <div
       style={{
-        background: "#f8fbff",
-        border: "1px solid rgba(42,55,82,0.12)",
+        background: "rgba(6,14,32,0.58)",
+        border: "1px solid rgba(255,255,255,0.12)",
         borderRadius: "16px",
         padding: "16px",
       }}
     >
-      <h3 style={{ marginTop: 0, color: "#7c3aed" }}>{title}</h3>
-      <p style={{ margin: 0, color: "#334155", lineHeight: 1.6 }}>
+      <h3 style={{ marginTop: 0, color: "#c0c1ff" }}>{title}</h3>
+      <p style={{ margin: 0, color: "#dae2fd", lineHeight: 1.6 }}>
         {value || "Ainda não gerado para esta cena."}
       </p>
     </div>

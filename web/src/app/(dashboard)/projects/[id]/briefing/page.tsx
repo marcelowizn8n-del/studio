@@ -171,8 +171,8 @@ export default function ProjectBriefingPage() {
           minHeight: "100vh",
           display: "grid",
           placeItems: "center",
-          background: "#f4f7fb",
-          color: "#172033",
+          background: "#0b1326",
+          color: "#dae2fd",
           fontFamily: "var(--font-body)",
         }}
       >
@@ -185,8 +185,8 @@ export default function ProjectBriefingPage() {
     <main
       style={{
         minHeight: "100vh",
-        background: "#f4f7fb",
-        color: "#172033",
+        background: "#0b1326",
+        color: "#dae2fd",
         padding: "32px",
         fontFamily: "var(--font-body)",
       }}
@@ -216,7 +216,7 @@ export default function ProjectBriefingPage() {
                 fontWeight: 700,
                 letterSpacing: "0.08em",
                 textTransform: "uppercase",
-                color: "#2f6fdd",
+                color: "#c0c1ff",
                 marginBottom: "10px",
               }}
             >
@@ -225,7 +225,7 @@ export default function ProjectBriefingPage() {
 
             <h1 style={{ margin: 0, fontSize: "34px" }}>Briefing do projeto</h1>
 
-            <p style={{ marginTop: "10px", color: "#5f6f89", maxWidth: "760px" }}>
+            <p style={{ marginTop: "10px", color: "#c7c4d7", maxWidth: "760px" }}>
               Estruture a base criativa do projeto para depois gerar história, prompts de imagem e prompts de vídeo.
             </p>
           </div>
@@ -235,10 +235,10 @@ export default function ProjectBriefingPage() {
               href="/projects"
               style={{
                 textDecoration: "none",
-                color: "#172033",
-                background: "#ffffff",
-                border: "1px solid rgba(42,55,82,0.16)",
-                borderRadius: "12px",
+                color: "#dae2fd",
+                background: "rgba(255,255,255,0.055)",
+                border: "1px solid rgba(255,255,255,0.16)",
+                borderRadius: "16px",
                 padding: "12px 18px",
                 fontWeight: 700,
               }}
@@ -251,10 +251,10 @@ export default function ProjectBriefingPage() {
               style={{
                 height: "44px",
                 padding: "0 18px",
-                borderRadius: "12px",
-                border: "1px solid rgba(42,55,82,0.16)",
-                background: "#ffffff",
-                color: "#172033",
+                borderRadius: "16px",
+                border: "1px solid rgba(255,255,255,0.16)",
+                background: "rgba(255,255,255,0.055)",
+                color: "#dae2fd",
                 cursor: "pointer",
                 fontWeight: 700,
               }}
@@ -266,31 +266,31 @@ export default function ProjectBriefingPage() {
 
         <section
           style={{
-            background: "#ffffff",
-            border: "1px solid rgba(42,55,82,0.12)",
-            borderRadius: "20px",
+            background: "rgba(255,255,255,0.055)",
+            border: "1px solid rgba(255,255,255,0.12)",
+            borderRadius: "24px",
             padding: "24px",
             display: "grid",
             gap: "10px",
           }}
         >
           <h2 style={{ marginTop: 0, marginBottom: 0 }}>{project?.title}</h2>
-          <div style={{ color: "#334155" }}>
+          <div style={{ color: "#dae2fd" }}>
             <strong>Status:</strong> {project?.status}
           </div>
-          <div style={{ color: "#334155" }}>
+          <div style={{ color: "#dae2fd" }}>
             <strong>Usuário:</strong> {user?.full_name} ({user?.email})
           </div>
-          <div style={{ color: "#5f6f89" }}>
+          <div style={{ color: "#c7c4d7" }}>
             {project?.description || "Sem descrição do projeto"}
           </div>
         </section>
 
         <section
           style={{
-            background: "#ffffff",
-            border: "1px solid rgba(42,55,82,0.12)",
-            borderRadius: "20px",
+            background: "rgba(255,255,255,0.055)",
+            border: "1px solid rgba(255,255,255,0.12)",
+            borderRadius: "24px",
             padding: "24px",
           }}
         >
@@ -304,10 +304,10 @@ export default function ProjectBriefingPage() {
                 }
                 rows={4}
                 style={{
-                  borderRadius: "12px",
-                  border: "1px solid rgba(42,55,82,0.16)",
-                  background: "#f8fbff",
-                  color: "#172033",
+                  borderRadius: "16px",
+                  border: "1px solid rgba(255,255,255,0.16)",
+                  background: "rgba(6,14,32,0.58)",
+                  color: "#dae2fd",
                   padding: "14px",
                   outline: "none",
                   resize: "vertical",
@@ -332,10 +332,10 @@ export default function ProjectBriefingPage() {
                   }
                   style={{
                     height: "48px",
-                    borderRadius: "12px",
-                    border: "1px solid rgba(42,55,82,0.16)",
-                    background: "#f8fbff",
-                    color: "#172033",
+                    borderRadius: "16px",
+                    border: "1px solid rgba(255,255,255,0.16)",
+                    background: "rgba(6,14,32,0.58)",
+                    color: "#dae2fd",
                     padding: "0 14px",
                     outline: "none",
                   }}
@@ -352,10 +352,10 @@ export default function ProjectBriefingPage() {
                   }
                   style={{
                     height: "48px",
-                    borderRadius: "12px",
-                    border: "1px solid rgba(42,55,82,0.16)",
-                    background: "#f8fbff",
-                    color: "#172033",
+                    borderRadius: "16px",
+                    border: "1px solid rgba(255,255,255,0.16)",
+                    background: "rgba(6,14,32,0.58)",
+                    color: "#dae2fd",
                     padding: "0 14px",
                     outline: "none",
                   }}
@@ -372,10 +372,10 @@ export default function ProjectBriefingPage() {
                   }
                   style={{
                     height: "48px",
-                    borderRadius: "12px",
-                    border: "1px solid rgba(42,55,82,0.16)",
-                    background: "#f8fbff",
-                    color: "#172033",
+                    borderRadius: "16px",
+                    border: "1px solid rgba(255,255,255,0.16)",
+                    background: "rgba(6,14,32,0.58)",
+                    color: "#dae2fd",
                     padding: "0 14px",
                     outline: "none",
                   }}
@@ -392,10 +392,10 @@ export default function ProjectBriefingPage() {
                   }
                   style={{
                     height: "48px",
-                    borderRadius: "12px",
-                    border: "1px solid rgba(42,55,82,0.16)",
-                    background: "#f8fbff",
-                    color: "#172033",
+                    borderRadius: "16px",
+                    border: "1px solid rgba(255,255,255,0.16)",
+                    background: "rgba(6,14,32,0.58)",
+                    color: "#dae2fd",
                     padding: "0 14px",
                     outline: "none",
                   }}
@@ -412,10 +412,10 @@ export default function ProjectBriefingPage() {
                   }
                   style={{
                     height: "48px",
-                    borderRadius: "12px",
-                    border: "1px solid rgba(42,55,82,0.16)",
-                    background: "#f8fbff",
-                    color: "#172033",
+                    borderRadius: "16px",
+                    border: "1px solid rgba(255,255,255,0.16)",
+                    background: "rgba(6,14,32,0.58)",
+                    color: "#dae2fd",
                     padding: "0 14px",
                     outline: "none",
                   }}
@@ -435,10 +435,10 @@ export default function ProjectBriefingPage() {
                   }
                   style={{
                     height: "48px",
-                    borderRadius: "12px",
-                    border: "1px solid rgba(42,55,82,0.16)",
-                    background: "#f8fbff",
-                    color: "#172033",
+                    borderRadius: "16px",
+                    border: "1px solid rgba(255,255,255,0.16)",
+                    background: "rgba(6,14,32,0.58)",
+                    color: "#dae2fd",
                     padding: "0 14px",
                     outline: "none",
                   }}
@@ -455,10 +455,10 @@ export default function ProjectBriefingPage() {
                 }
                 rows={4}
                 style={{
-                  borderRadius: "12px",
-                  border: "1px solid rgba(42,55,82,0.16)",
-                  background: "#f8fbff",
-                  color: "#172033",
+                  borderRadius: "16px",
+                  border: "1px solid rgba(255,255,255,0.16)",
+                  background: "rgba(6,14,32,0.58)",
+                  color: "#dae2fd",
                   padding: "14px",
                   outline: "none",
                   resize: "vertical",
@@ -478,10 +478,10 @@ export default function ProjectBriefingPage() {
                 }
                 rows={4}
                 style={{
-                  borderRadius: "12px",
-                  border: "1px solid rgba(42,55,82,0.16)",
-                  background: "#f8fbff",
-                  color: "#172033",
+                  borderRadius: "16px",
+                  border: "1px solid rgba(255,255,255,0.16)",
+                  background: "rgba(6,14,32,0.58)",
+                  color: "#dae2fd",
                   padding: "14px",
                   outline: "none",
                   resize: "vertical",
@@ -498,10 +498,10 @@ export default function ProjectBriefingPage() {
                 }
                 rows={4}
                 style={{
-                  borderRadius: "12px",
-                  border: "1px solid rgba(42,55,82,0.16)",
-                  background: "#f8fbff",
-                  color: "#172033",
+                  borderRadius: "16px",
+                  border: "1px solid rgba(255,255,255,0.16)",
+                  background: "rgba(6,14,32,0.58)",
+                  color: "#dae2fd",
                   padding: "14px",
                   outline: "none",
                   resize: "vertical",
@@ -513,10 +513,10 @@ export default function ProjectBriefingPage() {
               <div
                 style={{
                   background: "rgba(255, 84, 89, 0.12)",
-                  color: "#ff8f93",
+                  color: "#ffb4ab",
                   border: "1px solid rgba(255, 84, 89, 0.24)",
                   padding: "12px 14px",
-                  borderRadius: "12px",
+                  borderRadius: "16px",
                   fontSize: "14px",
                 }}
               >
@@ -528,10 +528,10 @@ export default function ProjectBriefingPage() {
               <div
                 style={{
                   background: "rgba(56, 217, 169, 0.12)",
-                  color: "#047857",
+                  color: "#7ff0c4",
                   border: "1px solid rgba(56, 217, 169, 0.24)",
                   padding: "12px 14px",
-                  borderRadius: "12px",
+                  borderRadius: "16px",
                   fontSize: "14px",
                 }}
               >
@@ -544,9 +544,9 @@ export default function ProjectBriefingPage() {
               disabled={saving}
               style={{
                 height: "50px",
-                borderRadius: "12px",
+                borderRadius: "16px",
                 border: "none",
-                background: saving ? "#94a3b8" : "#2563eb",
+                background: saving ? "#908fa0" : "#8083ff",
                 color: "#ffffff",
                 fontWeight: 700,
                 cursor: saving ? "not-allowed" : "pointer",
