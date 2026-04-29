@@ -1,0 +1,131 @@
+story-agent-v1/
+├─ docker-compose.yml
+├─ .env.example
+├─ .gitignore
+├─ README_LOCAL_SETUP.md
+├─ PROJECT_STRUCTURE.txt
+├─ infra/
+│  └─ caddy/
+│     └─ Caddyfile
+├─ web/
+│  ├─ Dockerfile
+│  ├─ package.json
+│  ├─ next.config.js
+│  ├─ tsconfig.json
+│  ├─ next-env.d.ts
+│  ├─ public/
+│  │  └─ .gitkeep
+│  └─ src/
+│     ├─ app/
+│     │  ├─ layout.tsx
+│     │  ├─ globals.css
+│     │  ├─ (auth)/
+│     │  │  ├─ login/
+│     │  │  │  └─ page.tsx
+│     │  │  └─ register/
+│     │  │     └─ page.tsx
+│     │  ├─ (dashboard)/
+│     │  │  ├─ layout.tsx
+│     │  │  ├─ page.tsx
+│     │  │  └─ projects/
+│     │  │     ├─ page.tsx
+│     │  │     ├─ new/
+│     │  │     │  └─ page.tsx
+│     │  │     └─ [id]/
+│     │  │        ├─ page.tsx
+│     │  │        ├─ briefing/
+│     │  │        │  └─ page.tsx
+│     │  │        ├─ story/
+│     │  │        │  └─ page.tsx
+│     │  │        ├─ scenes/
+│     │  │        │  └─ page.tsx
+│     │  │        ├─ image-prompts/
+│     │  │        │  └─ page.tsx
+│     │  │        └─ video-prompts/
+│     │  │           └─ page.tsx
+│     │  └─ settings/
+│     │     └─ page.tsx
+│     ├─ components/
+│     │  ├─ auth/
+│     │  ├─ layout/
+│     │  ├─ projects/
+│     │  ├─ story/
+│     │  ├─ scenes/
+│     │  └─ prompts/
+│     ├─ hooks/
+│     └─ lib/
+│        ├─ api-client.ts
+│        ├─ auth.ts
+│        └─ utils.ts
+├─ api/
+│  ├─ Dockerfile
+│  ├─ requirements.txt
+│  ├─ alembic.ini
+│  ├─ alembic/
+│  │  ├─ env.py
+│  │  ├─ script.py.mako
+│  │  └─ versions/
+│  └─ app/
+│     ├─ __init__.py
+│     ├─ main.py
+│     ├─ core/
+│     │  ├─ __init__.py
+│     │  ├─ config.py
+│     │  ├─ security.py
+│     │  └─ dependencies.py
+│     ├─ db/
+│     │  ├─ __init__.py
+│     │  ├─ base.py
+│     │  ├─ session.py
+│     │  └─ init_db.py
+│     ├─ models/
+│     │  ├─ __init__.py
+│     │  ├─ user.py
+│     │  ├─ project.py
+│     │  ├─ story_bible.py
+│     │  ├─ character.py
+│     │  ├─ scene.py
+│     │  ├─ image_prompt.py
+│     │  ├─ video_prompt.py
+│     │  └─ revision.py
+│     ├─ schemas/
+│     │  ├─ __init__.py
+│     │  ├─ auth.py
+│     │  ├─ user.py
+│     │  ├─ project.py
+│     │  ├─ story.py
+│     │  ├─ scene.py
+│     │  ├─ image_prompt.py
+│     │  └─ video_prompt.py
+│     ├─ routers/
+│     │  ├─ __init__.py
+│     │  ├─ hello.py
+│     │  ├─ health.py
+│     │  ├─ auth.py
+│     │  ├─ users.py
+│     │  ├─ projects.py
+│     │  ├─ story.py
+│     │  ├─ scenes.py
+│     │  ├─ image_prompts.py
+│     │  └─ video_prompts.py
+│     ├─ services/
+│     │  ├─ __init__.py
+│     │  ├─ auth_service.py
+│     │  ├─ project_service.py
+│     │  ├─ story_service.py
+│     │  ├─ scene_service.py
+│     │  ├─ image_prompt_service.py
+│     │  ├─ video_prompt_service.py
+│     │  └─ versioning_service.py
+│     └─ utils/
+│        ├─ __init__.py
+│        ├─ logger.py
+│        └─ validators.py
+├─ scripts/
+│  ├─ deploy.sh
+│  ├─ backup_postgres.sh
+│  └─ healthcheck.sh
+└─ docs/
+   ├─ architecture.md
+   ├─ api-spec.md
+   └─ deploy-guide.md

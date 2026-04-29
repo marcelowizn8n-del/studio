@@ -1,0 +1,106 @@
+version: "3.9"
+
+services:
+  caddy:
+    image: caddy:2
+    container_name: story_caddy
+    restart: unless-stopped
+    ports:
+      - "80:80"
+      - "443:443"
+    volumes:
+      - ./infra/caddy/Caddyfile:/etc/caddy/Caddyfile:ro
+      - caddy_data:/data
+      - caddy_config:/config
+    depends_on:
+      - web
+      - api
+    networks:
+      - app_net
+
+  web:
+    build:
+      context: ./web
+      dockerfile: Dockerfile
+    container_name: story_web
+    restart: unless-stopped
+    env_file:
+      - .env
+    environment:
+      NODE_ENV: production
+      PORT: 3000
+      NEXT_PUBLIC_APP_URL: ${NEXT_PUBLIC_APP_URL:-https://app.seudominio.com}
+      NEXT_PUBLIC_API_URL: ${NEXT_PUBLIC_API_URL:-https://api.seudominio.com}
+      INTERNAL_API_URL: ${INTERNAL_API_URL:-http://api:8000}
+    expose:
+      - "3000"
+    depends_on:
+      - api
+    networks:
+      - app_net
+
+  api:
+    build:
+      context: ./api
+      dockerfile: Dockerfile
+    container_name: story_api
+    restart: unless-stopped
+    env_file:
+      - .env
+    environment:
+      APP_ENV: production
+      APP_DOMAIN: ${APP_DOMAIN:-seudominio.com}
+      API_CORS_ORIGINS: ${API_CORS_ORIGINS:-https://app.seudominio.com}
+      POSTGRES_HOST: postgres
+      POSTGRES_PORT: 5432
+      POSTGRES_DB: ${POSTGRES_DB:-story_agent}
+      POSTGRES_USER: ${POSTGRES_USER:-story_user}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
+      REDIS_URL: ${REDIS_URL:-redis://redis:6379/0}
+      SECRET_KEY: ${SECRET_KEY}
+      ACCESS_TOKEN_EXPIRE_MINUTES: ${ACCESS_TOKEN_EXPIRE_MINUTES:-15}
+      REFRESH_TOKEN_EXPIRE_DAYS: ${REFRESH_TOKEN_EXPIRE_DAYS:-30}
+    expose:
+      - "8000"
+    depends_on:
+      - postgres
+      - redis
+    networks:
+      - app_net
+
+  postgres:
+    image: postgres:16
+    container_name: story_postgres
+    restart: unless-stopped
+    environment:
+      POSTGRES_DB: ${POSTGRES_DB:-story_agent}
+      POSTGRES_USER: ${POSTGRES_USER:-story_user}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    expose:
+      - "5432"
+    networks:
+      - app_net
+
+  redis:
+    image: redis:7-alpine
+    container_name: story_redis
+    restart: unless-stopped
+    command: ["redis-server", "--appendonly", "yes"]
+    volumes:
+      - redis_data:/data
+    expose:
+      - "6379"
+    networks:
+      - app_net
+
+volumes:
+  caddy_data:
+  caddy_config:
+  postgres_data:
+  redis_data:
+
+networks:
+  app_net:
+    driver: bridge

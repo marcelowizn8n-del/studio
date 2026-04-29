@@ -1,0 +1,30 @@
+{
+	email admin@thinkingtools.io
+}
+
+studio.thinkingtools.io {
+	encode gzip zstd
+
+	reverse_proxy web:3000
+
+	header {
+		X-Frame-Options "SAMEORIGIN"
+		X-Content-Type-Options "nosniff"
+		Referrer-Policy "strict-origin-when-cross-origin"
+		Strict-Transport-Security "max-age=31536000; includeSubDomains; preload"
+	}
+}
+
+api.thinkingtools.io {
+	encode gzip zstd
+
+	reverse_proxy api:8000
+
+	header {
+		X-Frame-Options "DENY"
+		X-Content-Type-Options "nosniff"
+		Referrer-Policy "strict-origin-when-cross-origin"
+		Strict-Transport-Security "max-age=31536000; includeSubDomains; preload"
+	}
+}
+
