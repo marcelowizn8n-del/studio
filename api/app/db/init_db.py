@@ -1,14 +1,19 @@
-from sqlalchemy import text
-
 from app.db.base import Base
 from app.db.session import engine
-from app.models import Project, ProjectImagePrompt, ProjectScene, ProjectVideoPrompt  # noqa: F401
+
+# importar models para registrar metadata
+from app.models.user import User  # noqa: F401
+from app.models.project import Project  # noqa: F401
+from app.models.project_briefing import ProjectBriefing  # noqa: F401
+from app.models.project_story import ProjectStory  # noqa: F401
+from app.models.project_image_prompt import ProjectImagePrompt  # noqa: F401
+from app.models.project_video_prompt import ProjectVideoPrompt  # noqa: F401
 
 
-def check_database_connection() -> None:
-    with engine.connect() as connection:
-        connection.execute(text("SELECT 1"))
-
-
-def init_database() -> None:
+def init() -> None:
     Base.metadata.create_all(bind=engine)
+    print("tables_created")
+
+
+if __name__ == "__main__":
+    init()

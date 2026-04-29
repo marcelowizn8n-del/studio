@@ -1,26 +1,26 @@
+import os
+
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 
-from app.core.config import get_settings
-from app.db.init_db import init_database
+from app.routers.auth import router as auth_router
 from app.routers.health import router as health_router
 from app.routers.hello import router as hello_router
-from app.routers.image_prompts import router as image_prompts_router
-from app.routers.scenes import router as scenes_router
-from app.routers.video_prompts import router as video_prompts_router
+from app.routers.projects import router as projects_router
 
-settings = get_settings()
+APP_NAME = os.getenv("APP_NAME", "Story Agent API")
+APP_VERSION = os.getenv("APP_VERSION", "0.1.0")
+origins_env = os.getenv("API_CORS_ORIGINS", "https://studio.thinkingtools.io")
+ALLOWED_ORIGINS = [origin.strip() for origin in origins_env.split(",") if origin.strip()]
 
 app = FastAPI(
-    title=settings.APP_NAME,
-    version=settings.APP_VERSION,
-    docs_url="/docs",
-    redoc_url="/redoc",
+    title=APP_NAME,
+    version=APP_VERSION,
 )
 
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=settings.cors_origins_list,
+    allow_origins=ALLOWED_ORIGINS,
     allow_credentials=True,
     allow_methods=["*"],
     allow_headers=["*"],
@@ -28,21 +28,22 @@ app.add_middleware(
 
 app.include_router(health_router)
 app.include_router(hello_router)
-app.include_router(scenes_router)
-app.include_router(image_prompts_router)
-app.include_router(video_prompts_router)
-
-
-@app.on_event("startup")
-def startup() -> None:
-    init_database()
+app.include_router(auth_router)
+app.include_router(projects_router)
 
 
 @app.get("/")
-def read_root():
+def root():
     return {
-        "message": "Story Agent API is running",
-        "hello_endpoint": "/api/v1/hello",
-        "health_endpoint": "/api/v1/health",
-        "docs": "/docs",
+        "status": "ok",
+        "message": "Story Agent API online",
+        "docs_url": "/docs",
+        "health_url": "/api/v1/health",
+        "hello_url": "/api/v1/hello",
+        "auth_register_url": "/api/v1/auth/register",
+        "auth_login_url": "/api/v1/auth/login",
+        "auth_me_url": "/api/v1/auth/me",
+        "auth_refresh_url": "/api/v1/auth/refresh",
+        "auth_logout_url": "/api/v1/auth/logout",
+        "projects_url": "/api/v1/projects",
     }
