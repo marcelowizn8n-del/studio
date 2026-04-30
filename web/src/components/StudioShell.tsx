@@ -29,13 +29,16 @@ export function StudioShell({ active = "dashboard", children, onLogout }: Studio
           </Link>
         </div>
         <div className="mf-nav-actions">
-          <button className="mf-icon-btn" type="button" aria-label="Notificações">
-            ⌁
+          <Link className="mf-icon-btn" href="/settings" aria-label="Configurações" title="Configurações">
+            <svg aria-hidden="true" viewBox="0 0 24 24">
+              <path d="M12 15.5A3.5 3.5 0 1 0 12 8a3.5 3.5 0 0 0 0 7.5Z" />
+              <path d="M19.4 15a8 8 0 0 0 .1-1.2v-1.6l2-1.5-2-3.4-2.4 1a7.4 7.4 0 0 0-2.1-1.2L14.7 4H9.3L9 7.1a7.4 7.4 0 0 0-2.1 1.2l-2.4-1-2 3.4 2 1.5v1.6a8 8 0 0 0 .1 1.2l-2 1.5 2 3.4 2.4-1a7.4 7.4 0 0 0 2.1 1.2l.3 3.1h5.4l.3-3.1a7.4 7.4 0 0 0 2.1-1.2l2.4 1 2-3.4-2.2-1.5Z" />
+            </svg>
+          </Link>
+          <button className="mf-user-btn" onClick={onLogout} type="button" aria-label="Sair da conta" title="Sair da conta">
+            <span>MS</span>
+            Sair
           </button>
-          <button className="mf-icon-btn" type="button" aria-label="Configurações">
-            ⚙
-          </button>
-          <button className="mf-avatar" onClick={onLogout} type="button" aria-label="Sair" />
         </div>
       </nav>
       {children}

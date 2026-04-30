@@ -213,28 +213,63 @@ a:hover {
 
 .mf-nav-actions {
   display: flex;
-  gap: 18px;
+  gap: 12px;
   align-items: center;
 }
 
 .mf-icon-btn {
-  display: grid;
+  display: inline-grid;
   place-items: center;
   width: 40px;
   height: 40px;
-  border-radius: 14px;
-  border: 1px solid transparent;
-  background: transparent;
+  border-radius: 12px;
+  border: 1px solid rgba(255, 255, 255, 0.13);
+  background: rgba(255, 255, 255, 0.045);
   color: #aeb7cc;
+  transition: border-color 160ms ease, color 160ms ease, background 160ms ease;
 }
 
-.mf-avatar {
-  width: 40px;
-  height: 40px;
+.mf-icon-btn:hover {
+  border-color: rgba(174, 177, 255, 0.5);
+  background: rgba(128, 131, 255, 0.11);
+  color: #fff;
+}
+
+.mf-icon-btn svg {
+  width: 19px;
+  height: 19px;
+  fill: none;
+  stroke: currentColor;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+  stroke-width: 1.8;
+}
+
+.mf-user-btn {
+  min-height: 40px;
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
   border-radius: 999px;
   border: 1px solid rgba(128, 131, 255, 0.45);
-  background: radial-gradient(circle at 50% 35%, rgba(123, 208, 255, 0.45), rgba(6, 14, 32, 0.9) 62%);
+  background: rgba(255, 255, 255, 0.045);
+  color: #fff;
+  padding: 5px 14px 5px 5px;
+  font-weight: 800;
+  cursor: pointer;
   box-shadow: inset 0 0 22px rgba(123, 208, 255, 0.16);
+}
+
+.mf-user-btn span {
+  width: 30px;
+  height: 30px;
+  display: grid;
+  place-items: center;
+  border-radius: 999px;
+  background: radial-gradient(circle at 50% 35%, rgba(123, 208, 255, 0.45), rgba(6, 14, 32, 0.9) 62%);
+  color: #dfe8ff;
+  font-size: 11px;
+  letter-spacing: 0;
 }
 
 .mf-content {
