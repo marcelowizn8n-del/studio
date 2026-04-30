@@ -50,14 +50,23 @@ type ProjectSideNavProps = {
   projectTitle?: string;
   active: "briefing" | "story" | "gallery" | "timeline" | "assets" | "home";
   projectId: string;
+  portraitSrc?: string;
 };
 
-export function ProjectSideNav({ projectTitle, active, projectId }: ProjectSideNavProps) {
+export function ProjectSideNav({ projectTitle, active, projectId, portraitSrc }: ProjectSideNavProps) {
   const shortTitle = projectTitle || "Project Alpha";
 
   return (
     <aside className="mf-sidebar">
-      <div className="mf-sidebar-portrait" />
+      <div className="mf-sidebar-portrait">
+        {portraitSrc ? (
+          <img
+            src={portraitSrc}
+            alt="Imagem do projeto"
+            style={{ width: "100%", height: "100%", objectFit: "cover", borderRadius: "inherit" }}
+          />
+        ) : null}
+      </div>
       <div style={{ display: "flex", gap: "12px", alignItems: "center", margin: "18px 0 26px" }}>
         <strong style={{ color: "#fff", lineHeight: 1.1 }}>{shortTitle}</strong>
         <span style={{ color: "#8f9bb4", fontSize: "12px", textTransform: "uppercase" }}>Act I</span>

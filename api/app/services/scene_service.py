@@ -244,6 +244,76 @@ def generate_images_for_scenes(
     return list_project_scenes(db, project_id)
 
 
+def generate_image_for_scene(
+    db: Session,
+    project_id: int,
+    scene_id: int,
+    model: str | None = None,
+    size: str | None = None,
+    quality: str | None = None,
+) -> ProjectScene:
+    settings = get_settings()
+    if not settings.OPENAI_API_KEY:
+        raise ValueError("OPENAI_API_KEY não configurada")
+
+    scene = get_project_scene(db, project_id, scene_id)
+    if not scene:
+        raise ValueError("Cena não encontrada")
+
+    image_model = model or settings.OPENAI_IMAGE_MODEL
+    image_size = _normalize_image_size(image_model, size or settings.OPENAI_IMAGE_SIZE)
+    image_quality = _normalize_image_quality(image_model, quality or settings.OPENAI_IMAGE_QUALITY)
+    if image_model not in SUPPORTED_IMAGE_MODELS:
+        raise ValueError(f"Modelo de imagem não suportado: {image_model}")
+
+    try:
+        from openai import OpenAI, OpenAIError
+    except ImportError as exc:
+        raise ValueError("Dependência openai não instalada no backend") from exc
+
+    client = OpenAI(api_key=settings.OPENAI_API_KEY)
+    mime_type = _mime_type_for_format(settings.OPENAI_IMAGE_FORMAT)
+
+    prompt = scene.image_prompt or (
+        f"{scene.title}: {scene.description}. Frame cinematográfico 16:9, "
+        "luz expressiva, composição clara, atmosfera memorável, sem texto, sem logos."
+    )
+
+    try:
+        response = client.images.generate(**_build_image_generation_params(
+            model=image_model,
+            prompt=prompt,
+            size=image_size,
+            quality=image_quality,
+            output_format=settings.OPENAI_IMAGE_FORMAT,
+        ))
+    except OpenAIError as exc:
+        message = str(exc)
+        if "must be verified" in message and image_model.startswith("gpt-image"):
+            raise ValueError(
+                f"Sua organização OpenAI precisa ser verificada para usar o modelo {image_model}. "
+                "Verifique a organização nas configurações da OpenAI e tente novamente após a liberação."
+            ) from exc
+        raise ValueError(f"Erro da OpenAI ao gerar imagem: {message}") from exc
+
+    image = response.data[0] if response.data else None
+    image_base64 = getattr(image, "b64_json", None) if image else None
+    if not image_base64:
+        raise ValueError(f"OpenAI não retornou imagem para {scene.title}")
+
+    scene.generated_image_base64 = image_base64
+    scene.generated_image_mime_type = mime_type
+    scene.image_generation_model = image_model
+    scene.image_generation_size = image_size
+    scene.image_generation_quality = image_quality
+    scene.image_generation_status = "generated"
+    scene.status = "image_generated"
+    db.add(scene)
+    db.commit()
+    db.refresh(scene)
+    return scene
+
+
 def normalize_scene_positions(db: Session, project_id: int) -> None:
     scenes = list_project_scenes(db, project_id)
     for index, scene in enumerate(scenes, start=1):

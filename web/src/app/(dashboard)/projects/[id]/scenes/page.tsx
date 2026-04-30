@@ -100,6 +100,7 @@ export default function ProjectScenesPage() {
   const [loading, setLoading] = useState(true);
   const [saving, setSaving] = useState(false);
   const [busyAction, setBusyAction] = useState("");
+  const [busySceneId, setBusySceneId] = useState<number | null>(null);
   const [error, setError] = useState("");
   const [success, setSuccess] = useState("");
 
@@ -252,6 +253,36 @@ export default function ProjectScenesPage() {
     }
   }
 
+  async function handleRegenerateSceneImage(scene: Scene) {
+    setBusySceneId(scene.id);
+    setError("");
+    setSuccess("");
+
+    try {
+      const response = await fetch(`/api/projects/${projectId}/scenes/${scene.id}/generate-image`, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ model: imageModel, size: imageSize, quality: imageQuality }),
+      });
+
+      const data = await response.json().catch(() => ({ detail: "Falha ao processar resposta" }));
+
+      if (!response.ok) {
+        setError(data.detail || "Não foi possível gerar a imagem");
+        return;
+      }
+
+      setScenes((current) =>
+        current.map((item) => (item.id === data.id ? data : item))
+      );
+      setSuccess(`Imagem da ${scene.title} regenerada`);
+    } catch {
+      setError("Erro inesperado ao regenerar a imagem");
+    } finally {
+      setBusySceneId(null);
+    }
+  }
+
   async function handleDeleteScene(scene: Scene) {
     const confirmed = window.confirm("Excluir esta cena?");
     if (!confirmed) return;
@@ -303,7 +334,14 @@ export default function ProjectScenesPage() {
   return (
     <StudioShell active="scenes" onLogout={handleLogout}>
       <div className="mf-with-sidebar">
-        <ProjectSideNav active="timeline" projectId={projectId} projectTitle={project?.title} />
+        <ProjectSideNav
+          active="timeline"
+          projectId={projectId}
+          projectTitle={project?.title}
+          portraitSrc={scenes.find((s) => s.generated_image_base64)
+            ? `data:${scenes.find((s) => s.generated_image_base64)!.generated_image_mime_type || "image/png"};base64,${scenes.find((s) => s.generated_image_base64)!.generated_image_base64}`
+            : undefined}
+        />
 
         <div className="mf-content" style={{ padding: 0 }}>
           <header className="mf-scene-header">
@@ -471,6 +509,15 @@ export default function ProjectScenesPage() {
                         }}
                       />
                       <div style={{ display: "flex", gap: "10px" }}>
+                        <button
+                          className="mf-mini-btn"
+                          type="button"
+                          onClick={() => handleRegenerateSceneImage(scene)}
+                          disabled={busySceneId === scene.id}
+                          title="Regenerar imagem desta cena"
+                        >
+                          {busySceneId === scene.id ? "..." : "↺"}
+                        </button>
                         <button className="mf-mini-btn" type="button" onClick={() => handleDeleteScene(scene)} title="Excluir cena">
                           ⋮
                         </button>

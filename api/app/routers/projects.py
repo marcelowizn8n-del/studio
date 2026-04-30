@@ -42,6 +42,7 @@ from app.services.project_video_prompt_service import (
 )
 from app.services.scene_service import (
     create_project_scene,
+    generate_image_for_scene,
     generate_images_for_scenes,
     delete_project_scene,
     generate_image_prompts_for_scenes,
@@ -360,6 +361,31 @@ def api_generate_project_scene_images(
             db,
             project_id=project_id,
             force_regenerate=payload.force_regenerate,
+            model=payload.model,
+            size=payload.size,
+            quality=payload.quality,
+        )
+    except ValueError as exc:
+        raise HTTPException(status_code=400, detail=str(exc))
+
+
+@router.post("/{project_id}/scenes/{scene_id}/generate-image", response_model=ProjectSceneOut)
+def api_generate_project_scene_image(
+    project_id: int,
+    scene_id: int,
+    payload: ProjectSceneImageGenerateRequest,
+    db: Session = Depends(get_db),
+    current_user: User = Depends(get_current_user),
+) -> ProjectSceneOut:
+    project = get_project_by_id(db, project_id, current_user.id)
+    if not project:
+        raise HTTPException(status_code=404, detail="Projeto não encontrado")
+
+    try:
+        return generate_image_for_scene(
+            db,
+            project_id=project_id,
+            scene_id=scene_id,
             model=payload.model,
             size=payload.size,
             quality=payload.quality,
