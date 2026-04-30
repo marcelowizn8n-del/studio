@@ -316,9 +316,6 @@ export default function ProjectScenesPage() {
               </p>
             </div>
             <div style={{ display: "flex", gap: "16px", flexWrap: "wrap" }}>
-              <button className="mf-secondary" type="button">
-                ▷ Preview Sequence
-              </button>
               <button
                 className="mf-primary"
                 type="button"
@@ -474,9 +471,6 @@ export default function ProjectScenesPage() {
                         }}
                       />
                       <div style={{ display: "flex", gap: "10px" }}>
-                        <button className="mf-mini-btn" type="button" title="Salvar alterações">
-                          ✎
-                        </button>
                         <button className="mf-mini-btn" type="button" onClick={() => handleDeleteScene(scene)} title="Excluir cena">
                           ⋮
                         </button>

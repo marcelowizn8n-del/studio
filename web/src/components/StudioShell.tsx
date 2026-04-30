@@ -48,7 +48,7 @@ export function StudioShell({ active = "dashboard", children, onLogout }: Studio
 
 type ProjectSideNavProps = {
   projectTitle?: string;
-  active: "briefing" | "gallery" | "timeline" | "assets" | "home";
+  active: "briefing" | "story" | "gallery" | "timeline" | "assets" | "home";
   projectId: string;
 };
 
@@ -68,6 +68,9 @@ export function ProjectSideNav({ projectTitle, active, projectId }: ProjectSideN
         </Link>
         <Link className={`mf-side-item ${active === "briefing" ? "active" : ""}`} href={`/projects/${projectId}/briefing`}>
           ▣ Briefing
+        </Link>
+        <Link className={`mf-side-item ${active === "story" ? "active" : ""}`} href={`/projects/${projectId}/story`}>
+          ▤ Story
         </Link>
         <Link className={`mf-side-item ${active === "gallery" ? "active" : ""}`} href={`/projects/${projectId}/image-prompts`}>
           ▧ Gallery

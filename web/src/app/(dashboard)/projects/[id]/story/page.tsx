@@ -1,8 +1,8 @@
 "use client";
 
-import Link from "next/link";
 import { useEffect, useState } from "react";
 import { useParams, useRouter } from "next/navigation";
+import { ProjectSideNav, StudioFooter, StudioShell } from "@/components/StudioShell";
 
 type User = {
   id: number;
@@ -70,19 +70,17 @@ export default function ProjectStoryPage() {
         return;
       }
 
-      if (!storyResponse.ok) {
-        setError("Não foi possível carregar a história");
-        setLoading(false);
-        return;
-      }
-
       const meData = await meResponse.json();
       const projectData = await projectResponse.json();
-      const storyData = await storyResponse.json();
 
       setUser(meData);
       setProject(projectData);
-      setStory(storyData);
+
+      if (storyResponse.ok) {
+        setStory(await storyResponse.json());
+      } else if (storyResponse.status !== 404) {
+        setError("Erro ao carregar a história");
+      }
     } catch (err) {
       setError("Erro inesperado ao carregar a história");
     } finally {
@@ -130,10 +128,7 @@ export default function ProjectStoryPage() {
   }
 
   async function handleLogout() {
-    await fetch("/api/auth/logout", {
-      method: "POST",
-    });
-
+    await fetch("/api/auth/logout", { method: "POST" });
     router.push("/login");
     router.refresh();
   }
@@ -156,110 +151,11 @@ export default function ProjectStoryPage() {
   }
 
   return (
-    <main
-      style={{
-        minHeight: "100vh",
-        background: "#0b1326",
-        color: "#dae2fd",
-        padding: "32px",
-        fontFamily: "var(--font-body)",
-      }}
-    >
-      <div
-        style={{
-          maxWidth: "1100px",
-          margin: "0 auto",
-          display: "grid",
-          gap: "24px",
-        }}
-      >
-        <header
-          style={{
-            display: "flex",
-            justifyContent: "space-between",
-            alignItems: "center",
-            gap: "16px",
-            flexWrap: "wrap",
-          }}
-        >
-          <div>
-            <div
-              style={{
-                display: "inline-block",
-                fontSize: "12px",
-                fontWeight: 700,
-                letterSpacing: "0.08em",
-                textTransform: "uppercase",
-                color: "#c0c1ff",
-                marginBottom: "10px",
-              }}
-            >
-              Studio ThinkingTools
-            </div>
+    <StudioShell active="projects" onLogout={handleLogout}>
+      <div className="mf-with-sidebar">
+        <ProjectSideNav active="story" projectId={projectId} projectTitle={project?.title} />
 
-            <h1 style={{ margin: 0, fontSize: "34px" }}>História do projeto</h1>
-
-            <p style={{ marginTop: "10px", color: "#c7c4d7", maxWidth: "760px" }}>
-              Gere uma história base a partir do briefing já salvo no projeto.
-            </p>
-          </div>
-
-          <div style={{ display: "flex", gap: "12px", flexWrap: "wrap" }}>
-            <Link
-              href={`/projects/${projectId}/briefing`}
-              style={{
-                textDecoration: "none",
-                color: "#dae2fd",
-                background: "rgba(255,255,255,0.055)",
-                border: "1px solid rgba(255,255,255,0.16)",
-                borderRadius: "16px",
-                padding: "12px 18px",
-                fontWeight: 700,
-              }}
-            >
-              Voltar ao briefing
-            </Link>
-
-            <button
-              onClick={handleLogout}
-              style={{
-                height: "44px",
-                padding: "0 18px",
-                borderRadius: "16px",
-                border: "1px solid rgba(255,255,255,0.16)",
-                background: "rgba(255,255,255,0.055)",
-                color: "#dae2fd",
-                cursor: "pointer",
-                fontWeight: 700,
-              }}
-            >
-              Sair
-            </button>
-          </div>
-        </header>
-
-        <section
-          style={{
-            background: "rgba(255,255,255,0.055)",
-            border: "1px solid rgba(255,255,255,0.12)",
-            borderRadius: "24px",
-            padding: "24px",
-            display: "grid",
-            gap: "10px",
-          }}
-        >
-          <h2 style={{ marginTop: 0, marginBottom: 0 }}>{project?.title}</h2>
-          <div style={{ color: "#dae2fd" }}>
-            <strong>Status:</strong> {project?.status}
-          </div>
-          <div style={{ color: "#dae2fd" }}>
-            <strong>Usuário:</strong> {user?.full_name} ({user?.email})
-          </div>
-          <div style={{ color: "#c7c4d7" }}>
-            {project?.description || "Sem descrição do projeto"}
-          </div>
-        </section>
-
+        <div className="mf-content" style={{ padding: "32px", maxWidth: "860px" }}>
         <section
           style={{
             background: "rgba(255,255,255,0.055)",
@@ -268,6 +164,7 @@ export default function ProjectStoryPage() {
             padding: "24px",
             display: "grid",
             gap: "16px",
+            marginBottom: "24px",
           }}
         >
           <div style={{ display: "flex", justifyContent: "space-between", gap: "16px", flexWrap: "wrap" }}>
@@ -433,7 +330,9 @@ export default function ProjectStoryPage() {
             </div>
           )}
         </section>
+        </div>
       </div>
-    </main>
+      <StudioFooter />
+    </StudioShell>
   );
 }

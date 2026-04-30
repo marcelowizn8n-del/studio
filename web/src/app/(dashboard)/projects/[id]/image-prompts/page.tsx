@@ -72,19 +72,17 @@ export default function ProjectImagePromptsPage() {
         return;
       }
 
-      if (!promptsResponse.ok) {
-        setError("Não foi possível carregar os prompts de imagem");
-        setLoading(false);
-        return;
-      }
-
       const meData = await meResponse.json();
       const projectData = await projectResponse.json();
-      const promptsData = await promptsResponse.json();
 
       setUser(meData);
       setProject(projectData);
-      setImagePrompts(promptsData);
+
+      if (promptsResponse.ok) {
+        setImagePrompts(await promptsResponse.json());
+      } else if (promptsResponse.status !== 404) {
+        setError("Erro ao carregar os prompts de imagem");
+      }
     } catch (err) {
       setError("Erro inesperado ao carregar os prompts de imagem");
     } finally {
