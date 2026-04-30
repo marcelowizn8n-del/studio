@@ -17,6 +17,8 @@ SUPPORTED_IMAGE_MODELS = {
 }
 GPT_IMAGE_QUALITIES = {"low", "medium", "high"}
 DALL_E_3_QUALITIES = {"standard", "hd"}
+GPT_IMAGE_SIZES = {"1024x1024", "1536x1024", "1024x1536"}
+DALL_E_3_SIZES = {"1024x1024", "1792x1024", "1024x1792"}
 
 
 def list_project_scenes(db: Session, project_id: int) -> list[ProjectScene]:
@@ -181,7 +183,7 @@ def generate_images_for_scenes(
         raise ValueError("OPENAI_API_KEY não configurada")
 
     image_model = model or settings.OPENAI_IMAGE_MODEL
-    image_size = size or settings.OPENAI_IMAGE_SIZE
+    image_size = _normalize_image_size(image_model, size or settings.OPENAI_IMAGE_SIZE)
     image_quality = _normalize_image_quality(image_model, quality or settings.OPENAI_IMAGE_QUALITY)
     if image_model not in SUPPORTED_IMAGE_MODELS:
         raise ValueError(f"Modelo de imagem não suportado: {image_model}")
@@ -293,6 +295,26 @@ def _normalize_image_quality(model: str, quality: str) -> str:
     if normalized == "hd":
         return "high"
     return "medium"
+
+
+def _normalize_image_size(model: str, size: str) -> str:
+    normalized = size.lower().strip()
+    if model == "dall-e-3":
+        if normalized in DALL_E_3_SIZES:
+            return normalized
+        if normalized == "1536x1024":
+            return "1792x1024"
+        if normalized == "1024x1536":
+            return "1024x1792"
+        return "1024x1024"
+
+    if normalized in GPT_IMAGE_SIZES:
+        return normalized
+    if normalized == "1792x1024":
+        return "1536x1024"
+    if normalized == "1024x1792":
+        return "1024x1536"
+    return "1536x1024"
 
 
 def _build_image_generation_params(

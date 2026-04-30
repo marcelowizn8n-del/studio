@@ -51,7 +51,8 @@ const imageModelOptions = [
   { value: "dall-e-3", label: "DALL-E 3", description: "Fallback estável para geração por prompt" },
 ];
 
-const imageSizeOptions = ["1024x1024", "1536x1024", "1024x1536"];
+const gptImageSizeOptions = ["1024x1024", "1536x1024", "1024x1536"];
+const dallEImageSizeOptions = ["1024x1024", "1792x1024", "1024x1792"];
 const gptImageQualityOptions = ["low", "medium", "high"];
 const dallEQualityOptions = ["standard", "hd"];
 
@@ -152,7 +153,13 @@ export default function ProjectScenesPage() {
     if (imageModel !== "dall-e-3" && !gptImageQualityOptions.includes(imageQuality)) {
       setImageQuality("medium");
     }
-  }, [imageModel, imageQuality]);
+    if (imageModel === "dall-e-3" && !dallEImageSizeOptions.includes(imageSize)) {
+      setImageSize(imageSize === "1024x1536" ? "1024x1792" : "1792x1024");
+    }
+    if (imageModel !== "dall-e-3" && !gptImageSizeOptions.includes(imageSize)) {
+      setImageSize(imageSize === "1024x1792" ? "1024x1536" : "1536x1024");
+    }
+  }, [imageModel, imageQuality, imageSize]);
 
   async function runSceneAction(
     actionName: string,
@@ -418,7 +425,7 @@ export default function ProjectScenesPage() {
                 <label>
                   <span className="mf-label">Tamanho</span>
                   <select className="mf-field" value={imageSize} onChange={(event) => setImageSize(event.target.value)}>
-                    {imageSizeOptions.map((option) => (
+                    {(imageModel === "dall-e-3" ? dallEImageSizeOptions : gptImageSizeOptions).map((option) => (
                       <option key={option} value={option}>
                         {option}
                       </option>
