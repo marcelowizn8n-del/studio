@@ -23,6 +23,18 @@
   box-sizing: border-box;
 }
 
+main,
+section,
+article,
+aside,
+form,
+label,
+div,
+header,
+nav {
+  min-width: 0;
+}
+
 html, body {
   margin: 0;
   padding: 0;
@@ -135,6 +147,27 @@ body::after {
 h1, h2, h3 {
   font-family: var(--font-display);
   letter-spacing: 0;
+  overflow-wrap: anywhere;
+}
+
+p,
+span,
+strong,
+a,
+button,
+input,
+textarea,
+select {
+  min-width: 0;
+}
+
+p,
+input,
+textarea,
+.mf-info-value,
+.mf-scene-prompt p {
+  overflow-wrap: anywhere;
+  word-break: break-word;
 }
 
 input,
@@ -275,6 +308,7 @@ a:hover {
 .mf-content {
   max-width: 1220px;
   margin: 0 auto;
+  width: 100%;
 }
 
 .mf-with-sidebar {
@@ -335,6 +369,7 @@ a:hover {
   border-radius: 32px;
   backdrop-filter: blur(22px);
   box-shadow: 0 26px 80px rgba(0, 0, 0, 0.22), 0 0 42px rgba(99, 102, 241, 0.1);
+  min-width: 0;
 }
 
 .mf-hero {
@@ -370,6 +405,7 @@ a:hover {
   color: #c7c4d7;
   font-size: 20px;
   line-height: 1.55;
+  max-width: 100%;
 }
 
 .mf-hero-art {
@@ -410,6 +446,123 @@ a:hover {
   background: rgba(255, 255, 255, 0.06);
   color: #fff;
   font-weight: 700;
+  white-space: nowrap;
+}
+
+.mf-dashboard-grid {
+  display: grid;
+  grid-template-columns: minmax(0, 1.45fr) minmax(300px, 0.9fr);
+  gap: 34px;
+  align-items: stretch;
+}
+
+.mf-dashboard-card {
+  padding: 34px;
+}
+
+.mf-session-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: 18px;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+  padding-bottom: 24px;
+}
+
+.mf-session-header h2,
+.mf-card-title {
+  margin: 0;
+  color: #fff;
+  font-size: clamp(24px, 2.3vw, 30px);
+  line-height: 1.15;
+}
+
+.mf-card-title {
+  margin-bottom: 28px;
+}
+
+.mf-status-pill {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 34px;
+  flex: 0 0 auto;
+  padding: 0 18px;
+  border-radius: 999px;
+  border: 1px solid rgba(127, 240, 196, 0.22);
+  background: rgba(127, 240, 196, 0.1);
+  color: #7ff0c4;
+  font-weight: 900;
+}
+
+.mf-info-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 34px;
+  margin-top: 34px;
+}
+
+.mf-info-item {
+  min-width: 0;
+}
+
+.mf-info-value {
+  margin-top: 12px;
+  max-width: 100%;
+  color: #fff;
+  font-size: clamp(18px, 2vw, 22px);
+  line-height: 1.22;
+  font-weight: 600;
+}
+
+.mf-info-value.accent {
+  color: #aeb1ff;
+  font-weight: 800;
+}
+
+.mf-shortcut {
+  min-height: 78px;
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto;
+  align-items: center;
+  gap: 16px;
+  padding: 14px 20px;
+  border-radius: 18px;
+  background: rgba(255, 255, 255, 0.055);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  color: #fff;
+  font-weight: 800;
+  font-size: clamp(17px, 1.9vw, 20px);
+}
+
+.mf-shortcut-main {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  min-width: 0;
+}
+
+.mf-shortcut-icon {
+  width: 48px;
+  height: 48px;
+  flex: 0 0 48px;
+  border-radius: 14px;
+  background: color-mix(in srgb, var(--shortcut-tone) 18%, transparent);
+  color: var(--shortcut-tone);
+  display: grid;
+  place-items: center;
+}
+
+.mf-shortcut-title {
+  min-width: 0;
+  overflow-wrap: anywhere;
+  line-height: 1.2;
+}
+
+.mf-shortcut-arrow {
+  color: #758198;
+  flex: 0 0 auto;
+  padding-left: 6px;
 }
 
 .mf-primary {
@@ -805,6 +958,7 @@ a:hover {
     font-size: 36px;
   }
 
+  .mf-dashboard-grid,
   .mf-briefing-grid,
   .mf-two-col,
   .mf-prompt-grid,
@@ -820,5 +974,31 @@ a:hover {
   .mf-timeline::before,
   .mf-timeline-dot {
     display: none;
+  }
+}
+
+@media (max-width: 720px) {
+  .mf-shell {
+    padding: 16px 14px 72px;
+  }
+
+  .mf-hero-copy,
+  .mf-dashboard-card,
+  .mf-form-card {
+    padding: 24px;
+  }
+
+  .mf-info-grid {
+    grid-template-columns: 1fr;
+    gap: 24px;
+  }
+
+  .mf-session-header {
+    align-items: flex-start;
+    flex-direction: column;
+  }
+
+  .mf-shortcut {
+    padding: 14px;
   }
 }

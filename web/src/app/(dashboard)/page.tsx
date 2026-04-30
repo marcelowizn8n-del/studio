@@ -82,15 +82,15 @@ export default function DashboardPage() {
           <div className="mf-hero-art" />
         </section>
 
-        <section style={{ display: "grid", gridTemplateColumns: "minmax(0, 2fr) minmax(320px, 1fr)", gap: "34px" }}>
-          <div className="mf-glass" style={{ padding: "34px" }}>
-            <div style={{ display: "flex", justifyContent: "space-between", borderBottom: "1px solid rgba(255,255,255,0.06)", paddingBottom: "24px" }}>
-              <h2 style={{ margin: 0, color: "#fff", fontSize: "30px" }}>Detalhes da Sessão</h2>
-              <span className="mf-pill" style={{ minHeight: "32px", color: "#7ff0c4", background: "rgba(127,240,196,0.1)" }}>
+        <section className="mf-dashboard-grid">
+          <div className="mf-glass mf-dashboard-card">
+            <div className="mf-session-header">
+              <h2>Detalhes da Sessão</h2>
+              <span className="mf-status-pill">
                 ATIVA
               </span>
             </div>
-            <div style={{ display: "grid", gridTemplateColumns: "repeat(2, minmax(0, 1fr))", gap: "38px", marginTop: "34px" }}>
+            <div className="mf-info-grid">
               <Info label="ID da Sessão" value={`MF-${String(user?.id || 0).padStart(4, "0")}-001X`} />
               <Info label="Nome de Usuário" value={user?.full_name || "Marcelo"} />
               <Info label="E-mail de Acesso" value={user?.email || ""} />
@@ -98,8 +98,8 @@ export default function DashboardPage() {
             </div>
           </div>
 
-          <div className="mf-glass" style={{ padding: "34px" }}>
-            <h2 style={{ marginTop: 0, color: "#fff", fontSize: "30px" }}>Atalhos</h2>
+          <div className="mf-glass mf-dashboard-card">
+            <h2 className="mf-card-title">Atalhos</h2>
             <div style={{ display: "grid", gap: "20px" }}>
               <Shortcut href="/projects" title="Projetos" tone="#8083ff" />
               <Shortcut href="/settings" title="Configurações" tone="#ddb7ff" />
@@ -115,9 +115,9 @@ export default function DashboardPage() {
 
 function Info({ label, value, accent = false }: { label: string; value: string; accent?: boolean }) {
   return (
-    <div>
+    <div className="mf-info-item">
       <div className="mf-label">{label}</div>
-      <div style={{ marginTop: "12px", color: accent ? "#aeb1ff" : "#fff", fontSize: "22px", fontWeight: accent ? 800 : 500 }}>
+      <div className={`mf-info-value ${accent ? "accent" : ""}`}>
         {value}
       </div>
     </div>
@@ -127,27 +127,17 @@ function Info({ label, value, accent = false }: { label: string; value: string; 
 function Shortcut({ href, title, tone }: { href: string; title: string; tone: string }) {
   return (
     <Link
+      className="mf-shortcut"
       href={href}
       style={{
-        minHeight: "78px",
-        display: "flex",
-        alignItems: "center",
-        justifyContent: "space-between",
-        gap: "16px",
-        padding: "0 24px",
-        borderRadius: "18px",
-        background: "rgba(255,255,255,0.055)",
-        border: "1px solid rgba(255,255,255,0.08)",
-        color: "#fff",
-        fontWeight: 800,
-        fontSize: "20px",
+        ["--shortcut-tone" as string]: tone,
       }}
     >
-      <span style={{ display: "flex", alignItems: "center", gap: "18px" }}>
-        <span style={{ width: "48px", height: "48px", borderRadius: "14px", background: `${tone}22`, color: tone, display: "grid", placeItems: "center" }}>▱</span>
-        {title}
+      <span className="mf-shortcut-main">
+        <span className="mf-shortcut-icon">▱</span>
+        <span className="mf-shortcut-title">{title}</span>
       </span>
-      <span style={{ color: "#758198" }}>›</span>
+      <span className="mf-shortcut-arrow">›</span>
     </Link>
   );
 }
