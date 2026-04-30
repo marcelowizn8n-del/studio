@@ -3,6 +3,7 @@
 import Link from "next/link";
 import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
+import { StudioFooter, StudioShell } from "@/components/StudioShell";
 
 type User = {
   id: number;
@@ -185,94 +186,32 @@ export default function ProjectsPage() {
   }
 
   return (
-    <main
-      style={{
-        minHeight: "100vh",
-        background: "#0b1326",
-        color: "#dae2fd",
-        padding: "32px",
-        fontFamily: "var(--font-body)",
-      }}
-    >
-      <div
-        style={{
-          maxWidth: "1200px",
-          margin: "0 auto",
-          display: "grid",
-          gap: "24px",
-        }}
-      >
-        <header
-          style={{
-            display: "flex",
-            justifyContent: "space-between",
-            alignItems: "center",
-            gap: "16px",
-            flexWrap: "wrap",
-          }}
-        >
-          <div>
-            <div
-              style={{
-                display: "inline-block",
-                fontSize: "12px",
-                fontWeight: 700,
-                letterSpacing: "0.08em",
-                textTransform: "uppercase",
-                color: "#c0c1ff",
-                marginBottom: "10px",
-              }}
-            >
-              Studio ThinkingTools
-            </div>
-
-            <h1 style={{ margin: 0, fontSize: "34px" }}>Projetos</h1>
-
-            <p style={{ marginTop: "10px", color: "#c7c4d7", maxWidth: "760px" }}>
-              Cada projeto pode receber briefing, história, prompts de imagem e prompts de vídeo.
+    <StudioShell active="projects" onLogout={handleLogout}>
+      <div className="mf-content">
+        <section className="mf-glass mf-hero">
+          <div className="mf-hero-copy">
+            <div className="mf-kicker">Projetos criativos</div>
+            <h1 className="mf-title">Projetos</h1>
+            <p className="mf-subtitle">
+              Organize histórias, cenas, prompts e imagens em uma biblioteca visual com fluxo de produção completo.
             </p>
+            <div style={{ display: "flex", gap: "16px", flexWrap: "wrap", marginTop: "28px" }}>
+              <Link className="mf-primary" href="/" style={{ display: "inline-flex", alignItems: "center" }}>
+                Dashboard
+              </Link>
+              <span className="mf-pill">{projects.length} projetos</span>
+            </div>
           </div>
+          <div className="mf-hero-art" />
+        </section>
 
-          <div style={{ display: "flex", gap: "12px", flexWrap: "wrap" }}>
-            <Link
-              href="/"
-              style={{
-                textDecoration: "none",
-                color: "#dae2fd",
-                background: "rgba(255,255,255,0.055)",
-                border: "1px solid rgba(255,255,255,0.16)",
-                borderRadius: "16px",
-                padding: "12px 18px",
-                fontWeight: 700,
-              }}
-            >
-              Voltar ao painel
-            </Link>
-
-            <button
-              onClick={handleLogout}
-              style={{
-                height: "44px",
-                padding: "0 18px",
-                borderRadius: "16px",
-                border: "1px solid rgba(255,255,255,0.16)",
-                background: "rgba(255,255,255,0.055)",
-                color: "#dae2fd",
-                cursor: "pointer",
-                fontWeight: 700,
-              }}
-            >
-              Sair
-            </button>
-          </div>
-        </header>
+        <div style={{ display: "grid", gap: "26px", marginTop: "48px" }}>
 
         <section
+          className="mf-glass"
           style={{
-            background: "rgba(255,255,255,0.055)",
-            border: "1px solid rgba(255,255,255,0.12)",
             borderRadius: "24px",
-            padding: "24px",
+            padding: "30px",
           }}
         >
           <h2 style={{ marginTop: 0 }}>
@@ -293,15 +232,7 @@ export default function ProjectsPage() {
                   setForm((current) => ({ ...current, title: event.target.value }))
                 }
                 required
-                style={{
-                  height: "48px",
-                  borderRadius: "16px",
-                  border: "1px solid rgba(255,255,255,0.16)",
-                  background: "rgba(6,14,32,0.58)",
-                  color: "#dae2fd",
-                  padding: "0 14px",
-                  outline: "none",
-                }}
+                className="mf-field"
               />
             </label>
 
@@ -316,15 +247,8 @@ export default function ProjectsPage() {
                   }))
                 }
                 rows={5}
-                style={{
-                  borderRadius: "16px",
-                  border: "1px solid rgba(255,255,255,0.16)",
-                  background: "rgba(6,14,32,0.58)",
-                  color: "#dae2fd",
-                  padding: "14px",
-                  outline: "none",
-                  resize: "vertical",
-                }}
+                className="mf-field"
+                style={{ resize: "vertical" }}
               />
             </label>
 
@@ -338,15 +262,7 @@ export default function ProjectsPage() {
                     status: event.target.value as "draft" | "active" | "archived",
                   }))
                 }
-                style={{
-                  height: "48px",
-                  borderRadius: "16px",
-                  border: "1px solid rgba(255,255,255,0.16)",
-                  background: "rgba(6,14,32,0.58)",
-                  color: "#dae2fd",
-                  padding: "0 14px",
-                  outline: "none",
-                }}
+                className="mf-field"
               >
                 <option value="draft">draft</option>
                 <option value="active">active</option>
@@ -354,50 +270,18 @@ export default function ProjectsPage() {
               </select>
             </label>
 
-            {error ? (
-              <div
-                style={{
-                  background: "rgba(255, 84, 89, 0.12)",
-                  color: "#ffb4ab",
-                  border: "1px solid rgba(255, 84, 89, 0.24)",
-                  padding: "12px 14px",
-                  borderRadius: "16px",
-                  fontSize: "14px",
-                }}
-              >
-                {error}
-              </div>
-            ) : null}
-
-            {success ? (
-              <div
-                style={{
-                  background: "rgba(56, 217, 169, 0.12)",
-                  color: "#7ff0c4",
-                  border: "1px solid rgba(56, 217, 169, 0.24)",
-                  padding: "12px 14px",
-                  borderRadius: "16px",
-                  fontSize: "14px",
-                }}
-              >
-                {success}
-              </div>
-            ) : null}
+            {error ? <div className="mf-alert mf-alert-error">{error}</div> : null}
+            {success ? <div className="mf-alert mf-alert-success">{success}</div> : null}
 
             <div style={{ display: "flex", gap: "12px", flexWrap: "wrap" }}>
               <button
                 type="submit"
                 disabled={saving}
                 style={{
-                  height: "50px",
-                  borderRadius: "16px",
-                  border: "none",
-                  background: saving ? "#908fa0" : "#8083ff",
-                  color: "#ffffff",
-                  fontWeight: 700,
+                  opacity: saving ? 0.7 : 1,
                   cursor: saving ? "not-allowed" : "pointer",
-                  padding: "0 18px",
                 }}
+                className="mf-primary"
               >
                 {saving
                   ? editingId
@@ -413,15 +297,10 @@ export default function ProjectsPage() {
                   type="button"
                   onClick={handleCancelEdit}
                   style={{
-                    height: "50px",
-                    borderRadius: "16px",
-                    border: "1px solid rgba(255,255,255,0.16)",
-                    background: "rgba(255,255,255,0.055)",
-                    color: "#dae2fd",
                     fontWeight: 700,
                     cursor: "pointer",
-                    padding: "0 18px",
                   }}
+                  className="mf-secondary"
                 >
                   Cancelar edição
                 </button>
@@ -435,9 +314,8 @@ export default function ProjectsPage() {
 
           {projects.length === 0 ? (
             <div
+              className="mf-glass"
               style={{
-                background: "rgba(255,255,255,0.055)",
-                border: "1px solid rgba(255,255,255,0.12)",
                 borderRadius: "18px",
                 padding: "20px",
                 color: "#c7c4d7",
@@ -449,11 +327,10 @@ export default function ProjectsPage() {
             projects.map((project) => (
               <article
                 key={project.id}
+                className="mf-glass"
                 style={{
-                  background: "rgba(255,255,255,0.055)",
-                  border: "1px solid rgba(255,255,255,0.12)",
-                  borderRadius: "18px",
-                  padding: "20px",
+                  borderRadius: "22px",
+                  padding: "24px",
                   display: "grid",
                   gap: "12px",
                 }}
@@ -483,7 +360,7 @@ export default function ProjectsPage() {
                         borderRadius: "10px",
                         border: "1px solid rgba(90,160,255,0.25)",
                         background: "rgba(90,160,255,0.12)",
-                        color: "#1d4ed8",
+                        color: "#9dbdff",
                         padding: "0 14px",
                         display: "inline-flex",
                         alignItems: "center",
@@ -519,7 +396,7 @@ export default function ProjectsPage() {
                         borderRadius: "10px",
                         border: "1px solid rgba(255,210,90,0.25)",
                         background: "rgba(255,210,90,0.12)",
-                        color: "#9a6b00",
+                        color: "#ffe38a",
                         padding: "0 14px",
                         display: "inline-flex",
                         alignItems: "center",
@@ -537,7 +414,7 @@ export default function ProjectsPage() {
                         borderRadius: "10px",
                         border: "1px solid rgba(200,140,255,0.28)",
                         background: "rgba(170,120,255,0.14)",
-                        color: "#6d28d9",
+                        color: "#d7b8ff",
                         padding: "0 14px",
                         display: "inline-flex",
                         alignItems: "center",
@@ -610,7 +487,9 @@ export default function ProjectsPage() {
             ))
           )}
         </section>
+        </div>
       </div>
-    </main>
+      <StudioFooter />
+    </StudioShell>
   );
 }

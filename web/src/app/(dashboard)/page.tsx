@@ -3,6 +3,7 @@
 import Link from "next/link";
 import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
+import { StudioFooter, StudioShell } from "@/components/StudioShell";
 
 type User = {
   id: number;
@@ -22,10 +23,7 @@ export default function DashboardPage() {
 
     async function loadSession() {
       try {
-        const response = await fetch("/api/auth/me", {
-          method: "GET",
-          cache: "no-store",
-        });
+        const response = await fetch("/api/auth/me", { method: "GET", cache: "no-store" });
 
         if (!response.ok) {
           router.push("/login");
@@ -34,172 +32,122 @@ export default function DashboardPage() {
         }
 
         const data = await response.json();
-        if (mounted) {
-          setUser(data);
-        }
+        if (mounted) setUser(data);
       } catch (error) {
         router.push("/login");
         router.refresh();
       } finally {
-        if (mounted) {
-          setLoading(false);
-        }
+        if (mounted) setLoading(false);
       }
     }
 
     loadSession();
-
     return () => {
       mounted = false;
     };
   }, [router]);
 
   async function handleLogout() {
-    await fetch("/api/auth/logout", {
-      method: "POST",
-    });
-
+    await fetch("/api/auth/logout", { method: "POST" });
     router.push("/login");
     router.refresh();
   }
 
   if (loading) {
     return (
-      <main style={{ padding: "48px", fontFamily: "var(--font-body)" }}>
+      <main className="mf-shell" style={{ display: "grid", placeItems: "center" }}>
         <h1>Carregando sessão...</h1>
       </main>
     );
   }
 
   return (
-    <main
-      style={{
-        minHeight: "100vh",
-        background: "#0b1326",
-        color: "#dae2fd",
-        padding: "32px",
-        fontFamily: "var(--font-body)",
-      }}
-    >
-      <div
-        style={{
-          maxWidth: "1100px",
-          margin: "0 auto",
-          display: "grid",
-          gap: "24px",
-        }}
-      >
-        <header
-          style={{
-            display: "flex",
-            justifyContent: "space-between",
-            alignItems: "center",
-            gap: "16px",
-            flexWrap: "wrap",
-          }}
-        >
-          <div>
-            <div
-              style={{
-                display: "inline-block",
-                fontSize: "12px",
-                fontWeight: 700,
-                letterSpacing: "0.08em",
-                textTransform: "uppercase",
-                color: "#c0c1ff",
-                marginBottom: "10px",
-              }}
-            >
-              Studio ThinkingTools
-            </div>
-            <h1 style={{ margin: 0, fontSize: "34px" }}>
-              Área autenticada funcionando
-            </h1>
-            <p style={{ marginTop: "10px", color: "#c7c4d7", maxWidth: "760px" }}>
-              Seu frontend Next.js agora usa login real, cookies HttpOnly e
-              validação de sessão via FastAPI.
+    <StudioShell active="dashboard" onLogout={handleLogout}>
+      <div className="mf-content" style={{ display: "grid", gap: "72px" }}>
+        <section className="mf-glass mf-hero">
+          <div className="mf-hero-copy">
+            <h1 className="mf-title">Bem-vindo, {user?.full_name?.split(" ")[0] || "Marcelo"}</h1>
+            <p className="mf-subtitle">
+              Sua forja criativa está pronta. Continue de onde parou ou explore novos horizontes na biblioteca.
             </p>
+            <div style={{ display: "flex", gap: "18px", flexWrap: "wrap", marginTop: "34px" }}>
+              <Link className="mf-primary" href="/projects" style={{ display: "inline-flex", alignItems: "center" }}>
+                ⊕ Novo Projeto
+              </Link>
+              <Link className="mf-secondary" href="/projects" style={{ display: "inline-flex", alignItems: "center" }}>
+                Ver Estatísticas
+              </Link>
+            </div>
           </div>
-
-          <button
-            onClick={handleLogout}
-            style={{
-              height: "44px",
-              padding: "0 18px",
-              borderRadius: "16px",
-              border: "1px solid rgba(255,255,255,0.16)",
-              background: "rgba(255,255,255,0.055)",
-              color: "#dae2fd",
-              cursor: "pointer",
-              fontWeight: 700,
-            }}
-          >
-            Sair
-          </button>
-        </header>
-
-        <section
-          style={{
-            background: "rgba(255,255,255,0.055)",
-            border: "1px solid rgba(255,255,255,0.12)",
-            borderRadius: "24px",
-            padding: "24px",
-          }}
-        >
-          <h2 style={{ marginTop: 0 }}>Sessão atual</h2>
-          <div style={{ display: "grid", gap: "10px", color: "#dae2fd" }}>
-            <div><strong>ID:</strong> {user?.id}</div>
-            <div><strong>Nome:</strong> {user?.full_name}</div>
-            <div><strong>E-mail:</strong> {user?.email}</div>
-            <div><strong>Ativo:</strong> {user?.is_active ? "Sim" : "Não"}</div>
-            <div><strong>Criado em:</strong> {user?.created_at}</div>
-          </div>
+          <div className="mf-hero-art" />
         </section>
 
-        <section
-          style={{
-            display: "grid",
-            gridTemplateColumns: "repeat(auto-fit, minmax(240px, 1fr))",
-            gap: "16px",
-          }}
-        >
-          <Link
-            href="/projects"
-            style={{
-              textDecoration: "none",
-              color: "#dae2fd",
-              background: "rgba(255,255,255,0.055)",
-              border: "1px solid rgba(255,255,255,0.12)",
-              borderRadius: "18px",
-              padding: "20px",
-              display: "block",
-            }}
-          >
-            <strong>Projetos</strong>
-            <div style={{ marginTop: "8px", color: "#c7c4d7" }}>
-              Próximo passo: CRUD de projetos.
+        <section style={{ display: "grid", gridTemplateColumns: "minmax(0, 2fr) minmax(320px, 1fr)", gap: "34px" }}>
+          <div className="mf-glass" style={{ padding: "34px" }}>
+            <div style={{ display: "flex", justifyContent: "space-between", borderBottom: "1px solid rgba(255,255,255,0.06)", paddingBottom: "24px" }}>
+              <h2 style={{ margin: 0, color: "#fff", fontSize: "30px" }}>Detalhes da Sessão</h2>
+              <span className="mf-pill" style={{ minHeight: "32px", color: "#7ff0c4", background: "rgba(127,240,196,0.1)" }}>
+                ATIVA
+              </span>
             </div>
-          </Link>
+            <div style={{ display: "grid", gridTemplateColumns: "repeat(2, minmax(0, 1fr))", gap: "38px", marginTop: "34px" }}>
+              <Info label="ID da Sessão" value={`MF-${String(user?.id || 0).padStart(4, "0")}-001X`} />
+              <Info label="Nome de Usuário" value={user?.full_name || "Marcelo"} />
+              <Info label="E-mail de Acesso" value={user?.email || ""} />
+              <Info label="Nível de Acesso" value="Creative Director" accent />
+            </div>
+          </div>
 
-          <Link
-            href="/settings"
-            style={{
-              textDecoration: "none",
-              color: "#dae2fd",
-              background: "rgba(255,255,255,0.055)",
-              border: "1px solid rgba(255,255,255,0.12)",
-              borderRadius: "18px",
-              padding: "20px",
-              display: "block",
-            }}
-          >
-            <strong>Configurações</strong>
-            <div style={{ marginTop: "8px", color: "#c7c4d7" }}>
-              Próximo passo: gestão de conta e preferências.
+          <div className="mf-glass" style={{ padding: "34px" }}>
+            <h2 style={{ marginTop: 0, color: "#fff", fontSize: "30px" }}>Atalhos</h2>
+            <div style={{ display: "grid", gap: "20px" }}>
+              <Shortcut href="/projects" title="Projetos" tone="#8083ff" />
+              <Shortcut href="/settings" title="Configurações" tone="#ddb7ff" />
+              <Shortcut href="/projects" title="Suporte" tone="#7bd0ff" />
             </div>
-          </Link>
+          </div>
         </section>
       </div>
-    </main>
+      <StudioFooter />
+    </StudioShell>
+  );
+}
+
+function Info({ label, value, accent = false }: { label: string; value: string; accent?: boolean }) {
+  return (
+    <div>
+      <div className="mf-label">{label}</div>
+      <div style={{ marginTop: "12px", color: accent ? "#aeb1ff" : "#fff", fontSize: "22px", fontWeight: accent ? 800 : 500 }}>
+        {value}
+      </div>
+    </div>
+  );
+}
+
+function Shortcut({ href, title, tone }: { href: string; title: string; tone: string }) {
+  return (
+    <Link
+      href={href}
+      style={{
+        minHeight: "78px",
+        display: "flex",
+        alignItems: "center",
+        justifyContent: "space-between",
+        gap: "16px",
+        padding: "0 24px",
+        borderRadius: "18px",
+        background: "rgba(255,255,255,0.055)",
+        border: "1px solid rgba(255,255,255,0.08)",
+        color: "#fff",
+        fontWeight: 800,
+        fontSize: "20px",
+      }}
+    >
+      <span style={{ display: "flex", alignItems: "center", gap: "18px" }}>
+        <span style={{ width: "48px", height: "48px", borderRadius: "14px", background: `${tone}22`, color: tone, display: "grid", placeItems: "center" }}>▱</span>
+        {title}
+      </span>
+      <span style={{ color: "#758198" }}>›</span>
+    </Link>
   );
 }

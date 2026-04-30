@@ -1,8 +1,8 @@
 "use client";
 
-import Link from "next/link";
 import { useEffect, useState } from "react";
 import { useParams, useRouter } from "next/navigation";
+import { ProjectSideNav, StudioFooter, StudioShell } from "@/components/StudioShell";
 
 type User = {
   id: number;
@@ -182,382 +182,185 @@ export default function ProjectBriefingPage() {
   }
 
   return (
-    <main
-      style={{
-        minHeight: "100vh",
-        background: "#0b1326",
-        color: "#dae2fd",
-        padding: "32px",
-        fontFamily: "var(--font-body)",
-      }}
-    >
-      <div
-        style={{
-          maxWidth: "1100px",
-          margin: "0 auto",
-          display: "grid",
-          gap: "24px",
-        }}
-      >
-        <header
-          style={{
-            display: "flex",
-            justifyContent: "space-between",
-            alignItems: "center",
-            gap: "16px",
-            flexWrap: "wrap",
-          }}
-        >
-          <div>
-            <div
-              style={{
-                display: "inline-block",
-                fontSize: "12px",
-                fontWeight: 700,
-                letterSpacing: "0.08em",
-                textTransform: "uppercase",
-                color: "#c0c1ff",
-                marginBottom: "10px",
-              }}
-            >
-              Studio ThinkingTools
-            </div>
+    <StudioShell active="projects" onLogout={handleLogout}>
+      <div className="mf-with-sidebar">
+        <ProjectSideNav active="briefing" projectId={projectId} projectTitle={project?.title} />
 
-            <h1 style={{ margin: 0, fontSize: "34px" }}>Briefing do projeto</h1>
-
-            <p style={{ marginTop: "10px", color: "#c7c4d7", maxWidth: "760px" }}>
-              Estruture a base criativa do projeto para depois gerar história, prompts de imagem e prompts de vídeo.
-            </p>
-          </div>
-
-          <div style={{ display: "flex", gap: "12px", flexWrap: "wrap" }}>
-            <Link
-              href="/projects"
-              style={{
-                textDecoration: "none",
-                color: "#dae2fd",
-                background: "rgba(255,255,255,0.055)",
-                border: "1px solid rgba(255,255,255,0.16)",
-                borderRadius: "16px",
-                padding: "12px 18px",
-                fontWeight: 700,
-              }}
-            >
-              Voltar para projetos
-            </Link>
-
-            <button
-              onClick={handleLogout}
-              style={{
-                height: "44px",
-                padding: "0 18px",
-                borderRadius: "16px",
-                border: "1px solid rgba(255,255,255,0.16)",
-                background: "rgba(255,255,255,0.055)",
-                color: "#dae2fd",
-                cursor: "pointer",
-                fontWeight: 700,
-              }}
-            >
-              Sair
-            </button>
-          </div>
-        </header>
-
-        <section
-          style={{
-            background: "rgba(255,255,255,0.055)",
-            border: "1px solid rgba(255,255,255,0.12)",
-            borderRadius: "24px",
-            padding: "24px",
-            display: "grid",
-            gap: "10px",
-          }}
-        >
-          <h2 style={{ marginTop: 0, marginBottom: 0 }}>{project?.title}</h2>
-          <div style={{ color: "#dae2fd" }}>
-            <strong>Status:</strong> {project?.status}
-          </div>
-          <div style={{ color: "#dae2fd" }}>
-            <strong>Usuário:</strong> {user?.full_name} ({user?.email})
-          </div>
-          <div style={{ color: "#c7c4d7" }}>
-            {project?.description || "Sem descrição do projeto"}
-          </div>
-        </section>
-
-        <section
-          style={{
-            background: "rgba(255,255,255,0.055)",
-            border: "1px solid rgba(255,255,255,0.12)",
-            borderRadius: "24px",
-            padding: "24px",
-          }}
-        >
-          <form onSubmit={handleSubmit} style={{ display: "grid", gap: "16px" }}>
-            <label style={{ display: "grid", gap: "8px" }}>
-              <span>Premissa</span>
-              <textarea
-                value={briefing.premise}
-                onChange={(event) =>
-                  setBriefing((current) => ({ ...current, premise: event.target.value }))
-                }
-                rows={4}
-                style={{
-                  borderRadius: "16px",
-                  border: "1px solid rgba(255,255,255,0.16)",
-                  background: "rgba(6,14,32,0.58)",
-                  color: "#dae2fd",
-                  padding: "14px",
-                  outline: "none",
-                  resize: "vertical",
-                }}
-              />
-            </label>
-
-            <div
-              style={{
-                display: "grid",
-                gridTemplateColumns: "repeat(auto-fit, minmax(220px, 1fr))",
-                gap: "16px",
-              }}
-            >
-              <label style={{ display: "grid", gap: "8px" }}>
-                <span>Gênero</span>
-                <input
-                  type="text"
-                  value={briefing.genre}
-                  onChange={(event) =>
-                    setBriefing((current) => ({ ...current, genre: event.target.value }))
-                  }
-                  style={{
-                    height: "48px",
-                    borderRadius: "16px",
-                    border: "1px solid rgba(255,255,255,0.16)",
-                    background: "rgba(6,14,32,0.58)",
-                    color: "#dae2fd",
-                    padding: "0 14px",
-                    outline: "none",
-                  }}
-                />
-              </label>
-
-              <label style={{ display: "grid", gap: "8px" }}>
-                <span>Público</span>
-                <input
-                  type="text"
-                  value={briefing.audience}
-                  onChange={(event) =>
-                    setBriefing((current) => ({ ...current, audience: event.target.value }))
-                  }
-                  style={{
-                    height: "48px",
-                    borderRadius: "16px",
-                    border: "1px solid rgba(255,255,255,0.16)",
-                    background: "rgba(6,14,32,0.58)",
-                    color: "#dae2fd",
-                    padding: "0 14px",
-                    outline: "none",
-                  }}
-                />
-              </label>
-
-              <label style={{ display: "grid", gap: "8px" }}>
-                <span>Tom</span>
-                <input
-                  type="text"
-                  value={briefing.tone}
-                  onChange={(event) =>
-                    setBriefing((current) => ({ ...current, tone: event.target.value }))
-                  }
-                  style={{
-                    height: "48px",
-                    borderRadius: "16px",
-                    border: "1px solid rgba(255,255,255,0.16)",
-                    background: "rgba(6,14,32,0.58)",
-                    color: "#dae2fd",
-                    padding: "0 14px",
-                    outline: "none",
-                  }}
-                />
-              </label>
-
-              <label style={{ display: "grid", gap: "8px" }}>
-                <span>Formato</span>
-                <input
-                  type="text"
-                  value={briefing.format}
-                  onChange={(event) =>
-                    setBriefing((current) => ({ ...current, format: event.target.value }))
-                  }
-                  style={{
-                    height: "48px",
-                    borderRadius: "16px",
-                    border: "1px solid rgba(255,255,255,0.16)",
-                    background: "rgba(6,14,32,0.58)",
-                    color: "#dae2fd",
-                    padding: "0 14px",
-                    outline: "none",
-                  }}
-                />
-              </label>
-
-              <label style={{ display: "grid", gap: "8px" }}>
-                <span>Duração</span>
-                <input
-                  type="text"
-                  value={briefing.duration}
-                  onChange={(event) =>
-                    setBriefing((current) => ({ ...current, duration: event.target.value }))
-                  }
-                  style={{
-                    height: "48px",
-                    borderRadius: "16px",
-                    border: "1px solid rgba(255,255,255,0.16)",
-                    background: "rgba(6,14,32,0.58)",
-                    color: "#dae2fd",
-                    padding: "0 14px",
-                    outline: "none",
-                  }}
-                />
-              </label>
-
-              <label style={{ display: "grid", gap: "8px" }}>
-                <span>Estilo visual</span>
-                <input
-                  type="text"
-                  value={briefing.visual_style}
-                  onChange={(event) =>
-                    setBriefing((current) => ({
-                      ...current,
-                      visual_style: event.target.value,
-                    }))
-                  }
-                  style={{
-                    height: "48px",
-                    borderRadius: "16px",
-                    border: "1px solid rgba(255,255,255,0.16)",
-                    background: "rgba(6,14,32,0.58)",
-                    color: "#dae2fd",
-                    padding: "0 14px",
-                    outline: "none",
-                  }}
-                />
-              </label>
-            </div>
-
-            <label style={{ display: "grid", gap: "8px" }}>
-              <span>Objetivo</span>
-              <textarea
-                value={briefing.objective}
-                onChange={(event) =>
-                  setBriefing((current) => ({ ...current, objective: event.target.value }))
-                }
-                rows={4}
-                style={{
-                  borderRadius: "16px",
-                  border: "1px solid rgba(255,255,255,0.16)",
-                  background: "rgba(6,14,32,0.58)",
-                  color: "#dae2fd",
-                  padding: "14px",
-                  outline: "none",
-                  resize: "vertical",
-                }}
-              />
-            </label>
-
-            <label style={{ display: "grid", gap: "8px" }}>
-              <span>Referências</span>
-              <textarea
-                value={briefing.references_text}
-                onChange={(event) =>
-                  setBriefing((current) => ({
-                    ...current,
-                    references_text: event.target.value,
-                  }))
-                }
-                rows={4}
-                style={{
-                  borderRadius: "16px",
-                  border: "1px solid rgba(255,255,255,0.16)",
-                  background: "rgba(6,14,32,0.58)",
-                  color: "#dae2fd",
-                  padding: "14px",
-                  outline: "none",
-                  resize: "vertical",
-                }}
-              />
-            </label>
-
-            <label style={{ display: "grid", gap: "8px" }}>
-              <span>Observações</span>
-              <textarea
-                value={briefing.notes}
-                onChange={(event) =>
-                  setBriefing((current) => ({ ...current, notes: event.target.value }))
-                }
-                rows={4}
-                style={{
-                  borderRadius: "16px",
-                  border: "1px solid rgba(255,255,255,0.16)",
-                  background: "rgba(6,14,32,0.58)",
-                  color: "#dae2fd",
-                  padding: "14px",
-                  outline: "none",
-                  resize: "vertical",
-                }}
-              />
-            </label>
-
-            {error ? (
-              <div
-                style={{
-                  background: "rgba(255, 84, 89, 0.12)",
-                  color: "#ffb4ab",
-                  border: "1px solid rgba(255, 84, 89, 0.24)",
-                  padding: "12px 14px",
-                  borderRadius: "16px",
-                  fontSize: "14px",
-                }}
-              >
-                {error}
+        <div className="mf-content" style={{ padding: 0 }}>
+          <section className="mf-glass mf-hero">
+            <div className="mf-hero-copy">
+              <div className="mf-kicker">Briefing do projeto</div>
+              <h1 className="mf-title">{project?.title || "Novo projeto"}</h1>
+              <p className="mf-subtitle">
+                Defina os pilares narrativos e a identidade visual desta jornada através das memórias e da imaginação.
+              </p>
+              <div style={{ display: "flex", gap: "16px", flexWrap: "wrap", marginTop: "28px" }}>
+                <span className="mf-pill">✦ IA ativa</span>
+                <span className="mf-pill">↻ Atualizado agora</span>
               </div>
-            ) : null}
+            </div>
+            <div className="mf-hero-art" />
+          </section>
 
-            {success ? (
-              <div
-                style={{
-                  background: "rgba(56, 217, 169, 0.12)",
-                  color: "#7ff0c4",
-                  border: "1px solid rgba(56, 217, 169, 0.24)",
-                  padding: "12px 14px",
-                  borderRadius: "16px",
-                  fontSize: "14px",
-                }}
-              >
-                {success}
+          <div className="mf-briefing-grid">
+            <aside className="mf-glass mf-status-card">
+              <div style={{ color: "#fff", fontWeight: 900, fontSize: "18px", lineHeight: 1.3 }}>
+                Completion
+                <br />
+                Status
               </div>
-            ) : null}
+              <div>
+                <div style={{ display: "flex", justifyContent: "space-between", color: "#aeb1ff", fontSize: "12px", fontWeight: 900 }}>
+                  <span>PROGRESS</span>
+                  <span>65%</span>
+                </div>
+                <div style={{ height: "8px", borderRadius: "999px", background: "rgba(255,255,255,0.09)", marginTop: "10px", overflow: "hidden" }}>
+                  <div style={{ width: "65%", height: "100%", background: "linear-gradient(90deg,#6f72ff,#9b5cff)" }} />
+                </div>
+              </div>
+              <div style={{ display: "grid", gap: "14px", color: "#9aa6bd", fontWeight: 700 }}>
+                <span style={{ color: "#aeb1ff" }}>⊙ Premissa</span>
+                <span>⊙ Gênero & Público</span>
+                <span>⊙ Tom & Atmosfera</span>
+              </div>
+            </aside>
 
-            <button
-              type="submit"
-              disabled={saving}
-              style={{
-                height: "50px",
-                borderRadius: "16px",
-                border: "none",
-                background: saving ? "#908fa0" : "#8083ff",
-                color: "#ffffff",
-                fontWeight: 700,
-                cursor: saving ? "not-allowed" : "pointer",
-                padding: "0 18px",
-              }}
-            >
-              {saving ? "Salvando briefing..." : "Salvar briefing"}
-            </button>
-          </form>
-        </section>
+            <form onSubmit={handleSubmit} style={{ display: "grid", gap: "30px" }}>
+              <section className="mf-glass mf-form-card">
+                <h2>▣ Premissa Narrativa</h2>
+                <label style={{ display: "grid", gap: "10px" }}>
+                  <span className="mf-label">O núcleo da história</span>
+                  <textarea
+                    className="mf-field"
+                    value={briefing.premise}
+                    onChange={(event) => setBriefing((current) => ({ ...current, premise: event.target.value }))}
+                    rows={5}
+                    placeholder="Descreva o conflito central e a jornada emocional..."
+                    style={{ resize: "vertical" }}
+                  />
+                </label>
+                <div className="mf-two-col">
+                  <label style={{ display: "grid", gap: "10px" }}>
+                    <span className="mf-label">Contexto</span>
+                    <input
+                      className="mf-field"
+                      type="text"
+                      value={briefing.format}
+                      onChange={(event) => setBriefing((current) => ({ ...current, format: event.target.value }))}
+                      placeholder="Ex: Curta narrativa ilustrada"
+                    />
+                  </label>
+                  <label style={{ display: "grid", gap: "10px" }}>
+                    <span className="mf-label">Motivação</span>
+                    <input
+                      className="mf-field"
+                      type="text"
+                      value={briefing.objective}
+                      onChange={(event) => setBriefing((current) => ({ ...current, objective: event.target.value }))}
+                      placeholder="Ex: Memória, descoberta, imaginação"
+                    />
+                  </label>
+                </div>
+              </section>
+
+              <div className="mf-two-col">
+                <section className="mf-glass mf-form-card mf-accent-cyan">
+                  <h2>⚭ Gênero & Público</h2>
+                  <label style={{ display: "grid", gap: "10px" }}>
+                    <span className="mf-label">Gênero primário</span>
+                    <input
+                      className="mf-field"
+                      type="text"
+                      value={briefing.genre}
+                      onChange={(event) => setBriefing((current) => ({ ...current, genre: event.target.value }))}
+                      placeholder="Aventura fantástica"
+                    />
+                  </label>
+                  <label style={{ display: "grid", gap: "10px" }}>
+                    <span className="mf-label">Público alvo</span>
+                    <input
+                      className="mf-field"
+                      type="text"
+                      value={briefing.audience}
+                      onChange={(event) => setBriefing((current) => ({ ...current, audience: event.target.value }))}
+                      placeholder="Crianças e famílias"
+                    />
+                  </label>
+                  <label style={{ display: "grid", gap: "10px" }}>
+                    <span className="mf-label">Duração</span>
+                    <input
+                      className="mf-field"
+                      type="text"
+                      value={briefing.duration}
+                      onChange={(event) => setBriefing((current) => ({ ...current, duration: event.target.value }))}
+                      placeholder="3 a 5 minutos"
+                    />
+                  </label>
+                </section>
+
+                <section className="mf-glass mf-form-card mf-accent-pink">
+                  <h2>◌ Tom & Atmosfera</h2>
+                  <label style={{ display: "grid", gap: "10px" }}>
+                    <span className="mf-label">Tom emocional</span>
+                    <input
+                      className="mf-field"
+                      type="text"
+                      value={briefing.tone}
+                      onChange={(event) => setBriefing((current) => ({ ...current, tone: event.target.value }))}
+                      placeholder="Poético, nostálgico e encantador"
+                    />
+                  </label>
+                  <label style={{ display: "grid", gap: "10px" }}>
+                    <span className="mf-label">Estilo visual</span>
+                    <input
+                      className="mf-field"
+                      type="text"
+                      value={briefing.visual_style}
+                      onChange={(event) => setBriefing((current) => ({ ...current, visual_style: event.target.value }))}
+                      placeholder="Cinema nostálgico brasileiro"
+                    />
+                  </label>
+                  <label style={{ display: "grid", gap: "10px" }}>
+                    <span className="mf-label">Observações</span>
+                    <input
+                      className="mf-field"
+                      type="text"
+                      value={briefing.notes}
+                      onChange={(event) => setBriefing((current) => ({ ...current, notes: event.target.value }))}
+                      placeholder="Direção emocional e restrições criativas"
+                    />
+                  </label>
+                </section>
+              </div>
+
+              <section className="mf-glass mf-form-card">
+                <h2>Referências</h2>
+                <textarea
+                  className="mf-field"
+                  value={briefing.references_text}
+                  onChange={(event) => setBriefing((current) => ({ ...current, references_text: event.target.value }))}
+                  rows={4}
+                  placeholder="Locações, filmes, artistas, objetos, memórias e referências visuais..."
+                  style={{ resize: "vertical" }}
+                />
+              </section>
+
+              {error ? <div className="mf-alert mf-alert-error">{error}</div> : null}
+              {success ? <div className="mf-alert mf-alert-success">{success}</div> : null}
+
+              <div style={{ display: "flex", justifyContent: "flex-end", gap: "18px", flexWrap: "wrap" }}>
+                <button className="mf-secondary" type="button" onClick={() => loadData()}>
+                  Descartar alterações
+                </button>
+                <button className="mf-primary" type="submit" disabled={saving}>
+                  {saving ? "Salvando..." : "Salvar briefing"}
+                </button>
+              </div>
+            </form>
+          </div>
+        </div>
       </div>
-    </main>
+      <StudioFooter />
+    </StudioShell>
   );
 }

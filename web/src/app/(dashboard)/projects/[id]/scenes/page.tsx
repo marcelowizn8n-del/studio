@@ -1,8 +1,8 @@
 "use client";
 
-import Link from "next/link";
 import { useParams, useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
+import { ProjectSideNav, StudioFooter, StudioShell } from "@/components/StudioShell";
 
 type User = {
   id: number;
@@ -294,144 +294,27 @@ export default function ProjectScenesPage() {
   }
 
   return (
-    <main
-      style={{
-        minHeight: "100vh",
-        background: "#0b1326",
-        color: "#dae2fd",
-        padding: "32px",
-        fontFamily: "var(--font-body)",
-      }}
-    >
-      <div style={{ maxWidth: "1180px", margin: "0 auto", display: "grid", gap: "24px" }}>
-        <header
-          style={{
-            display: "flex",
-            justifyContent: "space-between",
-            alignItems: "center",
-            gap: "16px",
-            flexWrap: "wrap",
-          }}
-        >
-          <div>
-            <div
-              style={{
-                display: "inline-block",
-                fontSize: "12px",
-                fontWeight: 700,
-                letterSpacing: "0.08em",
-                textTransform: "uppercase",
-                color: "#c0c1ff",
-                marginBottom: "10px",
-              }}
-            >
-              Studio ThinkingTools
+    <StudioShell active="scenes" onLogout={handleLogout}>
+      <div className="mf-with-sidebar">
+        <ProjectSideNav active="timeline" projectId={projectId} projectTitle={project?.title} />
+
+        <div className="mf-content" style={{ padding: 0 }}>
+          <header className="mf-scene-header">
+            <div>
+              <div style={{ color: "#fff", fontWeight: 900, marginBottom: "14px" }}>
+                Scene Editor
+              </div>
+              <p style={{ margin: 0, color: "#aab6ce", fontSize: "20px" }}>
+                Architecting the visual narrative through procedural generation.
+              </p>
             </div>
-
-            <h1 style={{ margin: 0, fontSize: "34px" }}>Editor de cenas</h1>
-            <p style={{ marginTop: "10px", color: "#c7c4d7", maxWidth: "760px" }}>
-              Quebre a história em cenas individuais e gere prompts específicos de imagem e vídeo.
-            </p>
-          </div>
-
-          <div style={{ display: "flex", gap: "12px", flexWrap: "wrap" }}>
-            <Link href={`/projects/${projectId}/story`} style={buttonStyle}>
-              História
-            </Link>
-            <Link href={`/projects/${projectId}/image-prompts`} style={buttonStyle}>
-              Prompts de imagem
-            </Link>
-            <Link href={`/projects/${projectId}/video-prompts`} style={buttonStyle}>
-              Prompts de vídeo
-            </Link>
-            <Link href="/projects" style={buttonStyle}>
-              Projetos
-            </Link>
-            <button onClick={handleLogout} style={buttonStyle}>
-              Sair
-            </button>
-          </div>
-        </header>
-
-        <section style={{ ...panelStyle, display: "grid", gap: "10px" }}>
-          <h2 style={{ marginTop: 0, marginBottom: 0 }}>{project?.title}</h2>
-          <div style={{ color: "#dae2fd" }}>
-            <strong>Status:</strong> {project?.status}
-          </div>
-          <div style={{ color: "#dae2fd" }}>
-            <strong>Usuário:</strong> {user?.full_name} ({user?.email})
-          </div>
-          <div style={{ color: "#c7c4d7" }}>
-            {project?.description || "Sem descrição do projeto"}
-          </div>
-        </section>
-
-        <section style={{ display: "grid", gridTemplateColumns: "320px 1fr", gap: "18px", alignItems: "start" }}>
-          <aside style={{ ...panelStyle, display: "grid", gap: "18px" }}>
-            <div style={{ display: "grid", gap: "12px" }}>
-              <h2 style={{ margin: 0 }}>Gerar timeline</h2>
-              <label style={{ display: "grid", gap: "8px", color: "#dae2fd" }}>
-                Quantidade de cenas
-                <input
-                  type="number"
-                  min={1}
-                  max={20}
-                  value={sceneCount}
-                  onChange={(event) => setSceneCount(Number(event.target.value))}
-                  style={{ ...fieldStyle, height: "48px" }}
-                />
-              </label>
-              <button
-                onClick={() =>
-                  runSceneAction("generate-scenes", "Cenas geradas com sucesso", () =>
-                    fetch(`/api/projects/${projectId}/scenes/generate`, {
-                      method: "POST",
-                      headers: { "Content-Type": "application/json" },
-                      body: JSON.stringify({ force_regenerate: true, scene_count: sceneCount }),
-                    })
-                  )
-                }
-                disabled={busyAction === "generate-scenes"}
-                style={{
-                  ...buttonStyle,
-                  border: "none",
-                  background: busyAction === "generate-scenes" ? "#908fa0" : "#c0c1ff",
-                  color: "#ffffff",
-                }}
-              >
-                {busyAction === "generate-scenes" ? "Gerando..." : "Gerar cenas da história"}
+            <div style={{ display: "flex", gap: "16px", flexWrap: "wrap" }}>
+              <button className="mf-secondary" type="button">
+                ▷ Preview Sequence
               </button>
               <button
-                onClick={() =>
-                  runSceneAction("image-prompts", "Prompts de imagem gerados", () =>
-                    fetch(`/api/projects/${projectId}/scenes/generate-image-prompts`, {
-                      method: "POST",
-                      headers: { "Content-Type": "application/json" },
-                      body: JSON.stringify({ force_regenerate: true }),
-                    })
-                  )
-                }
-                disabled={!scenes.length || busyAction === "image-prompts"}
-                style={buttonStyle}
-              >
-                Gerar prompts de imagem
-              </button>
-              <button
-                onClick={() =>
-                  runSceneAction("video-prompts", "Prompts de vídeo gerados", () =>
-                    fetch(`/api/projects/${projectId}/scenes/generate-video-prompts`, {
-                      method: "POST",
-                      headers: { "Content-Type": "application/json" },
-                      body: JSON.stringify({ force_regenerate: true }),
-                    })
-                  )
-                }
-                disabled={!scenes.length || busyAction === "video-prompts"}
-                style={buttonStyle}
-              >
-                Gerar prompts de vídeo
-              </button>
-              <button
+                className="mf-primary"
+                type="button"
                 onClick={() =>
                   runSceneAction("gpt-images", "Imagens geradas", () =>
                     fetch(`/api/projects/${projectId}/scenes/generate-images`, {
@@ -447,204 +330,177 @@ export default function ProjectScenesPage() {
                   )
                 }
                 disabled={!scenes.length || busyAction === "gpt-images"}
-                style={{
-                  ...buttonStyle,
-                  border: "1px solid rgba(143,255,194,0.22)",
-                  background: "rgba(56,217,169,0.12)",
-                  color: "#7ff0c4",
-                }}
               >
-                {busyAction === "gpt-images" ? "Gerando imagens..." : "Gerar imagens"}
+                {busyAction === "gpt-images" ? "Renderizando..." : "Render All"}
               </button>
             </div>
+          </header>
 
-            <div
-              style={{
-                display: "grid",
-                gap: "12px",
-                borderTop: "1px solid rgba(255,255,255,0.12)",
-                paddingTop: "18px",
-              }}
-            >
-              <h2 style={{ margin: 0 }}>Modelo de imagem</h2>
-              <label style={{ display: "grid", gap: "8px", color: "#dae2fd" }}>
-                Modelo
-                <select
-                  value={imageModel}
-                  onChange={(event) => setImageModel(event.target.value)}
-                  style={{ ...fieldStyle, height: "48px" }}
+          <section className="mf-scene-tools">
+            <div className="mf-glass mf-tool-card">
+              <h2>Gerar timeline</h2>
+              <div className="mf-tool-row">
+                <label>
+                  <span className="mf-label">Quantidade</span>
+                  <input
+                    className="mf-field"
+                    type="number"
+                    min={1}
+                    max={20}
+                    value={sceneCount}
+                    onChange={(event) => setSceneCount(Number(event.target.value))}
+                  />
+                </label>
+                <button
+                  className="mf-primary"
+                  type="button"
+                  onClick={() =>
+                    runSceneAction("generate-scenes", "Cenas geradas com sucesso", () =>
+                      fetch(`/api/projects/${projectId}/scenes/generate`, {
+                        method: "POST",
+                        headers: { "Content-Type": "application/json" },
+                        body: JSON.stringify({ force_regenerate: true, scene_count: sceneCount }),
+                      })
+                    )
+                  }
+                  disabled={busyAction === "generate-scenes"}
                 >
-                  {imageModelOptions.map((option) => (
-                    <option key={option.value} value={option.value}>
-                      {option.label}
-                    </option>
-                  ))}
-                </select>
-              </label>
-              <div style={{ color: "#c7c4d7", fontSize: "14px", lineHeight: 1.5 }}>
+                  {busyAction === "generate-scenes" ? "Gerando..." : "Gerar cenas"}
+                </button>
+                <button
+                  className="mf-secondary"
+                  type="button"
+                  onClick={() =>
+                    runSceneAction("image-prompts", "Prompts de imagem gerados", () =>
+                      fetch(`/api/projects/${projectId}/scenes/generate-image-prompts`, {
+                        method: "POST",
+                        headers: { "Content-Type": "application/json" },
+                        body: JSON.stringify({ force_regenerate: true }),
+                      })
+                    )
+                  }
+                  disabled={!scenes.length || busyAction === "image-prompts"}
+                >
+                  Prompts imagem
+                </button>
+                <button
+                  className="mf-secondary"
+                  type="button"
+                  onClick={() =>
+                    runSceneAction("video-prompts", "Prompts de vídeo gerados", () =>
+                      fetch(`/api/projects/${projectId}/scenes/generate-video-prompts`, {
+                        method: "POST",
+                        headers: { "Content-Type": "application/json" },
+                        body: JSON.stringify({ force_regenerate: true }),
+                      })
+                    )
+                  }
+                  disabled={!scenes.length || busyAction === "video-prompts"}
+                >
+                  Prompts vídeo
+                </button>
+              </div>
+            </div>
+
+            <div className="mf-glass mf-tool-card">
+              <h2>Modelo de imagem</h2>
+              <div className="mf-tool-row">
+                <label>
+                  <span className="mf-label">Modelo</span>
+                  <select className="mf-field" value={imageModel} onChange={(event) => setImageModel(event.target.value)}>
+                    {imageModelOptions.map((option) => (
+                      <option key={option.value} value={option.value}>
+                        {option.label}
+                      </option>
+                    ))}
+                  </select>
+                </label>
+                <label>
+                  <span className="mf-label">Tamanho</span>
+                  <select className="mf-field" value={imageSize} onChange={(event) => setImageSize(event.target.value)}>
+                    {imageSizeOptions.map((option) => (
+                      <option key={option} value={option}>
+                        {option}
+                      </option>
+                    ))}
+                  </select>
+                </label>
+                <label>
+                  <span className="mf-label">Qualidade</span>
+                  <select className="mf-field" value={imageQuality} onChange={(event) => setImageQuality(event.target.value)}>
+                    {(imageModel === "dall-e-3" ? dallEQualityOptions : gptImageQualityOptions).map((option) => (
+                      <option key={option} value={option}>
+                        {option}
+                      </option>
+                    ))}
+                  </select>
+                </label>
+              </div>
+              <p style={{ color: "#8f9bb4", lineHeight: 1.5, marginBottom: 0 }}>
                 {imageModelOptions.find((option) => option.value === imageModel)?.description}
-              </div>
-              <label style={{ display: "grid", gap: "8px", color: "#dae2fd" }}>
-                Tamanho
-                <select
-                  value={imageSize}
-                  onChange={(event) => setImageSize(event.target.value)}
-                  style={{ ...fieldStyle, height: "48px" }}
-                >
-                  {imageSizeOptions.map((option) => (
-                    <option key={option} value={option}>
-                      {option}
-                    </option>
-                  ))}
-                </select>
-              </label>
-              <label style={{ display: "grid", gap: "8px", color: "#dae2fd" }}>
-                Qualidade
-                <select
-                  value={imageQuality}
-                  onChange={(event) => setImageQuality(event.target.value)}
-                  style={{ ...fieldStyle, height: "48px" }}
-                >
-                  {(imageModel === "dall-e-3" ? dallEQualityOptions : gptImageQualityOptions).map((option) => (
-                    <option key={option} value={option}>
-                      {option}
-                    </option>
-                  ))}
-                </select>
-              </label>
+              </p>
             </div>
+          </section>
 
-            <form onSubmit={handleCreateScene} style={{ display: "grid", gap: "12px" }}>
-              <h2 style={{ margin: 0 }}>Nova cena</h2>
-              <input
-                value={form.title}
-                onChange={(event) => setForm((current) => ({ ...current, title: event.target.value }))}
-                placeholder="Título"
-                required
-                style={{ ...fieldStyle, height: "48px" }}
-              />
-              <textarea
-                value={form.description}
-                onChange={(event) =>
-                  setForm((current) => ({ ...current, description: event.target.value }))
-                }
-                placeholder="Descrição visual da cena"
-                rows={5}
-                required
-                style={{ ...fieldStyle, resize: "vertical" }}
-              />
-              <input
-                type="number"
-                min={1}
-                value={form.duration_seconds}
-                onChange={(event) =>
-                  setForm((current) => ({
-                    ...current,
-                    duration_seconds: Number(event.target.value),
-                  }))
-                }
-                style={{ ...fieldStyle, height: "48px" }}
-              />
-              <button
-                type="submit"
-                disabled={saving}
-                style={{
-                  ...buttonStyle,
-                  border: "none",
-                  background: saving ? "#908fa0" : "#8083ff",
-                  color: "#ffffff",
-                }}
-              >
-                {saving ? "Criando..." : "Adicionar cena"}
-              </button>
-            </form>
-          </aside>
+          {error ? <div className="mf-alert mf-alert-error">{error}</div> : null}
+          {success ? <div className="mf-alert mf-alert-success">{success}</div> : null}
 
-          <section style={{ display: "grid", gap: "14px" }}>
-            {error ? (
-              <div
-                style={{
-                  background: "rgba(255, 84, 89, 0.12)",
-                  color: "#ffb4ab",
-                  border: "1px solid rgba(255, 84, 89, 0.24)",
-                  padding: "12px 14px",
-                  borderRadius: "16px",
-                }}
-              >
-                {error}
-              </div>
-            ) : null}
-
-            {success ? (
-              <div
-                style={{
-                  background: "rgba(56, 217, 169, 0.12)",
-                  color: "#7ff0c4",
-                  border: "1px solid rgba(56, 217, 169, 0.24)",
-                  padding: "12px 14px",
-                  borderRadius: "16px",
-                }}
-              >
-                {success}
-              </div>
-            ) : null}
-
+          <section className="mf-timeline">
             {scenes.length === 0 ? (
-              <div style={{ ...panelStyle, color: "#c7c4d7" }}>
+              <div className="mf-glass mf-empty-state">
                 Nenhuma cena criada ainda. Gere cenas a partir da história ou adicione manualmente.
               </div>
             ) : (
               scenes.map((scene) => (
-                <article
-                  key={scene.id}
-                  style={{
-                    ...panelStyle,
-                    display: "grid",
-                    gridTemplateColumns: "64px 1fr",
-                    gap: "18px",
-                  }}
-                >
-                  <div
-                    style={{
-                      display: "grid",
-                      placeItems: "center",
-                      width: "48px",
-                      height: "48px",
-                      borderRadius: "16px",
-                      background: "rgba(200,168,255,0.14)",
-                      color: "#c0c1ff",
-                      fontWeight: 800,
-                      fontSize: "20px",
-                    }}
-                  >
-                    {scene.position}
-                  </div>
+                <article className="mf-glass mf-scene-card" key={scene.id}>
+                  <div className="mf-timeline-dot" />
+                  <SceneVisual scene={scene} />
+                  <div style={{ display: "grid", gap: "18px" }}>
+                    <div style={{ display: "flex", justifyContent: "space-between", gap: "14px", alignItems: "start" }}>
+                      <input
+                        className="mf-scene-title-input"
+                        defaultValue={scene.title}
+                        onBlur={(event) => {
+                          if (event.target.value !== scene.title) {
+                            handleUpdateScene(scene, { title: event.target.value });
+                          }
+                        }}
+                      />
+                      <div style={{ display: "flex", gap: "10px" }}>
+                        <button className="mf-mini-btn" type="button" title="Salvar alterações">
+                          ✎
+                        </button>
+                        <button className="mf-mini-btn" type="button" onClick={() => handleDeleteScene(scene)} title="Excluir cena">
+                          ⋮
+                        </button>
+                      </div>
+                    </div>
 
-                  <div style={{ display: "grid", gap: "12px" }}>
-                    <input
-                      defaultValue={scene.title}
-                      onBlur={(event) => {
-                        if (event.target.value !== scene.title) {
-                          handleUpdateScene(scene, { title: event.target.value });
-                        }
-                      }}
-                      style={{ ...fieldStyle, height: "48px", fontWeight: 700 }}
-                    />
-                    <textarea
-                      defaultValue={scene.description}
-                      onBlur={(event) => {
-                        if (event.target.value !== scene.description) {
-                          handleUpdateScene(scene, { description: event.target.value });
-                        }
-                      }}
-                      rows={4}
-                      style={{ ...fieldStyle, resize: "vertical" }}
-                    />
+                    <label style={{ display: "grid", gap: "9px" }}>
+                      <span className="mf-label">Script text</span>
+                      <textarea
+                        className="mf-scene-script"
+                        defaultValue={scene.description}
+                        onBlur={(event) => {
+                          if (event.target.value !== scene.description) {
+                            handleUpdateScene(scene, { description: event.target.value });
+                          }
+                        }}
+                        rows={3}
+                      />
+                    </label>
 
-                    <div style={{ display: "flex", gap: "12px", flexWrap: "wrap", alignItems: "center" }}>
-                      <label style={{ display: "flex", gap: "8px", alignItems: "center", color: "#c7c4d7" }}>
-                        Duração
+                    <div className="mf-prompt-grid">
+                      <PromptBlock title="Image prompt" value={scene.image_prompt} />
+                      <PromptBlock title="Video prompt" value={scene.video_prompt} />
+                    </div>
+
+                    <div style={{ display: "flex", alignItems: "center", gap: "12px", color: "#8f9bb4", fontSize: "13px" }}>
+                      <span>{scene.status.toUpperCase()}</span>
+                      <label style={{ display: "flex", alignItems: "center", gap: "8px" }}>
+                        duração
                         <input
+                          className="mf-duration-input"
                           type="number"
                           min={1}
                           defaultValue={scene.duration_seconds}
@@ -654,73 +510,66 @@ export default function ProjectScenesPage() {
                               handleUpdateScene(scene, { duration_seconds: duration });
                             }
                           }}
-                          style={{ ...fieldStyle, width: "92px", height: "42px", padding: "0 12px" }}
                         />
+                        s
                       </label>
-                      <button onClick={() => handleDeleteScene(scene)} style={buttonStyle}>
-                        Excluir cena
-                      </button>
-                      <span style={{ color: "#908fa0", fontSize: "14px" }}>status: {scene.status}</span>
                     </div>
-
-                    <PromptBlock title="Prompt de imagem" value={scene.image_prompt} />
-                    <GeneratedImage scene={scene} />
-                    <PromptBlock title="Prompt de vídeo" value={scene.video_prompt} />
                   </div>
                 </article>
               ))
             )}
+
+            <form className="mf-new-scene" onSubmit={handleCreateScene}>
+              <div className="mf-add-circle">+</div>
+              <span>Append new scene</span>
+              <div className="mf-glass mf-new-scene-form">
+                <input
+                  className="mf-field"
+                  value={form.title}
+                  onChange={(event) => setForm((current) => ({ ...current, title: event.target.value }))}
+                  placeholder="Título da nova cena"
+                  required
+                />
+                <textarea
+                  className="mf-field"
+                  value={form.description}
+                  onChange={(event) => setForm((current) => ({ ...current, description: event.target.value }))}
+                  placeholder="Descrição visual da cena"
+                  rows={3}
+                  required
+                  style={{ resize: "vertical" }}
+                />
+                <input
+                  className="mf-field"
+                  type="number"
+                  min={1}
+                  value={form.duration_seconds}
+                  onChange={(event) => setForm((current) => ({ ...current, duration_seconds: Number(event.target.value) }))}
+                />
+                <button className="mf-primary" type="submit" disabled={saving}>
+                  {saving ? "Criando..." : "Adicionar cena"}
+                </button>
+              </div>
+            </form>
           </section>
-        </section>
+        </div>
       </div>
-    </main>
+      <StudioFooter />
+    </StudioShell>
   );
 }
 
-function GeneratedImage({ scene }: { scene: Scene }) {
-  if (!scene.generated_image_base64) {
-    return (
-      <div
-        style={{
-          background: "rgba(6,14,32,0.58)",
-          border: "1px solid rgba(255,255,255,0.12)",
-          borderRadius: "16px",
-          padding: "16px",
-          color: "#c7c4d7",
-        }}
-      >
-        Imagem ainda não gerada para esta cena.
-      </div>
-    );
-  }
-
+function SceneVisual({ scene }: { scene: Scene }) {
   const mimeType = scene.generated_image_mime_type || "image/png";
 
   return (
-    <div
-      style={{
-        background: "rgba(6,14,32,0.58)",
-        border: "1px solid rgba(255,255,255,0.12)",
-        borderRadius: "16px",
-        padding: "16px",
-        display: "grid",
-        gap: "10px",
-      }}
-    >
-      <h3 style={{ margin: 0, color: "#7ff0c4" }}>Imagem gerada</h3>
-      <img
-        src={`data:${mimeType};base64,${scene.generated_image_base64}`}
-        alt={`Imagem gerada para ${scene.title}`}
-        style={{
-          width: "100%",
-          borderRadius: "16px",
-          border: "1px solid rgba(255,255,255,0.12)",
-          display: "block",
-        }}
-      />
-      <div style={{ color: "#908fa0", fontSize: "14px" }}>
-        Modelo: {scene.image_generation_model || "n/d"} · Qualidade:{" "}
-        {scene.image_generation_quality || "n/d"} · Tamanho: {scene.image_generation_size || "n/d"}
+    <div className="mf-scene-visual">
+      {scene.generated_image_base64 ? (
+        <img src={`data:${mimeType};base64,${scene.generated_image_base64}`} alt={`Imagem gerada para ${scene.title}`} />
+      ) : null}
+      <div className="mf-scene-badges">
+        <span>{scene.image_generation_status || "PENDING"}</span>
+        <span>00:{String(scene.duration_seconds).padStart(2, "0")}s</span>
       </div>
     </div>
   );
@@ -728,16 +577,9 @@ function GeneratedImage({ scene }: { scene: Scene }) {
 
 function PromptBlock({ title, value }: { title: string; value: string | null }) {
   return (
-    <div
-      style={{
-        background: "rgba(6,14,32,0.58)",
-        border: "1px solid rgba(255,255,255,0.12)",
-        borderRadius: "16px",
-        padding: "16px",
-      }}
-    >
-      <h3 style={{ marginTop: 0, color: "#c0c1ff" }}>{title}</h3>
-      <p style={{ margin: 0, color: "#dae2fd", lineHeight: 1.6 }}>
+    <div className="mf-scene-prompt">
+      <h3>{title}</h3>
+      <p>
         {value || "Ainda não gerado para esta cena."}
       </p>
     </div>
