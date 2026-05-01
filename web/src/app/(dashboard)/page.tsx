@@ -62,7 +62,7 @@ export default function DashboardPage() {
   }
 
   return (
-    <StudioShell active="dashboard" onLogout={handleLogout}>
+    <StudioShell active="dashboard" onLogout={handleLogout} userInitials={user?.full_name?.split(" ").map((n) => n[0]).join("").slice(0, 2).toUpperCase() || "?"}>
       <div className="mf-content" style={{ display: "grid", gap: "72px" }}>
         <section className="mf-glass mf-hero">
           <div className="mf-hero-copy">

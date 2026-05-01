@@ -5,9 +5,10 @@ type StudioShellProps = {
   active?: "dashboard" | "projects" | "library" | "scenes";
   children: ReactNode;
   onLogout?: () => void;
+  userInitials?: string;
 };
 
-export function StudioShell({ active = "dashboard", children, onLogout }: StudioShellProps) {
+export function StudioShell({ active = "dashboard", children, onLogout, userInitials = "?" }: StudioShellProps) {
   return (
     <main className="mf-shell">
       <nav className="mf-topnav">
@@ -48,9 +49,8 @@ export function StudioShell({ active = "dashboard", children, onLogout }: Studio
               <path d="M19.4 15a8 8 0 0 0 .1-1.2v-1.6l2-1.5-2-3.4-2.4 1a7.4 7.4 0 0 0-2.1-1.2L14.7 4H9.3L9 7.1a7.4 7.4 0 0 0-2.1 1.2l-2.4-1-2 3.4 2 1.5v1.6a8 8 0 0 0 .1 1.2l-2 1.5 2 3.4 2.4-1a7.4 7.4 0 0 0 2.1 1.2l.3 3.1h5.4l.3-3.1a7.4 7.4 0 0 0 2.1-1.2l2.4 1 2-3.4-2.2-1.5Z" />
             </svg>
           </Link>
-          <button className="mf-user-btn" onClick={onLogout} type="button" aria-label="Sair da conta">
-            <span>MS</span>
-            Sair
+          <button className="mf-avatar-btn" onClick={onLogout} type="button" aria-label="Sair da conta">
+            {userInitials}
           </button>
         </div>
       </nav>
