@@ -6,6 +6,8 @@ import {
   fetchWithAuth,
 } from "@/lib/backend-auth";
 
+export const maxDuration = 300;
+
 async function readBackendJson(response: Response) {
   return response.json().catch(() => ({
     detail: "Resposta inválida do backend",

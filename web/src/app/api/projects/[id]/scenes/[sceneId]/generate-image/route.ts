@@ -1,6 +1,8 @@
 import { NextRequest, NextResponse } from "next/server";
 import { applyAuthCookies, clearAuthCookies, fetchWithAuth } from "@/lib/backend-auth";
 
+export const maxDuration = 120;
+
 type RouteContext = {
   params: { id: string; sceneId: string };
 };
